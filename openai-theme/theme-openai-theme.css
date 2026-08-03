@@ -1248,21 +1248,112 @@ svg.octicon-issue-opened, svg.octicon-git-pull-request { color: #8e8ea0 !importa
   border: 1px solid transparent !important;
 }
 .issue-state-label.green, .issue-state-label.is-open,
-.ui.green.label.issue-state {
+.ui.green.label.issue-state,
+.ui.green.label.issue-state-label,
+.ui.label.issue-state-label.green {
   background: rgba(38, 181, 146, 0.16) !important;
+  background-color: rgba(38, 181, 146, 0.16) !important;
   color: #4fc7a8 !important;
   border-color: rgba(38, 181, 146, 0.3) !important;
 }
-.issue-state-label.purple, .issue-state-label.is-merged {
-  background: rgba(155, 126, 240, 0.16) !important;
+.issue-state-label.purple, .issue-state-label.is-merged,
+.ui.purple.label.issue-state-label {
+  background-color: rgba(155, 126, 240, 0.16) !important;
   color: #b39af5 !important;
   border-color: rgba(155, 126, 240, 0.3) !important;
 }
-.issue-state-label.red, .issue-state-label.is-closed {
-  background: rgba(239, 74, 74, 0.16) !important;
+.issue-state-label.red, .issue-state-label.is-closed,
+.ui.red.label.issue-state-label {
+  background-color: rgba(239, 74, 74, 0.16) !important;
   color: #f26461 !important;
   border-color: rgba(239, 74, 74, 0.3) !important;
 }
+.issue-state-label .svg { color: currentColor !important; }
+
+/* --- Comment editor: pill tabs, roomier toolbar --- */
+.comment-form .ui.tabular.menu,
+.combo-markdown-editor .ui.tabular.menu,
+.markdown-editor-tabs {
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  border-radius: 10px !important;
+  padding: 3px !important;
+  gap: 2px;
+  display: inline-flex !important;
+  margin-bottom: 10px !important;
+}
+.comment-form .ui.tabular.menu .item,
+.combo-markdown-editor .ui.tabular.menu .item {
+  border-radius: 7px !important;
+  border: none !important;
+  padding: 6px 14px !important;
+  font-size: 0.9em;
+  color: var(--color-text-light) !important;
+}
+.comment-form .ui.tabular.menu .item.active,
+.combo-markdown-editor .ui.tabular.menu .item.active {
+  background: rgba(255,255,255,0.1) !important;
+  color: #fff !important;
+}
+.markdown-toolbar, .combo-markdown-editor .markdown-toolbar {
+  gap: 3px;
+  padding: 6px 8px !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+}
+.markdown-toolbar button, .markdown-toolbar .markdown-toolbar-button {
+  border-radius: 7px !important;
+  width: 28px; height: 28px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--color-text-light-2) !important;
+  transition: background-color 0.15s ease-out, color 0.15s ease-out;
+}
+.markdown-toolbar button:hover {
+  background: rgba(255,255,255,0.08) !important;
+  color: var(--color-text-dark) !important;
+}
+.combo-markdown-editor .ui.form textarea,
+.comment-form textarea { border-radius: 10px !important; min-height: 110px; }
+/* dropzone */
+.dropzone, .ui.form .dropzone {
+  border: 1px dashed rgba(255,255,255,0.12) !important;
+  border-radius: 10px !important;
+  background: rgba(255,255,255,0.02) !important;
+  color: var(--color-text-light-3) !important;
+  padding: 16px !important;
+}
+
+/* --- Issue sidebar: thinner rules, tighter groups --- */
+.issue-content-right .ui.divider,
+.issue-sidebar .ui.divider,
+.issue-content-right hr {
+  border-color: rgba(255,255,255,0.06) !important;
+  margin: 14px 0 !important;
+}
+.issue-content-right .ui.header,
+.issue-sidebar .ui.header {
+  font-size: 0.82em !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-light-3) !important;
+  font-weight: 600 !important;
+  margin-bottom: 7px !important;
+}
+.issue-content-right .ui.button, .issue-sidebar .ui.button {
+  font-size: 0.88em !important;
+  padding: 7px 13px !important;
+}
+
+/* --- Comment header row --- */
+.comment .comment-header, .timeline-item .comment-header {
+  padding: 9px 14px !important;
+  font-size: 0.92em;
+}
+.comment .comment-header-left .author { font-weight: 500; }
+.comment .comment-content, .timeline-item .render-content { padding: 14px !important; }
+
+/* --- Form action buttons: not cramped --- */
+.comment-form .ui.buttons, .comment-form .field > .ui.button { margin-top: 4px; }
+.comment-form .ui.primary.button { padding: 8px 18px !important; }
 
 /* --- Issue / PR title block gets a card --- */
 .issue-content-header, .issue-title-header,
