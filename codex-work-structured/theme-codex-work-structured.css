@@ -1,5 +1,5 @@
 /*
- * Codex Work Seamless for Gitea 1.27.x
+ * Codex Work Structured for Gitea 1.27.x
  *
  * A dark, low-glare workspace designed for long coding sessions. The theme
  * uses warm graphite layers instead of pure black, clear surface boundaries,
@@ -781,7 +781,7 @@ select:focus {
 /* Repository header and navigation */
 .repository .secondary-nav {
   background: #1c1c1c;
-  border-bottom: 1px solid var(--cw-border-subtle);
+  border-bottom: 0 !important;
 }
 
 .repository .repo-header {
@@ -1275,6 +1275,11 @@ code {
 .user.settings
   .user-setting-content
   > .ui.attached.segment:has(+ .ui.top.attached.header) {
+  margin-bottom: 16px !important;
+  border-radius: 0 0 var(--cw-radius-md) var(--cw-radius-md) !important;
+}
+
+.organization.profile .ui.attached.segment:has(+ .ui.top.attached.header) {
   margin-bottom: 16px !important;
   border-radius: 0 0 var(--cw-radius-md) var(--cw-radius-md) !important;
 }

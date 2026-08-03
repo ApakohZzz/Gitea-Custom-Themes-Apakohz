@@ -1,6 +1,6 @@
 # Codex Work themes for Gitea
 
-为 Gitea 1.27.x 设计的 Codex / ChatGPT Work 风格主题集合。默认推荐 `codex-work-seamless`：使用暖石墨色分层、清晰边界和克制的青绿色交互色，面向长时间编码和代码审查。
+为 Gitea 1.27.x 设计的 Codex / ChatGPT Work 风格主题集合。默认推荐 `codex-work-structured`：使用暖石墨色分层、清晰边界和克制的青绿色交互色，面向长时间编码和代码审查。
 
 ## 设计目标
 
@@ -13,14 +13,14 @@
 ## 文件
 
 ```text
-codex-work-seamless/
-└── theme-codex-work-seamless.css
+codex-work-structured/
+└── theme-codex-work-structured.css
 
 chatgpt-work/
 └── theme-chatgpt-work.css
 ```
 
-- `codex-work-seamless`：推荐的暗色主题；独立名称用于绕开旧 CSS 的长缓存。
+- `codex-work-structured`：推荐的暗色主题；独立名称用于绕开旧 CSS 的长缓存。
 - `chatgpt-work`：上一版浅色主题，保留为可选方案。
 
 每个大版本使用独立主题名，避免 Gitea 对同名主题静态资源的长时间缓存影响升级。
@@ -30,16 +30,16 @@ chatgpt-work/
 将主题放入 Gitea 的 custom 目录：
 
 ```bash
-install -m 0644 codex-work-seamless/theme-codex-work-seamless.css \
-  /data/gitea/public/assets/css/theme-codex-work-seamless.css
+install -m 0644 codex-work-structured/theme-codex-work-structured.css \
+  /data/gitea/public/assets/css/theme-codex-work-structured.css
 ```
 
 在 `app.ini` 的 `[ui]` 段注册并设为默认主题：
 
 ```ini
 [ui]
-DEFAULT_THEME = codex-work-seamless
-THEMES = codex-work-seamless,chatgpt-work,openai-theme,gitea-light,gitea-dark,gitea-auto
+DEFAULT_THEME = codex-work-structured
+THEMES = codex-work-structured,chatgpt-work,openai-theme,gitea-light,gitea-dark,gitea-auto
 ```
 
 配置发生变化时需要重启 Gitea。仅替换已经注册的 CSS 文件时，刷新浏览器即可看到新版本；如果浏览器命中旧缓存，请强制刷新。
@@ -55,7 +55,7 @@ THEMES = codex-work-seamless,chatgpt-work,openai-theme,gitea-light,gitea-dark,gi
 部署前保留当前文件副本：
 
 ```bash
-cp theme-codex-work-seamless.css theme-codex-work-seamless.css.bak.$(date +%Y-%m-%d-%H%M)
+cp theme-codex-work-structured.css theme-codex-work-structured.css.bak.$(date +%Y-%m-%d-%H%M)
 ```
 
-需要回滚时将 `DEFAULT_THEME` 改回 `chatgpt-work`、`openai-theme` 或内置主题，或将备份文件复制回 `theme-codex-work-seamless.css`，然后重启 Gitea。
+需要回滚时将 `DEFAULT_THEME` 改回 `chatgpt-work`、`openai-theme` 或内置主题，或将备份文件复制回 `theme-codex-work-structured.css`，然后重启 Gitea。
