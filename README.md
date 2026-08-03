@@ -1,10 +1,10 @@
-# ChatGPT Work theme for Gitea
+# Codex Work themes for Gitea
 
-一套为 Gitea 1.27.x 从零设计的浅色工作台主题。它借鉴 ChatGPT 与 Codex 的视觉克制，但不复制产品界面：暖灰画布、白色工作面、清晰文字层级、低噪声边框，以及仅用于关键交互的低饱和绿色。
+为 Gitea 1.27.x 设计的 Codex / ChatGPT Work 风格主题集合。默认推荐 `codex-work-dark`：使用暖石墨色分层、清晰边界和克制的青绿色交互色，面向长时间编码和代码审查。
 
 ## 设计目标
 
-- **长时间阅读舒适**：避免纯黑或纯白大面积高反差，正文和代码保持清楚。
+- **长时间阅读舒适**：避免纯黑背景，以暖石墨色建立低眩光层级。
 - **开发信息优先**：仓库文件、工单、合并请求、Actions 和设置页都保留 Gitea 原有信息密度。
 - **少装饰、强层级**：普通内容依靠间距和细边框分层，只给浮层使用阴影。
 - **宽屏不过度拉伸**：代码仓库最大宽度 1320px，首页动态最大宽度 1180px。
@@ -13,27 +13,33 @@
 ## 文件
 
 ```text
+codex-work-dark/
+└── theme-codex-work-dark.css
+
 chatgpt-work/
 └── theme-chatgpt-work.css
 ```
 
-主题名为 `chatgpt-work`。它使用独立文件名，避免 Gitea 对旧主题静态资源的长时间缓存影响升级，也不会覆盖已有主题的回滚文件。
+- `codex-work-dark`：推荐的暗色主题。
+- `chatgpt-work`：上一版浅色主题，保留为可选方案。
+
+每个大版本使用独立主题名，避免 Gitea 对同名主题静态资源的长时间缓存影响升级。
 
 ## 安装
 
 将主题放入 Gitea 的 custom 目录：
 
 ```bash
-install -m 0644 chatgpt-work/theme-chatgpt-work.css \
-  /data/gitea/public/assets/css/theme-chatgpt-work.css
+install -m 0644 codex-work-dark/theme-codex-work-dark.css \
+  /data/gitea/public/assets/css/theme-codex-work-dark.css
 ```
 
 在 `app.ini` 的 `[ui]` 段注册并设为默认主题：
 
 ```ini
 [ui]
-DEFAULT_THEME = chatgpt-work
-THEMES = chatgpt-work,openai-theme,gitea-light,gitea-dark,gitea-auto
+DEFAULT_THEME = codex-work-dark
+THEMES = codex-work-dark,chatgpt-work,openai-theme,gitea-light,gitea-dark,gitea-auto
 ```
 
 配置发生变化时需要重启 Gitea。仅替换已经注册的 CSS 文件时，刷新浏览器即可看到新版本；如果浏览器命中旧缓存，请强制刷新。
@@ -49,7 +55,7 @@ THEMES = chatgpt-work,openai-theme,gitea-light,gitea-dark,gitea-auto
 部署前保留当前文件副本：
 
 ```bash
-cp theme-chatgpt-work.css theme-chatgpt-work.css.bak.$(date +%Y-%m-%d-%H%M)
+cp theme-codex-work-dark.css theme-codex-work-dark.css.bak.$(date +%Y-%m-%d-%H%M)
 ```
 
-需要回滚时将 `DEFAULT_THEME` 改回原主题，或将备份文件复制回 `theme-chatgpt-work.css`，然后重启 Gitea。
+需要回滚时将 `DEFAULT_THEME` 改回 `chatgpt-work`、`openai-theme` 或内置主题，或将备份文件复制回 `theme-codex-work-dark.css`，然后重启 Gitea。
