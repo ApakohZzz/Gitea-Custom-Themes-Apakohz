@@ -1,5 +1,5 @@
 /*
- * Codex Work Dark for Gitea 1.27.x
+ * Codex Work for Gitea 1.27.x
  *
  * A dark, low-glare workspace designed for long coding sessions. The theme
  * uses warm graphite layers instead of pure black, clear surface boundaries,
@@ -7,7 +7,7 @@
  */
 
 gitea-theme-meta-info {
-  --theme-display-name: "Codex Work Dark";
+  --theme-display-name: "Codex Work";
   --theme-color-scheme: "dark";
 }
 
@@ -1311,17 +1311,17 @@ code {
     display: none !important;
   }
 
-  #repo-files-table .latest-commit .commit-id-short {
+  .repository .latest-commit .commit-id-short {
     display: none;
   }
 
-  #repo-files-table .latest-commit .avatar-stack-names {
+  .repository .latest-commit .avatar-stack-names {
     flex: 0 0 128px;
     min-width: 128px;
     max-width: 128px;
   }
 
-  #repo-files-table .latest-commit .avatar-stack-names > a.muted {
+  .repository .latest-commit .avatar-stack-names > a.muted {
     max-width: 104px;
   }
 
