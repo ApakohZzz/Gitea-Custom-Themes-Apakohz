@@ -1271,8 +1271,8 @@ code {
   }
 
   .issue-title h1 {
-    font-size: 26px;
-    line-height: 1.2;
+    font-size: 24px;
+    line-height: 1.24;
   }
 
   .issue-title-buttons {
@@ -1285,17 +1285,44 @@ code {
     margin-top: 10px;
   }
 
+  .ui.top.attached.pull.tabular.menu {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    overflow: visible;
+  }
+
+  .ui.top.attached.pull.tabular.menu > .item {
+    flex: 1 1 0;
+    min-width: 0;
+    justify-content: center;
+    gap: 5px;
+    padding: 10px 5px;
+    font-size: 13px;
+  }
+
+  .ui.top.attached.pull.tabular.menu > .item .ui.label {
+    min-width: 18px;
+    margin-left: 0;
+    padding: 3px 5px;
+  }
+
+  .ui.top.attached.pull.tabular.menu > .flex-text-block {
+    display: none !important;
+  }
+
   #repo-files-table .latest-commit .commit-id-short {
     display: none;
   }
 
   #repo-files-table .latest-commit .avatar-stack-names {
-    flex: 0 1 118px;
-    max-width: 118px;
+    flex: 0 0 128px;
+    min-width: 128px;
+    max-width: 128px;
   }
 
   #repo-files-table .latest-commit .avatar-stack-names > a.muted {
-    max-width: 92px;
+    max-width: 104px;
   }
 
   .repository .file-header .file-actions,
