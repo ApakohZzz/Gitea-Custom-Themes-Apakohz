@@ -227,10 +227,10 @@
   --color-orange-badge-hover-bg:   #e0781f40;
 
   /* --- surfaces: pure neutral, no color cast --- */
-  --color-body:                    #0f0f0f;
+  --color-body:                    #1a1a1a;
   --color-box-header:              transparent;
   --color-box-body:                transparent;
-  --color-box-body-highlight:      rgba(255, 255, 255, 0.035);
+  --color-box-body-highlight:      rgba(255, 255, 255, 0.045);
   --color-text-dark:               #ececf1;
   --color-text:                    #c5c5d2;
   --color-text-light:              #acacbe;
@@ -248,28 +248,28 @@
   --color-hover:                   rgba(255, 255, 255, 0.055);
   --color-hover-opaque:            #1e1e24;
   --color-active:                  rgba(255, 255, 255, 0.08);
-  --color-menu:                    #1a1a1f;
-  --color-card:                    rgba(255, 255, 255, 0.025);
+  --color-menu:                    #262626;
+  --color-card:                    #212121;
   --color-markup-table-row:        rgba(255, 255, 255, 0.03);
-  --color-markup-code-block:       rgba(255, 255, 255, 0.04);
-  --color-markup-code-inline:      rgba(255, 255, 255, 0.07);
-  --color-button:                  rgba(255, 255, 255, 0.055);
-  --color-code-bg:                 rgba(255, 255, 255, 0.03);
-  --color-shadow:                  rgba(0, 0, 0, 0.6);
-  --color-shadow-opaque:           #000000;
-  --color-secondary-bg:            rgba(255, 255, 255, 0.045);
-  --color-expand-button:           rgba(255, 255, 255, 0.055);
+  --color-markup-code-block:       rgba(255, 255, 255, 0.05);
+  --color-markup-code-inline:      rgba(255, 255, 255, 0.08);
+  --color-button:                  rgba(255, 255, 255, 0.07);
+  --color-code-bg:                 rgba(255, 255, 255, 0.04);
+  --color-shadow:                  rgba(0, 0, 0, 0.5);
+  --color-shadow-opaque:           #0d0d0d;
+  --color-secondary-bg:            rgba(255, 255, 255, 0.06);
+  --color-expand-button:           rgba(255, 255, 255, 0.07);
   --color-placeholder-text:        var(--color-text-light-3);
   --color-editor-line-highlight:   rgba(255, 255, 255, 0.05);
   --color-editor-selection:        rgba(142, 142, 160, 0.35);
-  --color-project-column-bg:       #1a1a1f;
+  --color-project-column-bg:       #212121;
   --color-caret:                   var(--color-text-dark);
-  --color-reaction-bg:             rgba(255, 255, 255, 0.045);
-  --color-reaction-hover-bg:       rgba(255, 255, 255, 0.09);
-  --color-reaction-active-bg:      rgba(255, 255, 255, 0.12);
+  --color-reaction-bg:             rgba(255, 255, 255, 0.06);
+  --color-reaction-hover-bg:       rgba(255, 255, 255, 0.1);
+  --color-reaction-active-bg:      rgba(255, 255, 255, 0.13);
   --color-tooltip-text:            #ececf1;
-  --color-tooltip-bg:              #26262c;
-  --color-nav-bg:                  rgba(15, 15, 15, 0.82);
+  --color-tooltip-bg:              #303030;
+  --color-nav-bg:                  rgba(26, 26, 26, 0.85);
   --color-nav-hover-bg:            rgba(255, 255, 255, 0.055);
   --color-nav-text:                var(--color-text);
   --color-secondary-nav-bg:        transparent;
@@ -337,14 +337,14 @@
    Component layer
    ========================================================================== */
 
-/* Base: pure neutral black, NO green aurora */
+/* Base: Codex-like elevated dark (not pure black) */
 html { font-size: 14px; }
 body {
   font-size: 14px;
   line-height: 1.65;
   letter-spacing: 0;
   -webkit-font-smoothing: antialiased;
-  background: #0f0f0f !important;
+  background: #1a1a1a !important;
 }
 
 /* Icons: consistent 16px, tighter alignment */
@@ -710,14 +710,14 @@ body {
 /* --- Cards / segments: flat, quiet, hover elevates --- */
 .ui.segment, .ui.card, .ui.cards > .card, .ui.box {
   border-radius: 14px !important;
-  border: 1px solid rgba(255, 255, 255, 0.07) !important;
-  background: rgba(255, 255, 255, 0.022) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: #212121 !important;
   box-shadow: none !important;
   transition: background-color 0.2s ease-out, border-color 0.2s ease-out, box-shadow 0.2s ease-out;
 }
 .ui.segment:hover, .ui.card:hover, .ui.box:hover {
-  border-color: rgba(255, 255, 255, 0.13) !important;
-  background: rgba(255, 255, 255, 0.032) !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  background: #262626 !important;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35) !important;
 }
 .ui.attached.segment,
@@ -1489,4 +1489,224 @@ tr.del-code, .code-inner.del-code {
   border-radius: 5px;
   padding: 2px 6px;
   font-size: 0.85em;
+}
+
+/* ==========================================================================
+   Round 3 fixes (from screenshot review)
+   ========================================================================== */
+
+/* --- 1. Heatmap: blue ramp so levels are distinguishable --- */
+#user-heatmap { --heatmap-cell-size: 10px; }
+#user-heatmap rect, .vch__day__square {
+  width: 10px !important; height: 10px !important;
+  rx: 2 !important; ry: 2 !important;
+}
+/* Gitea paints levels via --color-calendar-graph-day-*; override to cool blues */
+:root {
+  --color-calendar-graph-day-bg: #2a2a2a;
+  --color-calendar-graph-day-border: rgba(255,255,255,0.04);
+  --color-calendar-graph-day-L1-bg: #1c3a5e;
+  --color-calendar-graph-day-L2-bg: #24568c;
+  --color-calendar-graph-day-L3-bg: #2f74bd;
+  --color-calendar-graph-day-L4-bg: #4d9ae8;
+  --color-calendar-graph-day-L1-border: rgba(255,255,255,0.05);
+  --color-calendar-graph-day-L2-border: rgba(255,255,255,0.05);
+  --color-calendar-graph-day-L3-border: rgba(255,255,255,0.06);
+  --color-calendar-graph-day-L4-border: rgba(255,255,255,0.08);
+}
+/* fallback:直接命中 Gitea 的 level class（不同版本类名不同，全覆盖） */
+#user-heatmap .vch__day__square[data-level="0"], #user-heatmap rect[data-level="0"] { fill: #2a2a2a !important; }
+#user-heatmap .vch__day__square[data-level="1"], #user-heatmap rect[data-level="1"] { fill: #1c3a5e !important; }
+#user-heatmap .vch__day__square[data-level="2"], #user-heatmap rect[data-level="2"] { fill: #24568c !important; }
+#user-heatmap .vch__day__square[data-level="3"], #user-heatmap rect[data-level="3"] { fill: #2f74bd !important; }
+#user-heatmap .vch__day__square[data-level="4"], #user-heatmap rect[data-level="4"] { fill: #4d9ae8 !important; }
+/* legend squares follow the same ramp */
+.contribution-legend .legend-square, #user-heatmap + * .legend { border-radius: 2px; }
+
+/* --- 2. Repo nav tabs: give real height, stop the squeeze --- */
+.repository .header-wrapper .ui.tabular.menu,
+.repository .ui.tabular.menu:not(.secondary),
+.repository .overflow-menu {
+  min-height: 44px;
+  align-items: center;
+  padding: 5px !important;
+}
+.repository .overflow-menu-items .item,
+.repository .ui.tabular.menu .item {
+  padding: 8px 14px !important;
+  min-height: 34px;
+  align-items: center;
+}
+/* mirror-sync notice must not overlap the tab bar */
+.repository .mirror-sync-notice,
+.repository .ui.info.message.mirror,
+.repository .header-wrapper > .ui.container > .flex-text-block:first-child {
+  margin-bottom: 10px !important;
+  padding: 7px 12px !important;
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.07) !important;
+  border-radius: 9px !important;
+  font-size: 0.88em;
+  color: var(--color-text-light-2) !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.repository .header-wrapper { padding-bottom: 6px; }
+
+/* --- 3. Repo action buttons: kill the double-nested frame --- */
+/* Gitea wraps each action in .ui.labeled.button (outer) containing button+label.
+   Previously both drew borders → double frame. Now only the group draws one. */
+.repo-buttons .ui.labeled.button,
+.repository .ui.labeled.button {
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 9999px !important;
+  background: rgba(255,255,255,0.05) !important;
+  overflow: hidden;
+  display: inline-flex !important;
+  align-items: stretch;
+  padding: 0 !important;
+}
+.repo-buttons .ui.labeled.button > .ui.button,
+.repo-buttons .ui.labeled.button > button,
+.repository .ui.labeled.button > .ui.button {
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  padding: 7px 13px !important;
+  box-shadow: none !important;
+}
+.repo-buttons .ui.labeled.button > .ui.button:hover,
+.repository .ui.labeled.button > .ui.button:hover {
+  background: rgba(255,255,255,0.07) !important;
+}
+.repo-buttons .ui.labeled.button > .ui.label,
+.repository .ui.labeled.button > .ui.label {
+  border: none !important;
+  border-left: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 0 !important;
+  background: rgba(255,255,255,0.03) !important;
+  padding: 7px 12px !important;
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.86em !important;
+  color: var(--color-text-light) !important;
+}
+/* the lone RSS icon button stays a circle */
+.repo-buttons > .ui.icon.button:not(.labeled) {
+  width: 36px; height: 36px;
+  padding: 0 !important;
+  border-radius: 9999px !important;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.repo-buttons { gap: 8px; display: flex; align-items: center; }
+
+/* --- 4. Issue search toolbar: keep 精确 button inside bounds --- */
+.issue-list-toolbar, .issue-list-toolbar-left, .issue-list-toolbar-right {
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.issue-list-toolbar .ui.action.input,
+.issue-list-toolbar-right .ui.action.input {
+  display: flex !important;
+  align-items: center;
+  gap: 6px;
+  flex: 1 1 260px;
+  min-width: 0;
+}
+.issue-list-toolbar .ui.action.input > input {
+  flex: 1;
+  min-width: 0;
+  border-radius: 9999px !important;
+  border: 1px solid rgba(255,255,255,0.09) !important;
+}
+/* the "精确" toggle + search icon become separate compact controls */
+.issue-list-toolbar .ui.action.input > .ui.button,
+.issue-list-toolbar .ui.action.input > .ui.checkbox,
+.issue-list-toolbar .ui.action.input > label {
+  flex-shrink: 0;
+  border-radius: 9999px !important;
+  margin: 0 !important;
+  white-space: nowrap;
+}
+.issue-list-toolbar .ui.action.input > .ui.button {
+  padding: 7px 13px !important;
+  background: rgba(255,255,255,0.06) !important;
+  border: 1px solid rgba(255,255,255,0.09) !important;
+}
+
+/* --- 5. Left summary rail on issue dashboard (在您的仓库中 …) --- */
+.small-menu-items, .ui.secondary.vertical.menu.small-menu-items {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+.small-menu-items .item {
+  border-radius: 8px !important;
+  padding: 8px 11px !important;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--color-text-light) !important;
+  border-bottom: none !important;
+}
+.small-menu-items .item:hover { background: rgba(255,255,255,0.05) !important; }
+.small-menu-items .item.active {
+  background: rgba(255,255,255,0.09) !important;
+  color: #fff !important;
+  font-weight: 500;
+}
+.small-menu-items .item .ui.label,
+.small-menu-items .item .count {
+  background: transparent !important;
+  color: var(--color-text-light-3) !important;
+  padding: 0 !important;
+  font-size: 0.9em;
+}
+
+/* --- 6. Dashboard sidebar search: icon never overlaps text --- */
+.dashboard .ui.action.left.icon.input > input,
+.dashboard .ui.left.icon.input > input {
+  padding-left: 36px !important;
+  text-indent: 0 !important;
+}
+.dashboard .ui.action.left.icon.input > i.icon,
+.dashboard .ui.left.icon.input > i.icon {
+  position: absolute !important;
+  left: 12px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 16px !important; height: 16px !important;
+  display: inline-flex !important;
+  align-items: center; justify-content: center;
+  pointer-events: none;
+  opacity: 0.5;
+  z-index: 3;
+}
+.dashboard .ui.action.left.icon.input { position: relative !important; }
+
+/* --- Elevated surfaces to match the lighter base --- */
+.ui.dropdown .menu, .ui.popup, .ui.selection.dropdown .menu,
+.ui.modal { background: #262626 !important; }
+.navbar, #navbar { background: rgba(26, 26, 26, 0.85) !important; }
+.ui.input input, .ui.form input, .ui.form textarea,
+.ui.form select, .ui.selection.dropdown {
+  background: rgba(255,255,255,0.05) !important;
+}
+.ui.input input:focus, .ui.form input:focus, .ui.form textarea:focus {
+  background: rgba(255,255,255,0.08) !important;
+}
+.ui.button:not(.primary):not(.positive):not(.red) {
+  background: rgba(255,255,255,0.07) !important;
+}
+.ui.button:not(.primary):not(.positive):not(.red):hover {
+  background: rgba(255,255,255,0.12) !important;
+}
+/* code / diff wells slightly lighter than card */
+.code-diff, .file-body.file-code, .highlight, pre.code-block {
+  background: #1c1c1c !important;
+}
+.diff-file-box .diff-file-header, .comment .comment-header {
+  background: rgba(255,255,255,0.04) !important;
 }
