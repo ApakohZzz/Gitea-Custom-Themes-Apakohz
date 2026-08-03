@@ -1,5 +1,5 @@
 /*
- * Codex Work Carbon UI for Gitea 1.27.x
+ * Codex Work Unified for Gitea 1.27.x
  *
  * A dark, low-glare workspace designed for long coding sessions. The theme
  * uses warm graphite layers instead of pure black, clear surface boundaries,
@@ -648,15 +648,21 @@ select:focus {
 }
 
 .ui.action.input > input {
-  border-right: 0 !important;
-  border-radius: var(--cw-radius-sm) 0 0 var(--cw-radius-sm) !important;
+  min-width: 0;
+  border-right: 1px solid var(--color-input-border) !important;
+  border-radius: var(--cw-radius-sm) !important;
+}
+
+.ui.action.input {
+  gap: 8px;
 }
 
 .ui.action.input > .button,
 .ui.action.input > .dropdown,
 .ui.action.input > button {
   margin: 0 !important;
-  border-radius: 0 var(--cw-radius-sm) var(--cw-radius-sm) 0 !important;
+  border-left: 1px solid var(--cw-border-strong) !important;
+  border-radius: var(--cw-radius-sm) !important;
 }
 
 .ui.form label {
@@ -708,15 +714,29 @@ select:focus {
   box-shadow: var(--cw-shadow-lg) !important;
 }
 
+.ui.dropdown > .menu {
+  padding: 4px 0 !important;
+}
+
+.ui.dropdown > .menu .scrolling.menu {
+  padding: 4px 0 !important;
+}
+
 .ui.dropdown > .menu > .item,
+.ui.dropdown > .menu .scrolling.menu > .item,
 .overflow-menu-popup > .item {
-  margin: 3px 5px;
+  width: calc(100% - 12px) !important;
+  margin: 3px 6px !important;
   color: var(--cw-text-soft) !important;
-  border-radius: 7px !important;
+  border-radius: 8px !important;
 }
 
 .ui.dropdown > .menu > .item:hover,
 .ui.dropdown > .menu > .selected.item,
+.ui.dropdown > .menu > .active.item,
+.ui.dropdown > .menu .scrolling.menu > .item:hover,
+.ui.dropdown > .menu .scrolling.menu > .selected.item,
+.ui.dropdown > .menu .scrolling.menu > .active.item,
 .overflow-menu-popup > .item:hover {
   color: var(--cw-text) !important;
   background: var(--cw-surface-3) !important;
