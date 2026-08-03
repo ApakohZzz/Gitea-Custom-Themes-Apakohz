@@ -1630,13 +1630,16 @@ tr.del-code, .code-inner.del-code {
   border: 1px solid rgba(255,255,255,0.09) !important;
 }
 
-/* --- 5. Left summary rail on issue dashboard (在您的仓库中 …) --- */
-.small-menu-items, .ui.secondary.vertical.menu.small-menu-items {
+/* --- 5. Left summary rail on issue dashboard (在您的仓库中…) --- */
+/* NOTE: .small-menu-items is used BOTH as a vertical rail (issue dashboard)
+   and as a horizontal segmented control (release page). Split by .vertical. */
+.ui.vertical.menu.small-menu-items,
+.ui.secondary.vertical.menu.small-menu-items {
   background: transparent !important;
   border: none !important;
   padding: 0 !important;
 }
-.small-menu-items .item {
+.ui.vertical.menu.small-menu-items .item {
   border-radius: 8px !important;
   padding: 8px 11px !important;
   display: flex;
@@ -1645,19 +1648,88 @@ tr.del-code, .code-inner.del-code {
   color: var(--color-text-light) !important;
   border-bottom: none !important;
 }
-.small-menu-items .item:hover { background: rgba(255,255,255,0.05) !important; }
-.small-menu-items .item.active {
+.ui.vertical.menu.small-menu-items .item:hover { background: rgba(255,255,255,0.05) !important; }
+.ui.vertical.menu.small-menu-items .item.active {
   background: rgba(255,255,255,0.09) !important;
   color: #fff !important;
   font-weight: 500;
 }
-.small-menu-items .item .ui.label,
-.small-menu-items .item .count {
+.ui.vertical.menu.small-menu-items .item .ui.label,
+.ui.vertical.menu.small-menu-items .item .count {
   background: transparent !important;
   color: var(--color-text-light-3) !important;
   padding: 0 !important;
   font-size: 0.9em;
 }
+
+/* horizontal variant (release page: 0 发布 / 0 Git 标签) = pill segmented */
+.ui.compact.menu.small-menu-items:not(.vertical),
+.ui.compact.small.menu.small-menu-items:not(.vertical) {
+  display: inline-flex !important;
+  background: rgba(255,255,255,0.05) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 10px !important;
+  padding: 3px !important;
+  gap: 2px;
+  min-height: 0 !important;
+}
+.ui.compact.menu.small-menu-items:not(.vertical) .item {
+  border: none !important;
+  border-radius: 7px !important;
+  padding: 6px 13px !important;
+  margin: 0 !important;
+  font-size: 0.9em;
+  color: var(--color-text-light) !important;
+  background: transparent !important;
+}
+.ui.compact.menu.small-menu-items:not(.vertical) .item:hover {
+  background: rgba(255,255,255,0.07) !important;
+  color: var(--color-text-dark) !important;
+}
+.ui.compact.menu.small-menu-items:not(.vertical) .item.active {
+  background: rgba(255,255,255,0.11) !important;
+  color: #fff !important;
+  font-weight: 500;
+}
+.ui.compact.menu.small-menu-items:not(.vertical) .item::before,
+.ui.compact.menu.small-menu-items:not(.vertical) .item::after { display: none !important; }
+/* toolbar row that holds it gets breathing room */
+.repository .ui.secondary.pointing.menu + *,
+.release-list-topbar, .tag-list-topbar { margin-bottom: 14px; }
+
+/* --- Inline toggle fields: keep switch after the label text --- */
+.ui.form .inline.field > .ui.checkbox,
+.ui.form .field > .ui.checkbox { vertical-align: middle; }
+/* Gitea repo settings uses: <label>模板</label><div class="ui toggle checkbox"><input><label>说明</label></div>
+   Make the switch sit first, then its own描述 label. */
+.ui.toggle.checkbox {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 10px;
+}
+.ui.toggle.checkbox > input[type=checkbox] { order: 0; flex-shrink: 0; }
+.ui.toggle.checkbox > label { order: 1; margin: 0 !important; }
+
+/* --- Vertical settings menu: fix nested/indented sub-items --- */
+.ui.vertical.menu .item > .menu,
+.ui.vertical.menu .item .menu { margin: 4px 0 0 0 !important; }
+.ui.vertical.menu .item > .menu > .item,
+.ui.vertical.menu .item .menu .item {
+  padding: 7px 11px 7px 20px !important;
+  font-size: 0.94em;
+  border-radius: 7px !important;
+}
+/* collapsible group header (工作流 ›) aligns with siblings */
+.ui.vertical.menu .item.has-sub,
+.ui.vertical.menu details > summary.item {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 13px !important;
+  cursor: pointer;
+  list-style: none;
+}
+.ui.vertical.menu details > summary.item::-webkit-details-marker { display: none; }
 
 /* --- 6. Dashboard sidebar search: icon never overlaps text --- */
 /* Gitea renders: <div class="ui ... action left icon input"><input><i class="icon"><svg></i><button>
