@@ -862,3 +862,298 @@ h1, h2, h3, .ui.header { letter-spacing: -0.02em; font-weight: 600; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.11); border-radius: 6px; border: 3px solid transparent; background-clip: content-box; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); background-clip: content-box; }
+
+/* ==========================================================================
+   Codex / ChatGPT Work alignment pass
+   - tighter type, smaller heatmap cells, borderless stat rows
+   - list rows separated by hairlines instead of boxes
+   - neutralize remaining green accents
+   ========================================================================== */
+
+/* --- Neutralize leftover green icons/text --- */
+.text.green, .text.green .svg, a.text.green,
+.octicon-issue-opened, .octicon-git-pull-request,
+.issue-item .octicon-issue-opened,
+.labelled-list .green, .flex-item .green { color: var(--color-text-light-2) !important; }
+.ui.green.label, .ui.green.button { background: rgba(255,255,255,0.08) !important; color: var(--color-text-dark) !important; }
+/* issue state icons: neutral, only open uses a subtle accent */
+svg.octicon-issue-opened, svg.octicon-git-pull-request { color: #8e8ea0 !important; }
+
+/* --- Heatmap: Codex-style small cells --- */
+#user-heatmap { --heatmap-cell-size: 9px; padding: 2px 0; }
+#user-heatmap rect, .contrib-calendar rect, .vch__day__square {
+  rx: 2 !important; ry: 2 !important;
+  width: 9px !important; height: 9px !important;
+}
+#user-heatmap svg, .contrib-calendar svg { shape-rendering: geometricPrecision; }
+/* heatmap color ramp: neutral → cool blue (Codex uses cool tones) */
+#user-heatmap [fill*="var(--color-primary"],
+.vch__day__square[style*="--color-calendar"] { }
+#user-heatmap text, .contrib-calendar text {
+  font-size: 9px !important;
+  fill: var(--color-text-light-3) !important;
+}
+.total-contributions, .contribution-graph .header {
+  color: var(--color-text-light-2) !important;
+  font-size: 0.88em;
+}
+
+/* --- Repo header: compact action buttons like Codex toolbar --- */
+.repo-header .ui.button,
+.repo-buttons .ui.button,
+.repo-header .ui.labeled.button > .button {
+  padding: 6px 12px !important;
+  font-size: 0.9em !important;
+  font-weight: 500 !important;
+}
+.ui.labeled.button > .label,
+.repo-buttons .ui.label {
+  padding: 6px 10px !important;
+  font-size: 0.88em !important;
+  border-radius: 0 9999px 9999px 0 !important;
+  background: rgba(255,255,255,0.05) !important;
+  border: 1px solid rgba(255,255,255,0.09) !important;
+  border-left: none !important;
+  margin: 0 !important;
+}
+.ui.labeled.button > .button:first-child {
+  border-radius: 9999px 0 0 9999px !important;
+  border-right: none !important;
+}
+.repo-title, .repo-header .flex-text-block { gap: 8px; }
+
+/* --- Repo nav tabs: quiet, small count badges --- */
+.repository .ui.tabular.menu .item .ui.label,
+.repository .ui.menu .item .ui.label,
+.ui.menu .item > .ui.label,
+.ui.menu .item > .ui.circular.label {
+  background: rgba(255,255,255,0.09) !important;
+  color: var(--color-text-light) !important;
+  font-size: 0.78em !important;
+  padding: 1px 6px !important;
+  min-width: 0 !important;
+  margin-left: 5px !important;
+  font-weight: 500 !important;
+}
+
+/* --- Stats row (5 提交 / 2 分支 / 0 标签): borderless equal columns --- */
+.repository-summary,
+.repo-sub-menu,
+.ui.segment.sub-menu {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+  border-radius: 0 !important;
+  padding: 0 0 14px 0 !important;
+  margin-bottom: 18px !important;
+  display: flex;
+  gap: 0;
+}
+.repo-sub-menu .item, .ui.segment.sub-menu .item {
+  flex: 1;
+  text-align: center;
+  border: none !important;
+  border-right: 1px solid rgba(255,255,255,0.07) !important;
+  color: var(--color-text-light) !important;
+  font-size: 0.92em;
+}
+.repo-sub-menu .item:last-child, .ui.segment.sub-menu .item:last-child { border-right: none !important; }
+.repo-sub-menu .item:hover, .ui.segment.sub-menu .item:hover { color: var(--color-text-dark) !important; background: transparent !important; }
+
+/* --- File list: tighter rows, hairline separators, aligned icons --- */
+#repo-files-table .repo-file-item,
+.repo-file-line,
+#repo-files-table tr {
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: background-color 0.15s ease-out;
+}
+#repo-files-table tr:hover { background: rgba(255,255,255,0.03); }
+#repo-files-table td, .repo-file-cell {
+  padding: 9px 12px !important;
+  vertical-align: middle !important;
+  border: none !important;
+}
+#repo-files-table .svg, .repo-file-cell .svg {
+  vertical-align: -3px;
+  margin-right: 6px;
+  color: var(--color-text-light-2) !important;
+}
+#repo-files-table .commit-message, .repo-file-cell.message { color: var(--color-text-light-2) !important; font-size: 0.92em; }
+#repo-files-table .age, .repo-file-cell.age { color: var(--color-text-light-3) !important; font-size: 0.88em; }
+/* latest-commit header row */
+.latest-commit, #repo-files-table .commit-list {
+  background: rgba(255,255,255,0.025) !important;
+  border-radius: 10px 10px 0 0;
+}
+
+/* --- Search inputs: keep icon from overlapping placeholder --- */
+.ui.icon.input > input { padding-right: 40px !important; }
+.ui.icon.input > .icon, .ui.icon.input > .svg {
+  right: 12px !important; left: auto !important;
+  top: 50% !important; transform: translateY(-50%) !important;
+  margin: 0 !important; opacity: 0.6;
+  pointer-events: none;
+}
+.ui.left.icon.input > input { padding-left: 38px !important; padding-right: 14px !important; }
+.ui.left.icon.input > .icon, .ui.left.icon.input > .svg { left: 13px !important; right: auto !important; }
+/* keyboard hint chip inside search */
+.ui.input kbd, .ui.action.input kbd {
+  background: rgba(255,255,255,0.07) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 5px;
+  padding: 1px 5px;
+  font-size: 0.78em;
+  color: var(--color-text-light-2);
+  margin-right: 6px;
+}
+
+/* --- Sidebar filter block on dashboard: no nested frame --- */
+.dashboard .ui.segment .ui.small.fluid.action.input { margin-bottom: 10px; }
+.dashboard .ui.secondary.filter.menu,
+.dashboard .ui.small.secondary.filter.menu {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 0 4px 0 !important;
+  gap: 0;
+}
+.dashboard .ui.secondary.filter.menu .item { padding: 7px 11px !important; font-size: 0.9em; }
+
+/* --- Activity feed: hairline rows, aligned meta, smaller avatars --- */
+.dashboard .flex-list .flex-item,
+.dashboard .news .item,
+#activity-feed .flex-item {
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding: 13px 4px !important;
+  gap: 11px;
+  align-items: flex-start;
+}
+.dashboard .flex-list .flex-item:last-child { border-bottom: none; }
+.dashboard .flex-item-leading .ui.avatar.image,
+.dashboard .flex-item-leading img,
+#activity-feed img.avatar { width: 22px !important; height: 22px !important; border-radius: 6px !important; }
+.dashboard .flex-item-main { gap: 3px; line-height: 1.5; }
+.dashboard .flex-item-title { font-size: 0.94em; font-weight: 400; }
+.dashboard .flex-item-body { color: var(--color-text-light-2) !important; font-size: 0.9em; }
+.dashboard .flex-item-trailing, #activity-feed .flex-item-trailing {
+  align-self: center;
+  color: var(--color-text-light-3) !important;
+}
+.dashboard .flex-item-trailing .svg { opacity: 0.55; }
+/* commit sha chip inside feed */
+.dashboard .flex-item-body .ui.label,
+.dashboard .commit-id, #activity-feed .sha {
+  font-family: var(--fonts-monospace);
+  font-size: 0.85em !important;
+  background: rgba(255,255,255,0.06) !important;
+  padding: 1px 6px !important;
+  border-radius: 5px !important;
+}
+
+/* --- Issue / PR list: row blocks with hairlines --- */
+.issue-list .flex-item,
+.milestone-list .flex-item,
+#issue-list .flex-item {
+  border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+  border-radius: 0 !important;
+  padding: 14px 10px !important;
+  gap: 10px;
+  transition: background-color 0.15s ease-out;
+}
+.issue-list .flex-item:hover, #issue-list .flex-item:hover {
+  background: rgba(255,255,255,0.03) !important;
+  transform: none !important;
+}
+.issue-list .flex-item:last-child { border-bottom: none !important; }
+.issue-list .flex-item-title { font-size: 0.98em; font-weight: 500; }
+.issue-list .flex-item-body, .issue-list .desc {
+  color: var(--color-text-light-3) !important;
+  font-size: 0.88em;
+  margin-top: 3px;
+}
+.issue-list .flex-item-leading { padding-top: 2px; }
+/* the open/closed segmented control on issue list */
+.issue-list-toolbar-left .ui.compact.menu,
+.issue-list-toolbar .ui.compact.menu {
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  border-radius: 10px !important;
+  padding: 3px !important;
+  gap: 2px;
+}
+.issue-list-toolbar .ui.compact.menu .item {
+  border-radius: 7px !important;
+  padding: 6px 12px !important;
+  border: none !important;
+  font-size: 0.9em;
+  color: var(--color-text-light) !important;
+}
+.issue-list-toolbar .ui.compact.menu .item.active {
+  background: rgba(255,255,255,0.1) !important;
+  color: #fff !important;
+}
+
+/* --- Right sidebar of repo page: airy, borderless sections --- */
+.repository .repo-home-sidebar-top,
+.repository .repo-home-sidebar-bottom,
+.repository #repo-desc + * {
+  padding-left: 22px;
+}
+.repository .repo-home-sidebar-top h4,
+.repository .repo-home-sidebar-bottom h4,
+.repository .ui.header:not(.attached) {
+  font-size: 0.82em !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-light-3) !important;
+  font-weight: 600 !important;
+  margin: 18px 0 8px !important;
+}
+.repository .language-stats { border-radius: 9999px; overflow: hidden; height: 7px; gap: 2px; }
+.repository .language-stats-details { font-size: 0.86em; color: var(--color-text-light-2) !important; }
+
+/* --- Language bar segments neutral-friendly --- */
+.language-stats .language-percentage { border-radius: 0 !important; }
+
+/* --- Markdown body (README) tighter --- */
+.markup h1:first-child { margin-top: 0 !important; font-size: 1.7em; }
+.markup { font-size: 0.95em; line-height: 1.7; }
+.markup h1, .markup h2 { border-bottom: 1px solid rgba(255,255,255,0.07) !important; padding-bottom: 7px; }
+
+/* --- Buttons in toolbars a touch smaller (Codex compact feel) --- */
+.issue-list-toolbar .ui.button,
+.repo-file-actions .ui.button,
+.ui.small.button { padding: 7px 14px !important; font-size: 0.9em !important; }
+.ui.tiny.button { padding: 5px 11px !important; font-size: 0.85em !important; }
+
+/* --- Timeline / comment blocks --- */
+.timeline-item .content, .comment .content {
+  border-radius: 12px !important;
+  border-color: rgba(255,255,255,0.07) !important;
+}
+.timeline-item .comment-header {
+  background: rgba(255,255,255,0.03) !important;
+  border-radius: 12px 12px 0 0 !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+}
+
+/* --- Diff view --- */
+.diff-file-box .diff-file-header {
+  background: rgba(255,255,255,0.03) !important;
+  border-radius: 12px 12px 0 0 !important;
+}
+.diff-file-box { border-radius: 12px !important; }
+.file-body.file-code .lines-num { color: var(--color-text-light-3) !important; }
+
+/* --- Tables generally --- */
+.ui.table { border-radius: 12px !important; border-color: rgba(255,255,255,0.07) !important; }
+.ui.table thead th {
+  background: rgba(255,255,255,0.03) !important;
+  color: var(--color-text-light-2) !important;
+  font-weight: 500 !important;
+  font-size: 0.88em;
+  border-color: rgba(255,255,255,0.07) !important;
+}
+.ui.table td { border-color: rgba(255,255,255,0.05) !important; }
