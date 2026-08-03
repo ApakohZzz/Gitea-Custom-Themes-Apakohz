@@ -470,6 +470,218 @@ body {
   font-weight: 600;
 }
 
+/* --- Two-item switcher (dashboard 仓库/组织) — same pill treatment --- */
+.ui.two.item.menu,
+.ui.three.item.menu,
+.ui.item.menu:not(.tabular) {
+  display: flex !important;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 11px !important;
+  padding: 4px !important;
+  margin-bottom: 12px !important;
+  min-height: 0 !important;
+}
+.ui.two.item.menu .item,
+.ui.three.item.menu .item,
+.ui.item.menu:not(.tabular) .item {
+  flex: 1;
+  justify-content: center;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 8px 14px !important;
+  margin: 0 !important;
+  color: var(--color-text-light) !important;
+  font-weight: 500;
+  background: transparent !important;
+  transition: background-color 0.18s ease-out, color 0.18s ease-out;
+}
+.ui.two.item.menu .item:hover,
+.ui.three.item.menu .item:hover,
+.ui.item.menu:not(.tabular) .item:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: var(--color-text-dark) !important;
+}
+.ui.two.item.menu .item.active,
+.ui.three.item.menu .item.active,
+.ui.item.menu:not(.tabular) .item.active {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+.ui.two.item.menu .item::before,
+.ui.two.item.menu .item::after,
+.ui.item.menu:not(.tabular) .item::before,
+.ui.item.menu:not(.tabular) .item::after { display: none !important; }
+
+/* --- Vertical settings menu: rounded rows, no hard dividers --- */
+.ui.vertical.menu {
+  background: rgba(255, 255, 255, 0.022) !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  border-radius: 14px !important;
+  padding: 6px !important;
+  overflow: hidden;
+}
+.ui.vertical.menu .item {
+  border: none !important;
+  border-radius: 9px !important;
+  padding: 9px 13px !important;
+  margin: 1px 0 !important;
+  color: var(--color-text-light) !important;
+  background: transparent !important;
+  transition: background-color 0.18s ease-out, color 0.18s ease-out;
+}
+.ui.vertical.menu .item:hover {
+  background: rgba(255, 255, 255, 0.055) !important;
+  color: var(--color-text-dark) !important;
+}
+.ui.vertical.menu .item.active {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  font-weight: 500;
+}
+.ui.vertical.menu .item::before,
+.ui.vertical.menu .item::after { display: none !important; }
+/* header row inside vertical menu */
+.ui.vertical.menu .header.item {
+  color: var(--color-text-light-2) !important;
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: transparent !important;
+  padding-bottom: 6px !important;
+}
+.ui.vertical.menu .header.item:hover { background: transparent !important; }
+
+/* --- Checkboxes & toggles: fix misalignment, neutral accent --- */
+.ui.checkbox {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  min-height: 20px;
+}
+.ui.checkbox input[type=checkbox],
+.ui.checkbox input[type=radio] {
+  position: static !important;
+  opacity: 1 !important;
+  width: 16px !important;
+  height: 16px !important;
+  margin: 0 !important;
+  flex-shrink: 0;
+  accent-color: #ececf1;
+  cursor: pointer;
+}
+.ui.checkbox label {
+  position: static !important;
+  padding-left: 0 !important;
+  cursor: pointer;
+  line-height: 1.4;
+}
+.ui.checkbox label::before,
+.ui.checkbox label::after { display: none !important; }
+/* Gitea toggle switch */
+.ui.toggle.checkbox { min-height: 22px; }
+.ui.toggle.checkbox input[type=checkbox] {
+  appearance: none;
+  width: 36px !important;
+  height: 20px !important;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.14);
+  position: relative !important;
+  transition: background-color 0.18s ease-out;
+}
+.ui.toggle.checkbox input[type=checkbox]::after {
+  content: '';
+  position: absolute;
+  top: 2px; left: 2px;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: #ececf1;
+  transition: transform 0.18s ease-out;
+}
+.ui.toggle.checkbox input[type=checkbox]:checked { background: #ececf1; }
+.ui.toggle.checkbox input[type=checkbox]:checked::after {
+  transform: translateX(16px);
+  background: #0f0f0f;
+}
+
+/* --- Selection dropdown: same height as inputs --- */
+.ui.selection.dropdown {
+  min-height: 0 !important;
+  padding: 10px 34px 10px 14px !important;
+  display: flex !important;
+  align-items: center;
+  line-height: 1.4 !important;
+}
+.ui.selection.dropdown > .dropdown.icon {
+  top: 50% !important;
+  transform: translateY(-50%);
+  margin: 0 !important;
+  right: 12px !important;
+  padding: 0 !important;
+}
+.ui.selection.dropdown .default.text,
+.ui.selection.dropdown > .text { line-height: 1.4 !important; }
+/* avatar inside dropdown must not stretch */
+.ui.selection.dropdown img,
+.ui.dropdown .menu img { width: 20px !important; height: 20px !important; object-fit: cover; flex-shrink: 0; }
+
+/* --- Login / signup page: fix overlapping lines & card seams --- */
+.page-content.user.signin .ui.attached.segment,
+.page-content.user.signup .ui.attached.segment { border-radius: 0 !important; }
+.page-content.user.signin .ui.top.attached.header,
+.page-content.user.signup .ui.top.attached.header {
+  border-radius: 14px 14px 0 0 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+.page-content.user.signin .ui.attached.segment:last-of-type,
+.page-content.user.signup .ui.attached.segment:last-of-type {
+  border-radius: 0 0 14px 14px !important;
+}
+/* the passkey / register block: give it room so lines don't collide */
+.signin-passkey,
+.page-content.user.signin .ui.segment .center,
+.page-content.user.signin .ui.segment > .tw-text-center {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  line-height: 1.6;
+  padding: 4px 0;
+}
+.signin-passkey > * { margin: 0 !important; }
+/* divider text ("或") spacing */
+.divider.divider-text { margin: 16px 0 !important; }
+
+/* --- Contribution heatmap: smaller cells, more air --- */
+#user-heatmap rect { rx: 2; }
+#user-heatmap { --heatmap-cell-size: 10px; }
+.contribution-graph, #user-heatmap { padding: 4px 0; }
+
+/* --- Form layout: reduce the label/field imbalance --- */
+.ui.form .inline.field > label,
+.ui.form .field > label { color: var(--color-text-light) !important; font-weight: 500; }
+.ui.form .field { margin-bottom: 16px !important; }
+.ui.form .help, .ui.form .field .help {
+  color: var(--color-text-light-3) !important;
+  font-size: 0.9em;
+  line-height: 1.55;
+  margin-top: 6px !important;
+}
+
+/* --- Dashboard sidebar: unify the stacked panels --- */
+.dashboard .ui.segment + .ui.segment { margin-top: 12px !important; }
+.dashboard .ui.attached.segment,
+.dashboard .ui.attached.header { border-radius: 14px !important; }
+.dashboard .ui.attached.header + .ui.attached.segment {
+  border-radius: 0 0 14px 14px !important;
+  border-top: none !important;
+  margin-top: -1px !important;
+}
+.dashboard .ui.attached.header {
+  border-radius: 14px 14px 0 0 !important;
+}
+
 /* --- Dropdowns & popups --- */
 .ui.dropdown .menu, .ui.popup, .ui.selection.dropdown .menu {
   background: #1a1a1f !important;
