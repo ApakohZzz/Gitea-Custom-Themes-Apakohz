@@ -1,5 +1,5 @@
 /*
- * Codex Work Graphite for Gitea 1.27.x
+ * Codex Work Carbon for Gitea 1.27.x
  *
  * A dark, low-glare workspace designed for long coding sessions. The theme
  * uses warm graphite layers instead of pure black, clear surface boundaries,
@@ -887,7 +887,8 @@ select:focus {
 }
 
 #dashboard-repo-list .dashboard-repos {
-  overflow: hidden;
+  position: relative;
+  overflow: visible;
   background: var(--cw-surface);
   border: 1px solid var(--cw-border);
   border-radius: var(--cw-radius-md);
@@ -900,10 +901,12 @@ select:focus {
   background: var(--cw-surface) !important;
   border: 0 !important;
   border-bottom: 1px solid var(--cw-border) !important;
-  border-radius: 0 !important;
+  border-radius: var(--cw-radius-md) var(--cw-radius-md) 0 0 !important;
 }
 
 #dashboard-repo-list .repos-search {
+  position: relative;
+  z-index: 4;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -916,6 +919,14 @@ select:focus {
 #dashboard-repo-list .repos-search > .ui.action.input {
   flex: 0 0 auto;
   width: 100%;
+  overflow: visible;
+}
+
+#dashboard-repo-list .repos-search .ui.dropdown > .menu {
+  right: 0 !important;
+  left: auto !important;
+  z-index: 40;
+  min-width: 150px;
 }
 
 #dashboard-repo-list .repos-filter {
@@ -937,10 +948,11 @@ select:focus {
 }
 
 #dashboard-repo-list .ui.attached.table.segment {
+  overflow: hidden;
   background: var(--cw-surface) !important;
   border: 0 !important;
   border-top: 1px solid var(--cw-border) !important;
-  border-radius: 0 !important;
+  border-radius: 0 0 var(--cw-radius-md) var(--cw-radius-md) !important;
 }
 
 .dashboard.feeds .news .event {
@@ -953,24 +965,61 @@ select:focus {
   background: #ffffff05;
 }
 
+.dashboard.feeds .news .item-trailing > svg {
+  width: 22px !important;
+  height: 22px !important;
+  margin-right: 6px !important;
+  color: var(--cw-text-muted) !important;
+}
+
+#user-heatmap .heatmap-day,
+#user-heatmap .heatmap-legend-svg rect {
+  rx: 2px;
+  ry: 2px;
+}
+
+#user-heatmap rect[style*="--color-secondary-alpha-60"] {
+  fill: #222222 !important;
+}
+
+#user-heatmap rect[style*="--color-primary-light-4"] {
+  fill: #26313a !important;
+}
+
+#user-heatmap rect[style*="--color-primary-light-2"] {
+  fill: #30455a !important;
+}
+
+#user-heatmap rect[style*="--color-primary);"] {
+  fill: #3b5a75 !important;
+}
+
+#user-heatmap rect[style*="--color-primary-dark-2"] {
+  fill: #50799e !important;
+}
+
+#user-heatmap rect[style*="--color-primary-dark-4"] {
+  fill: #79b8f3 !important;
+}
+
 .heatmap-color-0 {
-  background: #2a2a2a !important;
+  background: #222222 !important;
 }
 
 .heatmap-color-1 {
-  background: #29443c !important;
+  background: #26313a !important;
 }
 
 .heatmap-color-2 {
-  background: #38695c !important;
+  background: #30455a !important;
 }
 
 .heatmap-color-3 {
-  background: #51927f !important;
+  background: #3b5a75 !important;
 }
 
 .heatmap-color-4 {
-  background: #79b8a7 !important;
+  background: #50799e !important;
 }
 
 /* Issues and pull requests */
