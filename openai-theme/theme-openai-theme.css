@@ -1232,3 +1232,158 @@ svg.octicon-issue-opened, svg.octicon-git-pull-request { color: #8e8ea0 !importa
   border-color: rgba(255,255,255,0.07) !important;
 }
 .ui.table td { border-color: rgba(255,255,255,0.05) !important; }
+
+/* ==========================================================================
+   PR / diff / issue detail — desaturate, add structure
+   ========================================================================== */
+
+/* --- State badges (开启中 / 已合并 / 已关闭): muted, pill --- */
+.issue-state-label, .ui.label.issue-state,
+.issue-title-buttons + * .ui.label,
+.ui.basic.label.issue-state {
+  border-radius: 9999px !important;
+  padding: 5px 12px !important;
+  font-weight: 500 !important;
+  font-size: 0.86em !important;
+  border: 1px solid transparent !important;
+}
+.issue-state-label.green, .issue-state-label.is-open,
+.ui.green.label.issue-state {
+  background: rgba(38, 181, 146, 0.16) !important;
+  color: #4fc7a8 !important;
+  border-color: rgba(38, 181, 146, 0.3) !important;
+}
+.issue-state-label.purple, .issue-state-label.is-merged {
+  background: rgba(155, 126, 240, 0.16) !important;
+  color: #b39af5 !important;
+  border-color: rgba(155, 126, 240, 0.3) !important;
+}
+.issue-state-label.red, .issue-state-label.is-closed {
+  background: rgba(239, 74, 74, 0.16) !important;
+  color: #f26461 !important;
+  border-color: rgba(239, 74, 74, 0.3) !important;
+}
+
+/* --- Issue / PR title block gets a card --- */
+.issue-content-header, .issue-title-header,
+.repository .issue-title-wrapper {
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  margin-bottom: 18px;
+}
+#issue-title-display h1, .issue-title h1 {
+  font-size: 1.65em !important;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+}
+.issue-title-meta, .issue-content-header .flex-text-block {
+  color: var(--color-text-light-2) !important;
+  font-size: 0.92em;
+  margin-top: 8px;
+}
+
+/* --- diff stat bars: desaturate, thinner --- */
+.diff-stats-bar, .diff-stats,
+.bar .diff-stat-bar {
+  height: 7px !important;
+  border-radius: 9999px !important;
+  overflow: hidden;
+  gap: 1px;
+}
+.diff-stats-bar .diff-stat-bar-add,
+.bar .diff-stat-add, .diff-stat-bar > .add {
+  background: rgba(38, 181, 146, 0.75) !important;
+}
+.diff-stats-bar .diff-stat-bar-del,
+.bar .diff-stat-del, .diff-stat-bar > .del {
+  background: rgba(239, 74, 74, 0.7) !important;
+}
+.diff-stats .text.green, .diff-stats-add, span.text.green {
+  color: #4fc7a8 !important;
+  font-weight: 500;
+  font-size: 0.9em;
+}
+.diff-stats .text.red, .diff-stats-del, span.text.red {
+  color: #f08a87 !important;
+  font-weight: 500;
+  font-size: 0.9em;
+}
+
+/* --- diff rows: softer add/del tint --- */
+.code-diff .add-code, .code-diff td.add-code,
+.diff-file-body .lines-code.add-code,
+tr.add-code, .code-inner.add-code {
+  background: rgba(38, 181, 146, 0.09) !important;
+}
+.code-diff .del-code, .code-diff td.del-code,
+.diff-file-body .lines-code.del-code,
+tr.del-code, .code-inner.del-code {
+  background: rgba(239, 74, 74, 0.09) !important;
+}
+.code-diff .lines-num.add-code, .lines-num-old.add-code,
+.diff-file-body .lines-num.add-code { background: rgba(38, 181, 146, 0.14) !important; }
+.code-diff .lines-num.del-code, .lines-num-new.del-code,
+.diff-file-body .lines-num.del-code { background: rgba(239, 74, 74, 0.14) !important; }
+/* hunk header row */
+.diff-file-body .lines-code.hunk, tr.same-code .hunk,
+.code-diff .hunk, td.chunk-header {
+  background: rgba(255,255,255,0.035) !important;
+  color: var(--color-text-light-3) !important;
+  font-size: 0.86em;
+}
+/* diff code font a touch smaller for density */
+.code-diff, .file-body.file-code { font-size: 0.86em; line-height: 1.55; }
+.code-diff .lines-num { user-select: none; opacity: 0.65; }
+
+/* --- diff file box header --- */
+.diff-file-box .diff-file-header,
+.diff-file-header.sticky-2nd-row {
+  padding: 10px 14px !important;
+  border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+}
+.diff-file-header .file { font-family: var(--fonts-monospace); font-size: 0.9em; }
+.diff-file-box { border: 1px solid rgba(255,255,255,0.07) !important; margin-bottom: 16px !important; }
+
+/* --- diff toolbar icon buttons: equal size --- */
+.diff-detail-actions .ui.button,
+.diff-detail-box .ui.icon.button,
+.diff-toolbar .ui.button {
+  width: 32px; height: 32px;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center; justify-content: center;
+}
+.diff-detail-actions .ui.dropdown.button,
+.diff-detail-box .ui.dropdown.button { width: auto; padding: 0 12px !important; }
+
+/* --- viewed-file counter chip --- */
+.diff-detail-box .diff-detail-stats,
+.review-progress, .viewed-files-counter {
+  background: rgba(255,255,255,0.05) !important;
+  border-radius: 9999px !important;
+  padding: 4px 11px !important;
+  font-size: 0.86em;
+  color: var(--color-text-light-2) !important;
+}
+
+/* --- Tabs with counts (对话内容 1 / 文件变动 1) --- */
+.repository .tabs .ui.menu .item,
+.issue-navbar .ui.menu .item { gap: 6px; }
+
+/* --- Timeline avatars & rails --- */
+.timeline-item .avatar img, .timeline .avatar img { border-radius: 7px !important; }
+.timeline::before, .timeline-item::before { background: rgba(255,255,255,0.07) !important; }
+
+/* --- Commit list rows --- */
+#commits-table tr, .commit-list tr {
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+#commits-table td, .commit-list td { padding: 10px 12px !important; border: none !important; }
+#commits-table .sha, .commit-list .sha, .commit-id-short {
+  font-family: var(--fonts-monospace);
+  background: rgba(255,255,255,0.06);
+  border-radius: 5px;
+  padding: 2px 6px;
+  font-size: 0.85em;
+}
