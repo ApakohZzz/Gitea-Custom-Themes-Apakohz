@@ -1,5 +1,5 @@
 /*
- * Codex Work Unified for Gitea 1.27.x
+ * Codex Work Refined for Gitea 1.27.x
  *
  * A dark, low-glare workspace designed for long coding sessions. The theme
  * uses warm graphite layers instead of pure black, clear surface boundaries,
@@ -13,11 +13,10 @@ gitea-theme-meta-info {
 
 :root {
   --is-dark-theme: true;
-  --fonts-proportional:
-    ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Noto Sans SC", "Microsoft YaHei", Arial, sans-serif;
-  --fonts-monospace:
-    "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --fonts-proportional: ui-sans-serif, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Noto Sans SC", "Microsoft YaHei", Arial, sans-serif;
+  --fonts-monospace: "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
+    monospace;
   --fonts-emoji: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji";
 
   /* Codex Work design tokens */
@@ -452,6 +451,11 @@ a:hover {
   padding-bottom: 64px;
 }
 
+/* The dashboard secondary navigation belongs directly below the global nav. */
+.page-content.dashboard.feeds {
+  padding-top: 0;
+}
+
 .page-content > .ui.container,
 .repository .ui.container {
   width: min(1340px, calc(100% - 48px)) !important;
@@ -661,8 +665,11 @@ select:focus {
 .ui.action.input > .dropdown,
 .ui.action.input > button {
   margin: 0 !important;
-  border-left: 1px solid var(--cw-border-strong) !important;
+  border: 1px solid var(--cw-border-strong) !important;
   border-radius: var(--cw-radius-sm) !important;
+  background-clip: padding-box;
+  box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 .ui.form label {
@@ -716,19 +723,53 @@ select:focus {
 
 .ui.dropdown > .menu {
   padding: 4px 0 !important;
+  box-sizing: border-box;
 }
 
 .ui.dropdown > .menu .scrolling.menu {
   padding: 4px 0 !important;
 }
 
+.ui.selection.dropdown > .menu {
+  min-width: 100% !important;
+  max-height: min(20rem, calc(100vh - 24px)) !important;
+}
+
 .ui.dropdown > .menu > .item,
 .ui.dropdown > .menu .scrolling.menu > .item,
 .overflow-menu-popup > .item {
-  width: calc(100% - 12px) !important;
-  margin: 3px 6px !important;
+  width: auto !important;
+  max-width: none;
+  margin: 2px 6px !important;
   color: var(--cw-text-soft) !important;
   border-radius: 8px !important;
+  box-sizing: border-box;
+}
+
+.ui.dropdown > .menu > .item,
+.ui.dropdown > .menu .scrolling.menu > .item,
+.overflow-menu-popup > .item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px;
+  line-height: 1.25;
+}
+
+.ui.dropdown > .menu > .item > svg.svg:first-child,
+.ui.dropdown > .menu .scrolling.menu > .item > svg.svg:first-child,
+.overflow-menu-popup > .item > svg.svg:first-child {
+  width: 20px !important;
+  height: 20px !important;
+  margin: 0 !important;
+  flex: 0 0 20px;
+  align-self: center;
+}
+
+.ui.dropdown > .menu > .item > img.ui.avatar,
+.ui.dropdown > .menu .scrolling.menu > .item > img.ui.avatar {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  align-self: center;
 }
 
 .ui.dropdown > .menu > .item:hover,
@@ -994,7 +1035,7 @@ select:focus {
   background: #ffffff05;
 }
 
-.dashboard.feeds #activity-feed .item-trailing > svg {
+#activity-feed .item-trailing > svg {
   width: 22px !important;
   height: 22px !important;
   margin-right: 6px !important;
@@ -1207,6 +1248,19 @@ code {
   border-bottom: 1px solid var(--cw-border-subtle);
 }
 
+.user.settings .ui.vertical.menu > details.item {
+  min-height: 44px;
+  padding: 0 !important;
+}
+
+.user.settings .ui.vertical.menu > details.item > summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 12px 14px !important;
+  box-sizing: border-box;
+}
+
 .repository.settings .ui.vertical.menu .item:last-child,
 .user.settings .ui.vertical.menu .item:last-child {
   border-bottom: 0;
@@ -1221,6 +1275,13 @@ code {
 .repository.settings .ui.form > .ui.segment,
 .user.settings .ui.form > .ui.segment {
   padding: 18px !important;
+}
+
+.user.settings
+  .user-setting-content
+  > .ui.attached.segment:has(+ .ui.top.attached.header) {
+  margin-bottom: 16px !important;
+  border-radius: 0 0 var(--cw-radius-md) var(--cw-radius-md) !important;
 }
 
 /* Pagination */
