@@ -571,12 +571,14 @@ body {
   flex-shrink: 0;
   accent-color: #ececf1;
   cursor: pointer;
+  order: 0;
 }
 .ui.checkbox label {
   position: static !important;
   padding-left: 0 !important;
   cursor: pointer;
   line-height: 1.4;
+  order: 1;
 }
 .ui.checkbox label::before,
 .ui.checkbox label::after { display: none !important; }
@@ -610,10 +612,16 @@ body {
 .ui.selection.dropdown {
   min-height: 0 !important;
   padding: 10px 34px 10px 14px !important;
-  display: flex !important;
+  display: inline-flex !important;
   align-items: center;
   line-height: 1.4 !important;
+  min-width: 180px;
+  width: auto;
 }
+.ui.selection.dropdown.fluid,
+.ui.fluid.selection.dropdown { width: 100% !important; }
+/* inline field dropdowns stay compact */
+.ui.form .inline.field .ui.selection.dropdown { width: auto !important; }
 .ui.selection.dropdown > .dropdown.icon {
   top: 50% !important;
   transform: translateY(-50%);
