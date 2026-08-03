@@ -1,5 +1,5 @@
 /*
- * Codex Work for Gitea 1.27.x
+ * Codex Work Graphite for Gitea 1.27.x
  *
  * A dark, low-glare workspace designed for long coding sessions. The theme
  * uses warm graphite layers instead of pure black, clear surface boundaries,
@@ -1271,8 +1271,8 @@ code {
   }
 
   .issue-title h1 {
-    font-size: 24px;
-    line-height: 1.24;
+    font-size: 24px !important;
+    line-height: 1.24 !important;
   }
 
   .issue-title-buttons {
