@@ -796,9 +796,9 @@ body {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06) !important;
   background: rgba(255, 255, 255, 0.06) !important;
 }
-/* search: input + button forms one continuous pill */
-.ui.action.input { gap: 0; }
-.ui.action.input input {
+/* search: input + button forms one continuous pill (only when NO left icon) */
+.ui.action.input:not([class*="left icon"]) { gap: 0; }
+.ui.action.input:not([class*="left icon"]) > input {
   border-radius: 9999px 0 0 9999px !important;
   padding-left: 18px !important;
   border-right: none !important;
@@ -1661,37 +1661,44 @@ tr.del-code, .code-inner.del-code {
 
 /* --- 6. Dashboard sidebar search: icon never overlaps text --- */
 /* Gitea renders: <div class="ui ... action left icon input"><input><i class="icon"><svg></i><button>
-   The <i> is a normal flow child, so it must be absolutely positioned and the
-   input needs left padding. Use high specificity to beat earlier rules. */
-.ui.input.left.icon > input,
-.ui.action.left.icon.input > input,
-div.ui.small.fluid.action.left.icon.input > input,
-.dashboard .ui.action.left.icon.input > input {
+   Two things must hold: (a) the input reserves left space, (b) the <i> is
+   centered absolutely. The earlier `.ui.action.input input{padding-left:18px}`
+   rule must lose, so we qualify with [class*="left icon"] + high specificity. */
+.ui[class*="left icon"].input > input,
+.ui[class*="left icon"].input > input[type="search"],
+.ui[class*="left icon"].input > input[type="text"] {
   padding-left: 38px !important;
 }
-.ui.input.left.icon > i.icon,
-.ui.action.left.icon.input > i.icon,
-div.ui.small.fluid.action.left.icon.input > i.icon,
-.dashboard .ui.action.left.icon.input > i.icon {
+.ui[class*="left icon"].input {
+  position: relative !important;
+  display: flex !important;
+  align-items: center;
+}
+.ui[class*="left icon"].input > i.icon,
+.ui[class*="left icon"].input > .icon {
   position: absolute !important;
   left: 13px !important;
   right: auto !important;
-  top: 50% !important;
-  bottom: auto !important;
-  transform: translateY(-50%) !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  transform: none !important;
+  height:100% !important;
   width: 16px !important;
-  height: 16px !important;
   margin: 0 !important;
   padding: 0 !important;
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   pointer-events: none;
   opacity: 0.5;
   z-index: 3;
 }
-.ui.action.left.icon.input,
-.ui.input.left.icon { position: relative !important; }
+.ui[class*="left icon"].input > i.icon > svg,
+.ui[class*="left icon"].input > .icon > svg {
+  width: 15px !important;
+  height: 15px !important;
+  display: block;
+}
 
 /* --- Elevated surfaces to match the lighter base --- */
 .ui.dropdown .menu, .ui.popup, .ui.selection.dropdown .menu,
