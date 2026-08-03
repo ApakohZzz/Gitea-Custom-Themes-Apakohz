@@ -1284,20 +1284,15 @@ svg.octicon-issue-opened, svg.octicon-git-pull-request { color: #8e8ea0 !importa
 }
 
 /* --- diff stat bars: desaturate, thinner --- */
-.diff-stats-bar, .diff-stats,
-.bar .diff-stat-bar {
+.diff-stats-bar {
   height: 7px !important;
   border-radius: 9999px !important;
   overflow: hidden;
-  gap: 1px;
+  background: rgba(239, 74, 74, 0.55) !important;
 }
-.diff-stats-bar .diff-stat-bar-add,
-.bar .diff-stat-add, .diff-stat-bar > .add {
-  background: rgba(38, 181, 146, 0.75) !important;
-}
-.diff-stats-bar .diff-stat-bar-del,
-.bar .diff-stat-del, .diff-stat-bar > .del {
-  background: rgba(239, 74, 74, 0.7) !important;
+.diff-stats-bar .diff-stats-add-bar {
+  background: rgba(38, 181, 146, 0.7) !important;
+  height: 100% !important;
 }
 .diff-stats .text.green, .diff-stats-add, span.text.green {
   color: #4fc7a8 !important;
@@ -1353,6 +1348,23 @@ tr.del-code, .code-inner.del-code {
   padding: 0 !important;
   display: inline-flex !important;
   align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.055) !important;
+  color: var(--color-text) !important;
+  border: 1px solid rgba(255,255,255,0.09) !important;
+}
+.diff-detail-actions .ui.button:hover,
+.diff-detail-box .ui.icon.button:hover {
+  background: rgba(255,255,255,0.1) !important;
+  color: var(--color-text-dark) !important;
+}
+/* active/checked toolbar toggles stay subtle, never solid white */
+.diff-detail-actions .ui.button.active,
+.diff-detail-box .ui.icon.button.active,
+.diff-detail-actions .ui.primary.button,
+.diff-detail-box .ui.primary.button {
+  background: rgba(255,255,255,0.14) !important;
+  color: #fff !important;
+  border-color: rgba(255,255,255,0.2) !important;
 }
 .diff-detail-actions .ui.dropdown.button,
 .diff-detail-box .ui.dropdown.button { width: auto; padding: 0 12px !important; }
