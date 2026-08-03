@@ -994,8 +994,38 @@ svg.octicon-issue-opened, svg.octicon-git-pull-request { color: #8e8ea0 !importa
   margin: 0 !important; opacity: 0.6;
   pointer-events: none;
 }
-.ui.left.icon.input > input { padding-left: 38px !important; padding-right: 14px !important; }
-.ui.left.icon.input > .icon, .ui.left.icon.input > .svg { left: 13px !important; right: auto !important; }
+/* left-icon variants (Gitea puts <i class="icon"> AFTER the input) */
+.ui.left.icon.input { position: relative; }
+.ui.left.icon.input > input,
+.ui.action.left.icon.input > input,
+.ui.left.icon.input > input[type=search] {
+  padding-left: 38px !important;
+  padding-right: 14px !important;
+}
+.ui.left.icon.input > .icon,
+.ui.left.icon.input > i.icon,
+.ui.action.left.icon.input > .icon {
+  position: absolute !important;
+  left: 13px !important; right: auto !important;
+  top: 50% !important; transform: translateY(-50%) !important;
+  margin: 0 !important; padding: 0 !important;
+  width: 16px; height: 16px;
+  display: flex; align-items: center;
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 2;
+}
+/* when a search box has BOTH action button and left icon, keep pill ends right */
+.ui.action.left.icon.input > input {
+  border-radius: 9999px !important;
+  border-right: 1px solid rgba(255,255,255,0.09) !important;
+}
+.ui.action.left.icon.input > .ui.button,
+.ui.action.left.icon.input > .button {
+  border-radius: 9999px !important;
+  margin-left: 6px !important;
+  border-left: 1px solid rgba(255,255,255,0.09) !important;
+}
 /* keyboard hint chip inside search */
 .ui.input kbd, .ui.action.input kbd {
   background: rgba(255,255,255,0.07) !important;
@@ -1020,6 +1050,32 @@ svg.octicon-issue-opened, svg.octicon-git-pull-request { color: #8e8ea0 !importa
   gap: 0;
 }
 .dashboard .ui.secondary.filter.menu .item { padding: 7px 11px !important; font-size: 0.9em; }
+/* the inner wrapper that Gitea renders around search+filter must not draw a box */
+.dashboard .ui.attached.segment > .ui.segment,
+.dashboard .ui.segment > .ui.segment,
+.dashboard .repo-search-wrapper,
+.dashboard .ui.segment .ui.attached.segment {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+.dashboard .ui.segment > .ui.segment:hover { background: transparent !important; box-shadow: none !important; }
+/* repo list rows in sidebar join the panel above seamlessly */
+.dashboard .flex-list, .dashboard .repo-owner-name-list {
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+.dashboard .flex-list .flex-item.repo-item,
+.dashboard .repo-owner-name-list .flex-item {
+  border-radius: 9px !important;
+  padding: 10px 12px !important;
+  border-bottom: none !important;
+  margin: 1px 0 !important;
+}
+.dashboard .flex-list .flex-item.repo-item:hover { background: rgba(255,255,255,0.05) !important; }
 
 /* --- Activity feed: hairline rows, aligned meta, smaller avatars --- */
 .dashboard .flex-list .flex-item,
