@@ -13,27 +13,27 @@
 ## 文件
 
 ```text
-openai-theme/
-└── theme-openai-theme.css
+chatgpt-work/
+└── theme-chatgpt-work.css
 ```
 
-主题文件名继续使用 `theme-openai-theme.css`，因此可以直接覆盖旧版本，无需修改现有用户的主题选择。
+主题名为 `chatgpt-work`。它使用独立文件名，避免 Gitea 对旧主题静态资源的长时间缓存影响升级，也不会覆盖已有主题的回滚文件。
 
 ## 安装
 
 将主题放入 Gitea 的 custom 目录：
 
 ```bash
-install -m 0644 openai-theme/theme-openai-theme.css \
-  /data/gitea/public/assets/css/theme-openai-theme.css
+install -m 0644 chatgpt-work/theme-chatgpt-work.css \
+  /data/gitea/public/assets/css/theme-chatgpt-work.css
 ```
 
 在 `app.ini` 的 `[ui]` 段注册并设为默认主题：
 
 ```ini
 [ui]
-DEFAULT_THEME = openai-theme
-THEMES = openai-theme,gitea-light,gitea-dark,gitea-auto
+DEFAULT_THEME = chatgpt-work
+THEMES = chatgpt-work,openai-theme,gitea-light,gitea-dark,gitea-auto
 ```
 
 配置发生变化时需要重启 Gitea。仅替换已经注册的 CSS 文件时，刷新浏览器即可看到新版本；如果浏览器命中旧缓存，请强制刷新。
@@ -49,7 +49,7 @@ THEMES = openai-theme,gitea-light,gitea-dark,gitea-auto
 部署前保留当前文件副本：
 
 ```bash
-cp theme-openai-theme.css theme-openai-theme.css.bak.$(date +%Y-%m-%d-%H%M)
+cp theme-chatgpt-work.css theme-chatgpt-work.css.bak.$(date +%Y-%m-%d-%H%M)
 ```
 
-需要回滚时将备份文件复制回 `theme-openai-theme.css`，然后刷新页面。
+需要回滚时将 `DEFAULT_THEME` 改回原主题，或将备份文件复制回 `theme-chatgpt-work.css`，然后重启 Gitea。
