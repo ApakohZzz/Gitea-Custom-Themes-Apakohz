@@ -1496,32 +1496,26 @@ tr.del-code, .code-inner.del-code {
    ========================================================================== */
 
 /* --- 1. Heatmap: blue ramp so levels are distinguishable --- */
+/* Gitea fills cells with inline style="fill: var(--color-primary-dark-N)".
+   Since our primary is neutral white, all levels looked identical.
+   Fix: redefine those vars ONLY inside the heatmap scope → cool blue ramp. */
+#user-heatmap, .contribution-graph, #user-heatmap svg {
+  --color-primary-dark-1: #1f4470;
+  --color-primary-dark-2: #2a5f9e;
+  --color-primary-dark-3: #3a7cc4;
+  --color-primary-dark-4: #5aa0e6;
+  --color-primary-dark-5: #7fbcf5;
+  --color-primary: #3a7cc4;
+  --color-secondary-alpha-60: #2b2b2b;
+}
 #user-heatmap { --heatmap-cell-size: 10px; }
-#user-heatmap rect, .vch__day__square {
+#user-heatmap rect.heatmap-day, .vch__day__square {
   width: 10px !important; height: 10px !important;
   rx: 2 !important; ry: 2 !important;
+  stroke: none !important;
 }
-/* Gitea paints levels via --color-calendar-graph-day-*; override to cool blues */
-:root {
-  --color-calendar-graph-day-bg: #2a2a2a;
-  --color-calendar-graph-day-border: rgba(255,255,255,0.04);
-  --color-calendar-graph-day-L1-bg: #1c3a5e;
-  --color-calendar-graph-day-L2-bg: #24568c;
-  --color-calendar-graph-day-L3-bg: #2f74bd;
-  --color-calendar-graph-day-L4-bg: #4d9ae8;
-  --color-calendar-graph-day-L1-border: rgba(255,255,255,0.05);
-  --color-calendar-graph-day-L2-border: rgba(255,255,255,0.05);
-  --color-calendar-graph-day-L3-border: rgba(255,255,255,0.06);
-  --color-calendar-graph-day-L4-border: rgba(255,255,255,0.08);
-}
-/* fallback:直接命中 Gitea 的 level class（不同版本类名不同，全覆盖） */
-#user-heatmap .vch__day__square[data-level="0"], #user-heatmap rect[data-level="0"] { fill: #2a2a2a !important; }
-#user-heatmap .vch__day__square[data-level="1"], #user-heatmap rect[data-level="1"] { fill: #1c3a5e !important; }
-#user-heatmap .vch__day__square[data-level="2"], #user-heatmap rect[data-level="2"] { fill: #24568c !important; }
-#user-heatmap .vch__day__square[data-level="3"], #user-heatmap rect[data-level="3"] { fill: #2f74bd !important; }
-#user-heatmap .vch__day__square[data-level="4"], #user-heatmap rect[data-level="4"] { fill: #4d9ae8 !important; }
-/* legend squares follow the same ramp */
-.contribution-legend .legend-square, #user-heatmap + * .legend { border-radius: 2px; }
+/* legend squares inherit the same scope so they match */
+.contribution-legend, .total-contributions + * { --color-primary-dark-2: #2a5f9e; }
 
 /* --- 2. Repo nav tabs: give real height, stop the squeeze --- */
 .repository .header-wrapper .ui.tabular.menu,
@@ -1666,25 +1660,38 @@ tr.del-code, .code-inner.del-code {
 }
 
 /* --- 6. Dashboard sidebar search: icon never overlaps text --- */
-.dashboard .ui.action.left.icon.input > input,
-.dashboard .ui.left.icon.input > input {
-  padding-left: 36px !important;
-  text-indent: 0 !important;
+/* Gitea renders: <div class="ui ... action left icon input"><input><i class="icon"><svg></i><button>
+   The <i> is a normal flow child, so it must be absolutely positioned and the
+   input needs left padding. Use high specificity to beat earlier rules. */
+.ui.input.left.icon > input,
+.ui.action.left.icon.input > input,
+div.ui.small.fluid.action.left.icon.input > input,
+.dashboard .ui.action.left.icon.input > input {
+  padding-left: 38px !important;
 }
-.dashboard .ui.action.left.icon.input > i.icon,
-.dashboard .ui.left.icon.input > i.icon {
+.ui.input.left.icon > i.icon,
+.ui.action.left.icon.input > i.icon,
+div.ui.small.fluid.action.left.icon.input > i.icon,
+.dashboard .ui.action.left.icon.input > i.icon {
   position: absolute !important;
-  left: 12px !important;
+  left: 13px !important;
+  right: auto !important;
   top: 50% !important;
+  bottom: auto !important;
   transform: translateY(-50%) !important;
-  width: 16px !important; height: 16px !important;
+  width: 16px !important;
+  height: 16px !important;
+  margin: 0 !important;
+  padding: 0 !important;
   display: inline-flex !important;
-  align-items: center; justify-content: center;
+  align-items: center;
+  justify-content: center;
   pointer-events: none;
   opacity: 0.5;
   z-index: 3;
 }
-.dashboard .ui.action.left.icon.input { position: relative !important; }
+.ui.action.left.icon.input,
+.ui.input.left.icon { position: relative !important; }
 
 /* --- Elevated surfaces to match the lighter base --- */
 .ui.dropdown .menu, .ui.popup, .ui.selection.dropdown .menu,
