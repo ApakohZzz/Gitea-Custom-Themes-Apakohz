@@ -1,32 +1,55 @@
-# gitea-apokoh-themes
+# ChatGPT Work theme for Gitea
 
-自用 Gitea 自定义主题集合，针对 Gitea 1.27.x。
+一套为 Gitea 1.27.x 从零设计的浅色工作台主题。它借鉴 ChatGPT 与 Codex 的视觉克制，但不复制产品界面：暖灰画布、白色工作面、清晰文字层级、低噪声边框，以及仅用于关键交互的低饱和绿色。
 
-## openai-theme
+## 设计目标
 
-OpenAI 2026 品牌视觉风格的深色主题。
+- **长时间阅读舒适**：避免纯黑或纯白大面积高反差，正文和代码保持清楚。
+- **开发信息优先**：仓库文件、工单、合并请求、Actions 和设置页都保留 Gitea 原有信息密度。
+- **少装饰、强层级**：普通内容依靠间距和细边框分层，只给浮层使用阴影。
+- **宽屏不过度拉伸**：代码仓库最大宽度 1320px，首页动态最大宽度 1180px。
+- **可访问性**：保留清晰焦点环、可辨识状态色和 `prefers-reduced-motion` 支持。
 
-- 配色：纯黑底 `#0f0f0f` + 中性灰白主色 `#ececf1`（OpenAI 2026-05 改版后已弃用绿色作为主色，仅保留为历史签名色）
-- 字体：Inter（OpenAI Sans 未公开时的最佳开源替代）+ JetBrains Mono
-- 组件：胶囊按钮（9999px）、14px 大圆角卡片、扁平+hover 浮起、精准命中 `.overflow-menu-items` 分段控件
-- 图标：统一 16px，Gitea 茶 logo 灰度化融入单色体系
-- 动效：页面淡入、下拉弹出、卡片 hover 上浮、输入框聚焦光环
+## 文件
 
-### 安装
-
-```bash
-# 1. 放置主题文件到 Gitea custom 目录
-# Docker 部署：容器内 /data/gitea/public/assets/css/
-# 二进制部署：$GITEA_CUSTOM/public/assets/css/
-curl -L -o theme-openai-theme.css https://raw.githubusercontent.com/ApakohZzz/gitea-apokoh-themes/main/openai-theme/theme-openai-theme.css
-cp theme-openai-theme.css /path/to/gitea/custom/public/assets/css/
-
-# 2. 在 app.ini 的 [ui] 段注册
-# [ui]
-# DEFAULT_THEME = openai-theme
-# THEMES = openai-theme,gitea-light,gitea-dark,gitea-auto
-
-# 3. 重启 Gitea（Docker: docker restart gitea）
+```text
+openai-theme/
+└── theme-openai-theme.css
 ```
 
-文件名 `theme-openai-theme.css` 对应主题名 `openai-theme`。
+主题文件名继续使用 `theme-openai-theme.css`，因此可以直接覆盖旧版本，无需修改现有用户的主题选择。
+
+## 安装
+
+将主题放入 Gitea 的 custom 目录：
+
+```bash
+install -m 0644 openai-theme/theme-openai-theme.css \
+  /data/gitea/public/assets/css/theme-openai-theme.css
+```
+
+在 `app.ini` 的 `[ui]` 段注册并设为默认主题：
+
+```ini
+[ui]
+DEFAULT_THEME = openai-theme
+THEMES = openai-theme,gitea-light,gitea-dark,gitea-auto
+```
+
+配置发生变化时需要重启 Gitea。仅替换已经注册的 CSS 文件时，刷新浏览器即可看到新版本；如果浏览器命中旧缓存，请强制刷新。
+
+## 兼容性
+
+- 目标版本：Gitea 1.27.x
+- 主题类型：浅色
+- 浏览器：现代 Chromium、Firefox、Safari
+
+## 回滚
+
+部署前保留当前文件副本：
+
+```bash
+cp theme-openai-theme.css theme-openai-theme.css.bak.$(date +%Y-%m-%d-%H%M)
+```
+
+需要回滚时将备份文件复制回 `theme-openai-theme.css`，然后刷新页面。

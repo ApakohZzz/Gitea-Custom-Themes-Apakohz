@@ -1,1798 +1,939 @@
-/* ==========================================================================
-   theme-openai.css — OpenAI-inspired dark theme for Gitea 1.27.x (v3)
-   Theme name: openai
-   Design language (OpenAI 2026 rebrand):
-   - monochrome foundation: black / warm neutral greys, NO green tint
-   - green kept only as a rare functional accent (links/active), never as fill
-   - generous breathing room, 14px base type, refined 16px icons
-   - flat surfaces, hairline borders, elevation only on hover
-   - large radii (cards 14px, pills 9999px), 0.2s ease-out motion
-   ========================================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+/*
+ * ChatGPT Work for Gitea 1.27.x
+ *
+ * A calm, light workspace theme inspired by the visual restraint of ChatGPT
+ * and Codex: warm neutral canvas, crisp white working surfaces, readable type,
+ * quiet borders, and a restrained green accent used only for interaction.
+ */
 
-:root {
-  --is-dark-theme: true;
-  color-scheme: dark;
-  accent-color: #8e8ea0;
-
-  --fonts-proportional: "Inter", "SF Pro Text", "Segoe UI", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif !important;
-  --fonts-monospace: "JetBrains Mono", "SF Mono", "Cascadia Code", Consolas, ui-monospace, monospace !important;
-  --fonts-emoji: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif !important;
-
-  /* primary = neutral light grey (OpenAI monochrome), not green */
-  --color-primary:             #ececf1;
-  --color-primary-contrast:    #0f0f0f;
-  --color-primary-dark-1:      #f1f1f4;
-  --color-primary-dark-2:      #f5f5f7;
-  --color-primary-dark-3:      #f8f8fa;
-  --color-primary-dark-4:      #fbfbfc;
-  --color-primary-dark-5:      #fdfdfe;
-  --color-primary-dark-6:      #ffffff;
-  --color-primary-dark-7:      #ffffff;
-  --color-primary-light-1:     #d9d9e3;
-  --color-primary-light-2:     #c5c5d2;
-  --color-primary-light-3:     #acacbe;
-  --color-primary-light-4:     #8e8ea0;
-  --color-primary-light-5:     #565869;
-  --color-primary-light-6:     #343541;
-  --color-primary-light-7:     #202123;
-  --color-primary-alpha-10:    #ececf119;
-  --color-primary-alpha-20:    #ececf133;
-  --color-primary-alpha-30:    #ececf14d;
-  --color-primary-alpha-40:    #ececf166;
-  --color-primary-alpha-50:    #ececf180;
-  --color-primary-alpha-60:    #ececf199;
-  --color-primary-alpha-70:    #ececf1b3;
-  --color-primary-alpha-80:    #ececf1cc;
-  --color-primary-alpha-90:    #ececf1e6;
-  --color-primary-hover:       var(--color-primary-dark-2);
-  --color-primary-active:      var(--color-primary-dark-3);
-
-  --color-secondary:            #3c3c47;
-  --color-secondary-dark-1:     #43434f;
-  --color-secondary-dark-2:     #4c4c59;
-  --color-secondary-dark-3:     #5b5b69;
-  --color-secondary-dark-4:     #6c6c7b;
-  --color-secondary-dark-5:     #7a7a8a;
-  --color-secondary-dark-6:     #888898;
-  --color-secondary-dark-7:     #9696a6;
-  --color-secondary-dark-8:     #a5a5b4;
-  --color-secondary-dark-9:     #ababba;
-  --color-secondary-dark-10:    #b9b9c6;
-  --color-secondary-dark-11:    #c7c7d2;
-  --color-secondary-dark-12:    #d2d2db;
-  --color-secondary-dark-13:    #d5d5de;
-  --color-secondary-light-1:    #32323c;
-  --color-secondary-light-2:    #282831;
-  --color-secondary-light-3:    #1b1b21;
-  --color-secondary-light-4:    #141418;
-  --color-secondary-alpha-10:   #3c3c4719;
-  --color-secondary-alpha-20:   #3c3c4733;
-  --color-secondary-alpha-30:   #3c3c474d;
-  --color-secondary-alpha-40:   #3c3c4766;
-  --color-secondary-alpha-50:   #3c3c4780;
-  --color-secondary-alpha-60:   #3c3c4799;
-  --color-secondary-alpha-70:   #3c3c47b3;
-  --color-secondary-alpha-80:   #3c3c47cc;
-  --color-secondary-alpha-90:   #3c3c47e6;
-  --color-secondary-button:     var(--color-secondary-dark-4);
-  --color-secondary-hover:      var(--color-secondary-dark-3);
-  --color-secondary-active:     var(--color-secondary-dark-2);
-
-  --color-console-fg:           #ececf1;
-  --color-console-fg-subtle:    #acacbe;
-  --color-console-bg:           #0f0f0f;
-  --color-console-border:       #26262c;
-  --color-console-hover-bg:     #1c1c22;
-  --color-console-active-bg:    #26262c;
-  --color-console-menu-bg:      #18181d;
-  --color-console-menu-border:  #32323a;
-  --color-console-link:         #8e8ea0;
-
-  --color-red:      #ef4a4a;
-  --color-orange:   #e0781f;
-  --color-yellow:   #d0a215;
-  --color-olive:    #9ab337;
-  --color-green:    #10a37f;
-  --color-teal:     #0d9488;
-  --color-blue:     #4a8cf7;
-  --color-violet:   #9b7ef0;
-  --color-purple:   #b45fd0;
-  --color-pink:     #e050ad;
-  --color-brown:    #a67c5b;
-  --color-black:    #0f0f0f;
-
-  --color-red-light:      #f26461;
-  --color-orange-light:   #ec8f3f;
-  --color-yellow-light:   #ddb130;
-  --color-olive-light:    #aec55a;
-  --color-green-light:    #26b592;
-  --color-teal-light:     #14b8a6;
-  --color-blue-light:     #6ba3f9;
-  --color-violet-light:   #b39af5;
-  --color-purple-light:   #c87ce0;
-  --color-pink-light:     #ea72bf;
-  --color-brown-light:    #b8926f;
-  --color-black-light:    #2a2a32;
-
-  --color-red-dark-1:     #d84340;
-  --color-orange-dark-1:  #c96a1a;
-  --color-yellow-dark-1:  #b98f12;
-  --color-olive-dark-1:   #87a02f;
-  --color-green-dark-1:   #0e9171;
-  --color-teal-dark-1:    #0b8177;
-  --color-blue-dark-1:    #3f7ce0;
-  --color-violet-dark-1:  #8a6ee0;
-  --color-purple-dark-1:  #a252bd;
-  --color-pink-dark-1:    #cc479c;
-  --color-brown-dark-1:   #936d4f;
-  --color-black-dark-1:   #26262c;
-
-  --color-red-dark-2:     #c03b38;
-  --color-orange-dark-2:  #b25c16;
-  --color-yellow-dark-2:  #a27d10;
-  --color-olive-dark-2:   #768c29;
-  --color-green-dark-2:   #0c7f64;
-  --color-teal-dark-2:    #0a7168;
-  --color-blue-dark-2:    #366cc4;
-  --color-purple-dark-2:  #8e47a5;
-  --color-pink-dark-2:    #b33e89;
-  --color-brown-dark-2:   #7f5f44;
-  --color-black-dark-2:   #202027;
-
-  --color-ansi-black:          #0f0f0f;
-  --color-ansi-red:            #ef4a4a;
-  --color-ansi-green:          #10a37f;
-  --color-ansi-yellow:         #d0a215;
-  --color-ansi-blue:           #4a8cf7;
-  --color-ansi-magenta:        #e050ad;
-  --color-ansi-cyan:           #0d9488;
-  --color-ansi-white:          var(--color-console-fg-subtle);
-  --color-ansi-bright-black:   #2a2a32;
-  --color-ansi-bright-red:     #f26461;
-  --color-ansi-bright-green:   #26b592;
-  --color-ansi-bright-yellow:  #ddb130;
-  --color-ansi-bright-blue:    #6ba3f9;
-  --color-ansi-bright-magenta: #ea72bf;
-  --color-ansi-bright-cyan:    #14b8a6;
-  --color-ansi-bright-white:   var(--color-console-fg);
-
-  --color-series-16-0:   #8e8ea0;
-  --color-series-16-1:   #10a37f;
-  --color-series-16-2:   #ef4a4a;
-  --color-series-16-3:   #d0a215;
-  --color-series-16-4:   #b45fd0;
-  --color-series-16-5:   #9b7ef0;
-  --color-series-16-6:   #e0781f;
-  --color-series-16-7:   #0d9488;
-  --color-series-16-8:   #a67c5b;
-  --color-series-16-9:   #4a8cf7;
-  --color-series-16-10:  #c96a1a;
-  --color-series-16-11:  #26b592;
-  --color-series-16-12:  #8e47a5;
-  --color-series-16-13:  #14b8a6;
-  --color-series-16-14:  #366cc4;
-  --color-series-16-15:  #cc479c;
-
-  --color-grey:            #2f2f38;
-  --color-grey-light:      #6c6c7b;
-  --color-gold:            #b1983b;
-  --color-white:           #ffffff;
-  --color-git:             #f05133;
-  --color-logo:            #ececf1;
-
-  --color-diff-added-fg:              #26b592;
-  --color-diff-added-linenum-bg:      #10291f;
-  --color-diff-added-row-bg:          #0c2018;
-  --color-diff-added-row-border:      #1a3d30;
-  --color-diff-added-word-bg:         #1a4a3a;
-  --color-diff-moved-row-bg:          #33321a;
-  --color-diff-moved-row-border:      #7a8a3a;
-  --color-diff-removed-fg:            #f26461;
-  --color-diff-removed-linenum-bg:    #331a1a;
-  --color-diff-removed-row-bg:        #241212;
-  --color-diff-removed-row-border:    #4f2c2c;
-  --color-diff-removed-word-bg:       #5c2626;
-  --color-diff-inactive:              #1a1a1f;
-
-  --color-error-border:        #4f2424;
-  --color-error-bg:            #241717;
-  --color-error-bg-active:     #331c1c;
-  --color-error-bg-hover:      #2c1c1c;
-  --color-error-text:          #f26461;
-  --color-success-border:      #1a4030;
-  --color-success-bg:          #0d251c;
-  --color-success-text:        #26b592;
-  --color-warning-border:      #443316;
-  --color-warning-bg:          #251e12;
-  --color-warning-text:        #ddb130;
-  --color-info-border:         #1e3557;
-  --color-info-bg:             #121c30;
-  --color-info-text:           #6ba3f9;
-  --color-priority-border:     #332166;
-  --color-priority-bg:         #1a142e;
-  --color-priority-text:       #b39af5;
-
-  --color-red-badge:               #ef4a4a;
-  --color-red-badge-bg:            #ef4a4a1a;
-  --color-red-badge-hover-bg:      #ef4a4a40;
-  --color-green-badge:             #10a37f;
-  --color-green-badge-bg:          #10a37f1a;
-  --color-green-badge-hover-bg:    #10a37f40;
-  --color-yellow-badge:            #d0a215;
-  --color-yellow-badge-bg:         #d0a2151a;
-  --color-yellow-badge-hover-bg:   #d0a21540;
-  --color-orange-badge:            #e0781f;
-  --color-orange-badge-bg:         #e0781f1a;
-  --color-orange-badge-hover-bg:   #e0781f40;
-
-  /* --- surfaces: pure neutral, no color cast --- */
-  --color-body:                    #1a1a1a;
-  --color-box-header:              transparent;
-  --color-box-body:                transparent;
-  --color-box-body-highlight:      rgba(255, 255, 255, 0.045);
-  --color-text-dark:               #ececf1;
-  --color-text:                    #c5c5d2;
-  --color-text-light:              #acacbe;
-  --color-text-light-1:            #9a9aab;
-  --color-text-light-2:            #8e8ea0;
-  --color-text-light-3:            #6c6c7b;
-  --color-footer:                  transparent;
-  --color-timeline:                #2a2a32;
-  --color-input-text:              var(--color-text-dark);
-  --color-input-background:        rgba(255, 255, 255, 0.04);
-  --color-input-toggle-background: #2a2a32;
-  --color-input-border:            rgba(255, 255, 255, 0.09);
-  --color-light:                   rgba(255, 255, 255, 0.04);
-  --color-light-border:            rgba(255, 255, 255, 0.07);
-  --color-hover:                   rgba(255, 255, 255, 0.055);
-  --color-hover-opaque:            #1e1e24;
-  --color-active:                  rgba(255, 255, 255, 0.08);
-  --color-menu:                    #262626;
-  --color-card:                    #212121;
-  --color-markup-table-row:        rgba(255, 255, 255, 0.03);
-  --color-markup-code-block:       rgba(255, 255, 255, 0.05);
-  --color-markup-code-inline:      rgba(255, 255, 255, 0.08);
-  --color-button:                  rgba(255, 255, 255, 0.07);
-  --color-code-bg:                 rgba(255, 255, 255, 0.04);
-  --color-shadow:                  rgba(0, 0, 0, 0.5);
-  --color-shadow-opaque:           #0d0d0d;
-  --color-secondary-bg:            rgba(255, 255, 255, 0.06);
-  --color-expand-button:           rgba(255, 255, 255, 0.07);
-  --color-placeholder-text:        var(--color-text-light-3);
-  --color-editor-line-highlight:   rgba(255, 255, 255, 0.05);
-  --color-editor-selection:        rgba(142, 142, 160, 0.35);
-  --color-project-column-bg:       #212121;
-  --color-caret:                   var(--color-text-dark);
-  --color-reaction-bg:             rgba(255, 255, 255, 0.06);
-  --color-reaction-hover-bg:       rgba(255, 255, 255, 0.1);
-  --color-reaction-active-bg:      rgba(255, 255, 255, 0.13);
-  --color-tooltip-text:            #ececf1;
-  --color-tooltip-bg:              #303030;
-  --color-nav-bg:                  rgba(26, 26, 26, 0.85);
-  --color-nav-hover-bg:            rgba(255, 255, 255, 0.055);
-  --color-nav-text:                var(--color-text);
-  --color-secondary-nav-bg:        transparent;
-  --color-label-text:              var(--color-text);
-  --color-label-bg:                rgba(255, 255, 255, 0.08);
-  --color-label-hover-bg:          rgba(255, 255, 255, 0.14);
-  --color-label-active-bg:         rgba(255, 255, 255, 0.2);
-  --color-accent:                  #8e8ea0;
-  --color-small-accent:            rgba(255, 255, 255, 0.06);
-  --color-highlight-fg:            #ddb130;
-  --color-highlight-bg:            #332a12;
-  --color-overlay-backdrop:        rgba(0, 0, 0, 0.72);
-  --color-danger:                  var(--color-red);
-  --color-transparency-grid-light: #1e1e24;
-  --color-transparency-grid-dark:  #141418;
-  --color-workflow-edge-hover:     #5b5b69;
+gitea-theme-meta-info {
+  --theme-display-name: "ChatGPT Work";
+  --theme-color-scheme: "light";
 }
 
-/* ---------- syntax highlighting ---------- */
 :root {
-  --color-syntax-keyword:                    #ff7b72;
-  --color-syntax-bool:                       #79c0ff;
-  --color-syntax-control:                    #ddb130;
-  --color-syntax-name:                       #ffa657;
-  --color-syntax-type:                       #ffa657;
-  --color-syntax-number:                     #79c0ff;
-  --color-syntax-operator:                   #ff7b72;
-  --color-syntax-regexp:                     #a5d6ff;
-  --color-syntax-string:                     #a5d6ff;
-  --color-syntax-comment:                    #6c6c7b;
-  --color-syntax-invalid:                    #ff7b72;
-  --color-syntax-link:                       #79c0ff;
-  --color-syntax-tag:                        #7ee787;
-  --color-syntax-attribute:                  #79c0ff;
-  --color-syntax-property:                   #79c0ff;
-  --color-syntax-variable:                   #ffa657;
-  --color-syntax-string-special:             #ddb130;
-  --color-syntax-escape:                     #ddb130;
-  --color-syntax-entity:                     #d2a8ff;
-  --color-syntax-preproc:                    #ff7b72;
-  --color-syntax-preproc-file:               #79c0ff;
-  --color-syntax-decorator:                  #d2a8ff;
-  --color-syntax-namespace:                  #c5c5d2;
-  --color-syntax-name-pseudo:                #d2a8ff;
-  --color-syntax-comment-special:            #d2a8ff;
-  --color-syntax-text:                       #c5c5d2;
-  --color-syntax-text-alt:                   #acacbe;
-  --color-syntax-punctuation:                #acacbe;
-  --color-syntax-whitespace:                 #4c4c59;
-  --color-syntax-diff-fg:                    #ececf1;
-  --color-syntax-deleted-bg:                 #4f2626;
-  --color-syntax-inserted-bg:                #1a4030;
-  --color-syntax-emph:                       #ddb130;
-  --color-syntax-strong:                     #ffa657;
-  --color-syntax-heading:                    #ddb130;
-  --color-syntax-subheading:                 #a5d6ff;
-  --color-syntax-output:                     #8e8ea0;
-  --color-syntax-prompt:                     #ffa657;
-  --color-syntax-traceback:                  #ff7b72;
-  --color-syntax-matching-bracket-bg:        rgba(142, 142, 160, 0.3);
-  --color-syntax-nonmatching-bracket-bg:     rgba(239, 74, 74, 0.28);
+  --is-dark-theme: false;
+  --fonts-proportional:
+    ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Noto Sans SC", "Microsoft YaHei", Arial, sans-serif;
+  --fonts-monospace:
+    "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --fonts-emoji: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji";
+
+  /* ChatGPT Work design tokens */
+  --work-canvas: #f7f7f4;
+  --work-surface: #ffffff;
+  --work-surface-muted: #f1f1ee;
+  --work-surface-raised: #fbfbf9;
+  --work-border: #deded8;
+  --work-border-subtle: #e9e9e4;
+  --work-text: #202123;
+  --work-text-soft: #5f615e;
+  --work-text-muted: #7b7d78;
+  --work-accent: #0f7a65;
+  --work-accent-hover: #0c6958;
+  --work-accent-soft: #e3f3ee;
+  --work-focus: #80b9aa;
+  --work-shadow-sm: 0 1px 2px rgb(31 35 33 / 5%);
+  --work-shadow-md:
+    0 12px 34px rgb(31 35 33 / 10%), 0 2px 8px rgb(31 35 33 / 5%);
+  --work-radius-sm: 8px;
+  --work-radius-md: 12px;
+  --work-radius-lg: 16px;
+
+  /* Primary */
+  --color-primary: #0f7a65;
+  --color-primary-contrast: #ffffff;
+  --color-primary-dark-1: #0c6958;
+  --color-primary-dark-2: #09594b;
+  --color-primary-dark-3: #074a3f;
+  --color-primary-dark-4: #053b33;
+  --color-primary-dark-5: #032c26;
+  --color-primary-dark-6: #021d1a;
+  --color-primary-dark-7: #010f0d;
+  --color-primary-light-1: #2f8d79;
+  --color-primary-light-2: #52a18f;
+  --color-primary-light-3: #75b5a5;
+  --color-primary-light-4: #99c9bc;
+  --color-primary-light-5: #bcddd3;
+  --color-primary-light-6: #e0f0eb;
+  --color-primary-light-7: #f2f8f6;
+  --color-primary-alpha-10: #0f7a6519;
+  --color-primary-alpha-20: #0f7a6533;
+  --color-primary-alpha-30: #0f7a654d;
+  --color-primary-alpha-40: #0f7a6566;
+  --color-primary-alpha-50: #0f7a6580;
+  --color-primary-alpha-60: #0f7a6599;
+  --color-primary-alpha-70: #0f7a65b3;
+  --color-primary-alpha-80: #0f7a65cc;
+  --color-primary-alpha-90: #0f7a65e6;
+  --color-primary-hover: var(--color-primary-dark-1);
+  --color-primary-active: var(--color-primary-dark-2);
+
+  /* Neutral controls */
+  --color-secondary: #deded8;
+  --color-secondary-dark-1: #d3d3cd;
+  --color-secondary-dark-2: #c7c7c1;
+  --color-secondary-dark-3: #b4b5af;
+  --color-secondary-dark-4: #9fa19b;
+  --color-secondary-dark-5: #888b85;
+  --color-secondary-dark-6: #73766f;
+  --color-secondary-dark-7: #60635d;
+  --color-secondary-dark-8: #4e514c;
+  --color-secondary-dark-9: #3d403c;
+  --color-secondary-dark-10: #2e302d;
+  --color-secondary-dark-11: #20221f;
+  --color-secondary-dark-12: #121311;
+  --color-secondary-dark-13: #080908;
+  --color-secondary-light-1: #e5e5df;
+  --color-secondary-light-2: #ebebe6;
+  --color-secondary-light-3: #f1f1ed;
+  --color-secondary-light-4: #f7f7f4;
+  --color-secondary-alpha-10: #77777019;
+  --color-secondary-alpha-20: #77777033;
+  --color-secondary-alpha-30: #7777704d;
+  --color-secondary-alpha-40: #77777066;
+  --color-secondary-alpha-50: #77777080;
+  --color-secondary-alpha-60: #77777099;
+  --color-secondary-alpha-70: #777770b3;
+  --color-secondary-alpha-80: #777770cc;
+  --color-secondary-alpha-90: #777770e6;
+  --color-secondary-button: #555954;
+  --color-secondary-hover: #444844;
+  --color-secondary-active: #353936;
+
+  /* Console and named colors */
+  --color-console-fg: #e8e8e6;
+  --color-console-fg-subtle: #b9bcb7;
+  --color-console-bg: #1f211f;
+  --color-console-border: #343734;
+  --color-console-hover-bg: #292c29;
+  --color-console-active-bg: #343734;
+  --color-console-menu-bg: #252825;
+  --color-console-menu-border: #3b3f3b;
+  --color-console-link: #94c6b9;
+  --color-red: #c94b45;
+  --color-orange: #c66b2c;
+  --color-yellow: #c79618;
+  --color-olive: #7d8c36;
+  --color-green: #2f8b57;
+  --color-teal: #16847d;
+  --color-blue: #3a6fa5;
+  --color-violet: #6f63a8;
+  --color-purple: #8a5d96;
+  --color-pink: #a95d7e;
+  --color-brown: #8c684f;
+  --color-black: #202123;
+  --color-red-light: #d87570;
+  --color-orange-light: #d88d59;
+  --color-yellow-light: #d6ae4c;
+  --color-olive-light: #9ba35e;
+  --color-green-light: #5aa475;
+  --color-teal-light: #4aa19b;
+  --color-blue-light: #6790b9;
+  --color-violet-light: #9288bf;
+  --color-purple-light: #a782ae;
+  --color-pink-light: #bf829a;
+  --color-brown-light: #a78973;
+  --color-black-light: #555753;
+  --color-red-dark-1: #b83f3a;
+  --color-orange-dark-1: #b65d23;
+  --color-yellow-dark-1: #b28612;
+  --color-olive-dark-1: #6e7d2d;
+  --color-green-dark-1: #287c4c;
+  --color-teal-dark-1: #11756f;
+  --color-blue-dark-1: #326292;
+  --color-violet-dark-1: #625694;
+  --color-purple-dark-1: #7a4f86;
+  --color-pink-dark-1: #994f70;
+  --color-brown-dark-1: #7c5b43;
+  --color-black-dark-1: #171817;
+  --color-red-dark-2: #a53531;
+  --color-orange-dark-2: #a2501c;
+  --color-yellow-dark-2: #9e760e;
+  --color-olive-dark-2: #606e25;
+  --color-green-dark-2: #226d42;
+  --color-teal-dark-2: #0d665f;
+  --color-blue-dark-2: #2a557f;
+  --color-violet-dark-2: #554981;
+  --color-purple-dark-2: #6a4376;
+  --color-pink-dark-2: #894262;
+  --color-brown-dark-2: #6c4e39;
+  --color-black-dark-2: #101110;
+
+  /* ANSI and chart colors */
+  --color-ansi-black: #252725;
+  --color-ansi-red: #d05a54;
+  --color-ansi-green: #75a56d;
+  --color-ansi-yellow: #d0a341;
+  --color-ansi-blue: #6792be;
+  --color-ansi-magenta: #aa78a9;
+  --color-ansi-cyan: #5aa6a0;
+  --color-ansi-white: #c9cbc7;
+  --color-ansi-bright-black: #626660;
+  --color-ansi-bright-red: #df7c76;
+  --color-ansi-bright-green: #91bc89;
+  --color-ansi-bright-yellow: #e1be68;
+  --color-ansi-bright-blue: #84add4;
+  --color-ansi-bright-magenta: #c197c0;
+  --color-ansi-bright-cyan: #7ec0bb;
+  --color-ansi-bright-white: #f3f3f1;
+  --color-series-16-0: #0f7a65;
+  --color-series-16-1: #3e8b72;
+  --color-series-16-2: #c65b55;
+  --color-series-16-3: #a18434;
+  --color-series-16-4: #7b68a8;
+  --color-series-16-5: #5e79b1;
+  --color-series-16-6: #c27b3a;
+  --color-series-16-7: #3e938d;
+  --color-series-16-8: #9c674d;
+  --color-series-16-9: #4d7d91;
+  --color-series-16-10: #b45e36;
+  --color-series-16-11: #5c8e60;
+  --color-series-16-12: #87618f;
+  --color-series-16-13: #549078;
+  --color-series-16-14: #506eae;
+  --color-series-16-15: #9d657f;
+
+  /* Semantic colors */
+  --color-grey: #73766f;
+  --color-grey-light: #8f928b;
+  --color-gold: #9a7d28;
+  --color-white: #ffffff;
+  --color-diff-added-fg: #17613b;
+  --color-diff-added-linenum-bg: #dff1e6;
+  --color-diff-added-row-bg: #edf8f1;
+  --color-diff-added-row-border: #d0ead9;
+  --color-diff-added-word-bg: #bfe2cb;
+  --color-diff-moved-row-bg: #f5f1d8;
+  --color-diff-moved-row-border: #ddd39d;
+  --color-diff-removed-fg: #a13b3b;
+  --color-diff-removed-linenum-bg: #f7dddd;
+  --color-diff-removed-row-bg: #fdf0ef;
+  --color-diff-removed-row-border: #efcfcc;
+  --color-diff-removed-word-bg: #edc1bf;
+  --color-diff-inactive: #f0f0ec;
+  --color-error-border: #c94b4566;
+  --color-error-bg: #fae9e7;
+  --color-error-bg-active: #f4d1ce;
+  --color-error-bg-hover: #f7deda;
+  --color-error-text: #a63b36;
+  --color-success-border: #2f8b5766;
+  --color-success-bg: #e7f4eb;
+  --color-success-text: #237146;
+  --color-warning-border: #c7961866;
+  --color-warning-bg: #fbf4d9;
+  --color-warning-text: #86630d;
+  --color-info-border: #3a6fa566;
+  --color-info-bg: #eaf2f8;
+  --color-info-text: #2d5f91;
+  --color-priority-border: #6f63a866;
+  --color-priority-bg: #f0edf8;
+  --color-priority-text: #5f5298;
+  --color-red-badge: #b8403b;
+  --color-red-badge-bg: #c94b4518;
+  --color-red-badge-hover-bg: #c94b4540;
+  --color-green-badge: #237146;
+  --color-green-badge-bg: #2f8b5718;
+  --color-green-badge-hover-bg: #2f8b5740;
+  --color-yellow-badge: #8a6810;
+  --color-yellow-badge-bg: #c796181c;
+  --color-yellow-badge-hover-bg: #c7961844;
+  --color-orange-badge: #a4541e;
+  --color-orange-badge-bg: #c66b2c1c;
+  --color-orange-badge-hover-bg: #c66b2c44;
+  --color-git: #e05d44;
+  --color-logo: #0f7a65;
+
+  /* Gitea target colors */
+  --color-body: var(--work-canvas);
+  --color-box-header: #f5f5f2;
+  --color-box-body: var(--work-surface);
+  --color-box-body-highlight: #f1f7f5;
+  --color-text-dark: #181918;
+  --color-text: var(--work-text);
+  --color-text-light: #3e413d;
+  --color-text-light-1: #50534f;
+  --color-text-light-2: var(--work-text-soft);
+  --color-text-light-3: var(--work-text-muted);
+  --color-footer: #efefec;
+  --color-timeline: var(--work-border);
+  --color-input-text: var(--work-text);
+  --color-input-background: #ffffff;
+  --color-input-toggle-background: #d2d3ce;
+  --color-input-border: #cdcec8;
+  --color-light: #20212306;
+  --color-light-border: #20212317;
+  --color-hover: #20212308;
+  --color-hover-opaque: #f0f0ed;
+  --color-active: #20212312;
+  --color-menu: #ffffff;
+  --color-card: #ffffff;
+  --color-markup-table-row: #20212308;
+  --color-markup-code-block: #2021230a;
+  --color-markup-code-inline: #2021230d;
+  --color-button: #ffffff;
+  --color-code-bg: #fbfbf9;
+  --color-shadow: #2021231a;
+  --color-shadow-opaque: #d6d6d1;
+  --color-secondary-bg: #f0f0ed;
+  --color-expand-button: #dceee9;
+  --color-placeholder-text: #92948f;
+  --color-editor-line-highlight: #0f7a6512;
+  --color-editor-selection: #0f7a6530;
+  --color-project-column-bg: #f1f1ee;
+  --color-caret: var(--work-text);
+  --color-reaction-bg: #20212308;
+  --color-reaction-hover-bg: #e6f2ee;
+  --color-reaction-active-bg: #d7eae4;
+  --color-tooltip-text: #f8f8f6;
+  --color-tooltip-bg: #242624f2;
+  --color-nav-bg: rgb(247 247 244 / 92%);
+  --color-nav-hover-bg: #e8e8e3;
+  --color-nav-text: #343633;
+  --color-secondary-nav-bg: #f2f2ef;
+  --color-label-text: #424541;
+  --color-label-bg: #e8e8e3;
+  --color-label-hover-bg: #ddddd7;
+  --color-label-active-bg: #d1d2cb;
+  --color-accent: var(--work-accent);
+  --color-small-accent: #d6eae4;
+  --color-highlight-fg: #6f5600;
+  --color-highlight-bg: #fff3bb;
+  --color-overlay-backdrop: #1e211e70;
+  --color-danger: var(--color-red);
+  --color-transparency-grid-light: #fafaf8;
+  --color-transparency-grid-dark: #e2e2dd;
+  --color-workflow-edge-hover: #aeb1aa;
+
+  /* Syntax colors */
+  --color-syntax-keyword: #8d3b65;
+  --color-syntax-bool: #266a76;
+  --color-syntax-control: #7c4f18;
+  --color-syntax-name: #6a5316;
+  --color-syntax-type: #7b3f78;
+  --color-syntax-number: #365f9b;
+  --color-syntax-operator: #8d3b65;
+  --color-syntax-regexp: #6f4b9d;
+  --color-syntax-string: #3f6b3f;
+  --color-syntax-comment: #737a75;
+  --color-syntax-invalid: #b72e2e;
+  --color-syntax-link: var(--work-accent);
+  --color-syntax-tag: #8a4533;
+  --color-syntax-attribute: #654a91;
+  --color-syntax-property: #2f6487;
+  --color-syntax-variable: #8a4d24;
+  --color-syntax-string-special: #735b1d;
+  --color-syntax-escape: #6b5519;
+  --color-syntax-entity: #654a91;
+  --color-syntax-preproc: #32624c;
+  --color-syntax-preproc-file: #365f9b;
+  --color-syntax-decorator: #32624c;
+  --color-syntax-namespace: #555b56;
+  --color-syntax-name-pseudo: #654a91;
+  --color-syntax-comment-special: #6f4b9d;
+  --color-syntax-text: inherit;
+  --color-syntax-text-alt: #4f5852;
+  --color-syntax-punctuation: inherit;
+  --color-syntax-whitespace: #b5b7b2;
+  --color-syntax-diff-fg: #202123;
+  --color-syntax-deleted-bg: #f7dddd;
+  --color-syntax-inserted-bg: #dff1e6;
+  --color-syntax-emph: #7c4f18;
+  --color-syntax-strong: inherit;
+  --color-syntax-heading: #6a5316;
+  --color-syntax-subheading: #3f6b3f;
+  --color-syntax-output: #56605a;
+  --color-syntax-prompt: #8a4d24;
+  --color-syntax-traceback: #b72e2e;
+  --color-syntax-matching-bracket-bg: #0f7a6530;
+  --color-syntax-nonmatching-bracket-bg: #c94b4530;
+
+  accent-color: var(--work-accent);
+  color-scheme: light;
 }
 
-/* ==========================================================================
-   Component layer
-   ========================================================================== */
+/* Base */
+html {
+  background: var(--work-canvas);
+  text-rendering: optimizeLegibility;
+}
 
-/* Base: Codex-like elevated dark (not pure black) */
-html { font-size: 14px; }
 body {
+  background: var(--work-canvas);
+  color: var(--work-text);
+  font-family: var(--fonts-proportional);
   font-size: 14px;
-  line-height: 1.65;
-  letter-spacing: 0;
-  -webkit-font-smoothing: antialiased;
-  background: #1a1a1a !important;
-}
-
-/* Icons: consistent 16px, tighter alignment */
-.svg { width: 16px !important; height: 16px !important; flex-shrink: 0; }
-.navbar .logo svg, #navbar .logo svg { width: 26px !important; height: 26px !important; }
-/* Desaturate the green Gitea tea-cup logo to fit monochrome identity */
-.navbar .logo img, #navbar .logo img, .navbar .logo svg, #navbar .logo svg,
-.hero img, .page-content.home img { filter: grayscale(100%) brightness(1.6); opacity: 0.9; }
-
-/* Page entrance */
-.page-content { animation: oai-fade 0.28s ease-out; }
-@keyframes oai-fade { from { opacity: 0; } to { opacity: 1; } }
-
-/* --- Breathing room: content gets real padding --- */
-.page-content > .ui.container,
-.page-content > .ui.container.fluid,
-.ui.container.main { padding-top: 28px !important; padding-bottom: 40px !important; }
-.page-content.explore .ui.container,
-.page-content.dashboard .ui.container { padding-top: 24px !important; }
-.ui.segment { padding: 20px !important; }
-.ui.attached.header { padding: 14px 20px !important; }
-
-/* --- Navbar: quiet frosted bar --- */
-.navbar, #navbar {
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
-  background: rgba(15, 15, 15, 0.78) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
-  min-height: 56px;
-  padding: 0 8px;
-}
-.navbar .item, #navbar .item {
-  border-radius: 8px;
-  margin: 0 1px;
-  padding: 8px 12px !important;
-  color: var(--color-text-light) !important;
-  transition: background-color 0.18s ease-out, color 0.18s ease-out;
-}
-.navbar .item:hover, #navbar .item:hover {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--color-text-dark) !important;
-}
-
-/* --- Segmented control: real target is .overflow-menu-items --- */
-.overflow-menu-items {
-  display: inline-flex !important;
-  align-items: center;
-  gap: 4px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 11px;
-  padding: 4px;
-  margin: 0 auto;
-}
-.overflow-menu-items .item {
-  display: inline-flex !important;
-  align-items: center;
-  gap: 7px;
-  border: none !important;
-  border-radius: 8px !important;
-  padding: 7px 16px !important;
-  margin: 0 !important;
-  color: var(--color-text-light) !important;
-  font-weight: 500;
-  white-space: nowrap;
-  transition: background-color 0.18s ease-out, color 0.18s ease-out;
-}
-.overflow-menu-items .item:hover {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--color-text-dark) !important;
-}
-/* high specificity to beat Gitea's built-in .secondary-nav .item.active */
-.ui.secondary.pointing.tabular.menu.secondary-nav .overflow-menu-items .item.active,
-.ui.secondary.menu.secondary-nav .overflow-menu-items .item.active,
-.overflow-menu-items .item.active,
-.overflow-menu-items a.item.active {
-  background: rgba(255, 255, 255, 0.1) !important;
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  color: #ffffff !important;
-  box-shadow: none !important;
-  border: none !important;
-}
-.overflow-menu-items .item.active::after,
-.overflow-menu-items .item::after,
-.overflow-menu-items .item.active::before { display: none !important; }
-/* the wrapper menu must be a bare, borderless row that centers the pill */
-.ui.secondary.pointing.tabular.menu.secondary-nav,
-.ui.secondary.pointing.tabular.menu,
-.ui.secondary.pointing.menu,
-.ui.secondary.menu.secondary-nav {
-  border: none !important;
-  border-bottom: none !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-  margin-bottom: 28px !important;
-  display: flex !important;
-  justify-content: center;
-}
-
-/* --- Filter menu (所有/自建/派生...) as light segmented row --- */
-.ui.secondary.filter.menu {
-  gap: 2px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
-  padding-bottom: 0 !important;
-  margin-bottom: 8px !important;
-}
-.ui.secondary.filter.menu .item {
-  border-radius: 8px 8px 0 0 !important;
-  padding: 9px 14px !important;
-  color: var(--color-text-light) !important;
-  border-bottom: 2px solid transparent !important;
-  transition: color 0.18s ease-out, border-color 0.18s ease-out, background-color 0.18s ease-out;
-}
-.ui.secondary.filter.menu .item:hover {
-  background: rgba(255, 255, 255, 0.045);
-  color: var(--color-text-dark) !important;
-}
-.ui.secondary.filter.menu .item.active {
-  color: #ffffff !important;
-  border-bottom-color: #ececf1 !important;
-  background: transparent !important;
-  font-weight: 600;
-}
-
-/* --- Two-item switcher (dashboard 仓库/组织) — same pill treatment --- */
-.ui.two.item.menu,
-.ui.three.item.menu,
-.ui.item.menu:not(.tabular) {
-  display: flex !important;
-  gap: 4px;
-  background: rgba(255, 255, 255, 0.04) !important;
-  border: 1px solid rgba(255, 255, 255, 0.06) !important;
-  border-radius: 11px !important;
-  padding: 4px !important;
-  margin-bottom: 12px !important;
-  min-height: 0 !important;
-}
-.ui.two.item.menu .item,
-.ui.three.item.menu .item,
-.ui.item.menu:not(.tabular) .item {
-  flex: 1;
-  justify-content: center;
-  border: none !important;
-  border-radius: 8px !important;
-  padding: 8px 14px !important;
-  margin: 0 !important;
-  color: var(--color-text-light) !important;
-  font-weight: 500;
-  background: transparent !important;
-  transition: background-color 0.18s ease-out, color 0.18s ease-out;
-}
-.ui.two.item.menu .item:hover,
-.ui.three.item.menu .item:hover,
-.ui.item.menu:not(.tabular) .item:hover {
-  background: rgba(255, 255, 255, 0.06) !important;
-  color: var(--color-text-dark) !important;
-}
-.ui.two.item.menu .item.active,
-.ui.three.item.menu .item.active,
-.ui.item.menu:not(.tabular) .item.active {
-  background: rgba(255, 255, 255, 0.1) !important;
-  color: #ffffff !important;
-  box-shadow: none !important;
-}
-.ui.two.item.menu .item::before,
-.ui.two.item.menu .item::after,
-.ui.item.menu:not(.tabular) .item::before,
-.ui.item.menu:not(.tabular) .item::after { display: none !important; }
-
-/* --- Vertical settings menu: rounded rows, no hard dividers --- */
-.ui.vertical.menu {
-  background: rgba(255, 255, 255, 0.022) !important;
-  border: 1px solid rgba(255, 255, 255, 0.07) !important;
-  border-radius: 14px !important;
-  padding: 6px !important;
-  overflow: hidden;
-}
-.ui.vertical.menu .item {
-  border: none !important;
-  border-radius: 9px !important;
-  padding: 9px 13px !important;
-  margin: 1px 0 !important;
-  color: var(--color-text-light) !important;
-  background: transparent !important;
-  transition: background-color 0.18s ease-out, color 0.18s ease-out;
-}
-.ui.vertical.menu .item:hover {
-  background: rgba(255, 255, 255, 0.055) !important;
-  color: var(--color-text-dark) !important;
-}
-.ui.vertical.menu .item.active {
-  background: rgba(255, 255, 255, 0.1) !important;
-  color: #ffffff !important;
-  font-weight: 500;
-}
-.ui.vertical.menu .item::before,
-.ui.vertical.menu .item::after { display: none !important; }
-/* header row inside vertical menu */
-.ui.vertical.menu .header.item {
-  color: var(--color-text-light-2) !important;
-  font-size: 0.85em;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  background: transparent !important;
-  padding-bottom: 6px !important;
-}
-.ui.vertical.menu .header.item:hover { background: transparent !important; }
-
-/* --- Checkboxes & toggles: fix misalignment, neutral accent --- */
-.ui.checkbox {
-  display: inline-flex !important;
-  align-items: center;
-  gap: 8px;
-  min-height: 20px;
-}
-.ui.checkbox input[type=checkbox],
-.ui.checkbox input[type=radio] {
-  position: static !important;
-  opacity: 1 !important;
-  width: 16px !important;
-  height: 16px !important;
-  margin: 0 !important;
-  flex-shrink: 0;
-  accent-color: #ececf1;
-  cursor: pointer;
-  order: 0;
-}
-.ui.checkbox label {
-  position: static !important;
-  padding-left: 0 !important;
-  cursor: pointer;
-  line-height: 1.4;
-  order: 1;
-}
-.ui.checkbox label::before,
-.ui.checkbox label::after { display: none !important; }
-/* Gitea toggle switch */
-.ui.toggle.checkbox { min-height: 22px; }
-.ui.toggle.checkbox input[type=checkbox] {
-  appearance: none;
-  width: 36px !important;
-  height: 20px !important;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.14);
-  position: relative !important;
-  transition: background-color 0.18s ease-out;
-}
-.ui.toggle.checkbox input[type=checkbox]::after {
-  content: '';
-  position: absolute;
-  top: 2px; left: 2px;
-  width: 16px; height: 16px;
-  border-radius: 50%;
-  background: #ececf1;
-  transition: transform 0.18s ease-out;
-}
-.ui.toggle.checkbox input[type=checkbox]:checked { background: #ececf1; }
-.ui.toggle.checkbox input[type=checkbox]:checked::after {
-  transform: translateX(16px);
-  background: #0f0f0f;
-}
-
-/* --- Selection dropdown: same height as inputs --- */
-.ui.selection.dropdown {
-  min-height: 0 !important;
-  padding: 10px 34px 10px 14px !important;
-  display: inline-flex !important;
-  align-items: center;
-  line-height: 1.4 !important;
-  min-width: 180px;
-  width: auto;
-}
-.ui.selection.dropdown.fluid,
-.ui.fluid.selection.dropdown { width: 100% !important; }
-/* inline field dropdowns stay compact */
-.ui.form .inline.field .ui.selection.dropdown { width: auto !important; }
-.ui.selection.dropdown > .dropdown.icon {
-  top: 50% !important;
-  transform: translateY(-50%);
-  margin: 0 !important;
-  right: 12px !important;
-  padding: 0 !important;
-}
-.ui.selection.dropdown .default.text,
-.ui.selection.dropdown > .text { line-height: 1.4 !important; }
-/* avatar inside dropdown must not stretch */
-.ui.selection.dropdown img,
-.ui.dropdown .menu img { width: 20px !important; height: 20px !important; object-fit: cover; flex-shrink: 0; }
-
-/* --- Login / signup page: fix overlapping lines & card seams --- */
-.page-content.user.signin .ui.attached.segment,
-.page-content.user.signup .ui.attached.segment { border-radius: 0 !important; }
-.page-content.user.signin .ui.top.attached.header,
-.page-content.user.signup .ui.top.attached.header {
-  border-radius: 14px 14px 0 0 !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
-}
-.page-content.user.signin .ui.attached.segment:last-of-type,
-.page-content.user.signup .ui.attached.segment:last-of-type {
-  border-radius: 0 0 14px 14px !important;
-}
-/* the passkey / register block: give it room so lines don't collide */
-.signin-passkey,
-.page-content.user.signin .ui.segment .center,
-.page-content.user.signin .ui.segment > .tw-text-center {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  line-height: 1.6;
-  padding: 4px 0;
-}
-.signin-passkey > * { margin: 0 !important; }
-/* divider text ("或") spacing */
-.divider.divider-text { margin: 16px 0 !important; }
-
-/* --- Contribution heatmap: smaller cells, more air --- */
-#user-heatmap rect { rx: 2; }
-#user-heatmap { --heatmap-cell-size: 10px; }
-.contribution-graph, #user-heatmap { padding: 4px 0; }
-
-/* --- Form layout: reduce the label/field imbalance --- */
-.ui.form .inline.field > label,
-.ui.form .field > label { color: var(--color-text-light) !important; font-weight: 500; }
-.ui.form .field { margin-bottom: 16px !important; }
-.ui.form .help, .ui.form .field .help {
-  color: var(--color-text-light-3) !important;
-  font-size: 0.9em;
   line-height: 1.55;
-  margin-top: 6px !important;
+  letter-spacing: -0.005em;
 }
 
-/* --- Dashboard sidebar: unify the stacked panels --- */
-.dashboard .ui.segment + .ui.segment { margin-top: 12px !important; }
-.dashboard .ui.attached.segment,
-.dashboard .ui.attached.header { border-radius: 14px !important; }
-.dashboard .ui.attached.header + .ui.attached.segment {
-  border-radius: 0 0 14px 14px !important;
-  border-top: none !important;
-  margin-top: -1px !important;
-}
-.dashboard .ui.attached.header {
-  border-radius: 14px 14px 0 0 !important;
+::selection {
+  background: #cde5de;
+  color: #17342d;
 }
 
-/* --- Dropdowns & popups --- */
-.ui.dropdown .menu, .ui.popup, .ui.selection.dropdown .menu {
-  background: #1a1a1f !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  border-radius: 12px !important;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6) !important;
-  padding: 6px !important;
-  animation: oai-pop 0.14s ease-out;
-}
-.ui.dropdown .menu > .item {
-  border-radius: 8px !important;
-  padding: 9px 12px !important;
-  transition: background-color 0.15s ease-out;
-}
-.ui.dropdown .menu > .item:hover { background: rgba(255, 255, 255, 0.07) !important; }
-@keyframes oai-pop { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
-
-/* --- Cards / segments: flat, quiet, hover elevates --- */
-.ui.segment, .ui.card, .ui.cards > .card, .ui.box {
-  border-radius: 14px !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  background: #212121 !important;
-  box-shadow: none !important;
-  transition: background-color 0.2s ease-out, border-color 0.2s ease-out, box-shadow 0.2s ease-out;
-}
-.ui.segment:hover, .ui.card:hover, .ui.box:hover {
-  border-color: rgba(255, 255, 255, 0.14) !important;
-  background: #262626 !important;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35) !important;
-}
-.ui.attached.segment,
-.ui.attached.header { border-radius: 0 !important; }
-.ui.top.attached.header { border-radius: 14px 14px 0 0 !important; }
-.ui.bottom.attached.segment { border-radius: 0 0 14px 14px !important; }
-
-/* --- Repository list: the biggest offender, fully rebuilt --- */
-.flex-divided-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 6px !important;
-}
-.flex-divided-list .item,
-.flex-divided-list > .item {
-  border: 1px solid transparent !important;
-  border-radius: 10px !important;
-  padding: 13px 14px !important;
-  margin: 0 !important;
-  gap: 10px;
-  transition: background-color 0.18s ease-out, border-color 0.18s ease-out;
-}
-.flex-divided-list .item:hover {
-  background: rgba(255, 255, 255, 0.05) !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
-}
-.flex-divided-list .item .svg { color: var(--color-text-light-2); }
-.flex-divided-list .item a { font-weight: 500; }
-/* kill Gitea's built-in dividers so gaps do the separating */
-.flex-divided-list .item + .item { border-top: none !important; }
-
-/* --- Buttons: pill, monochrome; primary = light-on-dark like OpenAI --- */
-.ui.button, .ui.buttons .button {
-  border-radius: 9999px !important;
-  padding: 9px 18px !important;
-  font-weight: 500 !important;
-  border: 1px solid transparent !important;
-  transition: background-color 0.18s ease-out, border-color 0.18s ease-out, transform 0.12s ease-out, opacity 0.18s ease-out;
-}
-.ui.primary.button, .ui.positive.button {
-  background: #ececf1 !important;
-  color: #0f0f0f !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-.ui.primary.button:hover, .ui.positive.button:hover {
-  background: #ffffff !important;
-  transform: translateY(-1px);
-}
-.ui.primary.button:active, .ui.positive.button:active { transform: translateY(0); }
-.ui.button:not(.primary):not(.positive):not(.red) {
-  background: rgba(255, 255, 255, 0.055) !important;
-  color: var(--color-text) !important;
-  border-color: rgba(255, 255, 255, 0.09) !important;
-}
-.ui.button:not(.primary):not(.positive):not(.red):hover {
-  background: rgba(255, 255, 255, 0.1) !important;
-  border-color: rgba(255, 255, 255, 0.15) !important;
-  color: var(--color-text-dark) !important;
-}
-.ui.icon.button { padding: 9px 11px !important; }
-
-/* --- Inputs: pill search, neutral focus ring --- */
-.ui.input input, .ui.form input, .ui.form textarea, .ui.form select, .ui.selection.dropdown {
-  background: rgba(255, 255, 255, 0.04) !important;
-  border: 1px solid rgba(255, 255, 255, 0.09) !important;
-  border-radius: 10px !important;
-  padding: 10px 14px !important;
-  color: var(--color-text-dark) !important;
-  transition: border-color 0.18s ease-out, box-shadow 0.18s ease-out, background-color 0.18s ease-out;
-}
-.ui.input input:focus, .ui.form input:focus, .ui.form textarea:focus,
-.ui.selection.dropdown:focus, .ui.input.focus input {
-  border-color: rgba(255, 255, 255, 0.28) !important;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06) !important;
-  background: rgba(255, 255, 255, 0.06) !important;
-}
-/* search: input + button forms one continuous pill (only when NO left icon) */
-.ui.action.input:not([class*="left icon"]) { gap: 0; }
-.ui.action.input:not([class*="left icon"]) > input {
-  border-radius: 9999px 0 0 9999px !important;
-  padding-left: 18px !important;
-  border-right: none !important;
-}
-.ui.action.input > .button,
-.ui.action.input .ui.button {
-  border-radius: 0 9999px 9999px 0 !important;
-  padding: 0 18px !important;
-  border-left: none !important;
-  background: rgba(255, 255, 255, 0.04) !important;
-  border-color: rgba(255, 255, 255, 0.09) !important;
-}
-.ui.action.input > .button:hover { background: rgba(255, 255, 255, 0.08) !important; }
-
-/* --- Links: neutral, green only as subtle hover accent --- */
-a { color: var(--color-text-dark); transition: color 0.18s ease-out, opacity 0.18s ease-out; }
-a:hover { color: #ffffff; }
-.page-footer a, .page-footer { color: var(--color-text-light-3) !important; }
-
-/* --- Headings: tighter tracking, moderate size (hero was too big) --- */
-h1, h2, h3, .ui.header { letter-spacing: -0.02em; font-weight: 600; }
-.hero h1, .page-content.home h1 { font-size: 2.6rem !important; }
-.hero h2, .page-content.home h2 { font-size: 1.15rem !important; font-weight: 400 !important; color: var(--color-text-light) !important; }
-.hero, .page-content.home .hero { padding: 48px 0 32px !important; }
-.page-content.home .ui.grid { row-gap: 28px; }
-
-/* --- Messages --- */
-.ui.message { border-radius: 12px !important; padding: 14px 16px !important; }
-
-/* --- Avatars --- */
-.ui.avatar.image, .avatar, img.avatar { border-radius: 8px !important; }
-
-/* --- Labels / badges: pill --- */
-.ui.label, .ui.labels .label { border-radius: 9999px !important; padding: 3px 9px !important; font-weight: 500; }
-
-/* --- Code & diff --- */
-.highlight, .file-view, .file-wrap, .code-view, .ui.diff-detail-box { border-radius: 12px !important; }
-
-/* --- Contribution heatmap: monochrome, less green --- */
-#user-heatmap rect { rx: 2; }
-
-/* --- Footer: quiet --- */
-.page-footer {
-  opacity: 0.55;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 18px 0 !important;
-  margin-top: 24px;
+a {
+  text-underline-offset: 2px;
 }
 
-/* --- Modal --- */
-.ui.modal { border-radius: 16px !important; background: #1a1a1f !important; border: 1px solid rgba(255,255,255,0.08) !important; box-shadow: 0 32px 90px rgba(0,0,0,0.7) !important; }
-.ui.modal > .header { border-radius: 16px 16px 0 0 !important; background: transparent !important; border-bottom: 1px solid rgba(255,255,255,0.06) !important; }
-.ui.modal > .actions { border-radius: 0 0 16px 16px !important; background: transparent !important; border-top: 1px solid rgba(255,255,255,0.06) !important; }
-.ui.active.dimmer { background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
-
-/* --- Dividers: hairline --- */
-.ui.divider { border-color: rgba(255, 255, 255, 0.06) !important; }
-
-/* --- Scrollbar --- */
-::-webkit-scrollbar { width: 11px; height: 11px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.11); border-radius: 6px; border: 3px solid transparent; background-clip: content-box; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); background-clip: content-box; }
-
-/* ==========================================================================
-   Codex / ChatGPT Work alignment pass
-   - tighter type, smaller heatmap cells, borderless stat rows
-   - list rows separated by hairlines instead of boxes
-   - neutralize remaining green accents
-   ========================================================================== */
-
-/* --- Neutralize leftover green icons/text --- */
-.text.green, .text.green .svg, a.text.green,
-.octicon-issue-opened, .octicon-git-pull-request,
-.issue-item .octicon-issue-opened,
-.labelled-list .green, .flex-item .green { color: var(--color-text-light-2) !important; }
-.ui.green.label, .ui.green.button { background: rgba(255,255,255,0.08) !important; color: var(--color-text-dark) !important; }
-/* issue state icons: neutral, only open uses a subtle accent */
-svg.octicon-issue-opened, svg.octicon-git-pull-request { color: #8e8ea0 !important; }
-
-/* --- Heatmap: Codex-style small cells --- */
-#user-heatmap { --heatmap-cell-size: 9px; padding: 2px 0; }
-#user-heatmap rect, .contrib-calendar rect, .vch__day__square {
-  rx: 2 !important; ry: 2 !important;
-  width: 9px !important; height: 9px !important;
-}
-#user-heatmap svg, .contrib-calendar svg { shape-rendering: geometricPrecision; }
-/* heatmap color ramp: neutral → cool blue (Codex uses cool tones) */
-#user-heatmap [fill*="var(--color-primary"],
-.vch__day__square[style*="--color-calendar"] { }
-#user-heatmap text, .contrib-calendar text {
-  font-size: 9px !important;
-  fill: var(--color-text-light-3) !important;
-}
-.total-contributions, .contribution-graph .header {
-  color: var(--color-text-light-2) !important;
-  font-size: 0.88em;
+a:hover {
+  color: var(--work-accent-hover);
 }
 
-/* --- Repo header: compact action buttons like Codex toolbar --- */
-.repo-header .ui.button,
-.repo-buttons .ui.button,
-.repo-header .ui.labeled.button > .button {
-  padding: 6px 12px !important;
-  font-size: 0.9em !important;
-  font-weight: 500 !important;
-}
-.ui.labeled.button > .label,
-.repo-buttons .ui.label {
-  padding: 6px 10px !important;
-  font-size: 0.88em !important;
-  border-radius: 0 9999px 9999px 0 !important;
-  background: rgba(255,255,255,0.05) !important;
-  border: 1px solid rgba(255,255,255,0.09) !important;
-  border-left: none !important;
-  margin: 0 !important;
-}
-.ui.labeled.button > .button:first-child {
-  border-radius: 9999px 0 0 9999px !important;
-  border-right: none !important;
-}
-.repo-title, .repo-header .flex-text-block { gap: 8px; }
-
-/* --- Repo nav tabs: quiet, small count badges --- */
-.repository .ui.tabular.menu .item .ui.label,
-.repository .ui.menu .item .ui.label,
-.ui.menu .item > .ui.label,
-.ui.menu .item > .ui.circular.label {
-  background: rgba(255,255,255,0.09) !important;
-  color: var(--color-text-light) !important;
-  font-size: 0.78em !important;
-  padding: 1px 6px !important;
-  min-width: 0 !important;
-  margin-left: 5px !important;
-  font-weight: 500 !important;
+:focus-visible {
+  outline: 3px solid rgb(128 185 170 / 50%) !important;
+  outline-offset: 2px !important;
 }
 
-/* --- Stats row (5 提交 / 2 分支 / 0 标签): borderless equal columns --- */
-.repository-summary,
-.repo-sub-menu,
-.ui.segment.sub-menu {
-  background: transparent !important;
-  border: none !important;
-  border-bottom: 1px solid rgba(255,255,255,0.07) !important;
-  border-radius: 0 !important;
-  padding: 0 0 14px 0 !important;
-  margin-bottom: 18px !important;
-  display: flex;
-  gap: 0;
-}
-.repo-sub-menu .item, .ui.segment.sub-menu .item {
-  flex: 1;
-  text-align: center;
-  border: none !important;
-  border-right: 1px solid rgba(255,255,255,0.07) !important;
-  color: var(--color-text-light) !important;
-  font-size: 0.92em;
-}
-.repo-sub-menu .item:last-child, .ui.segment.sub-menu .item:last-child { border-right: none !important; }
-.repo-sub-menu .item:hover, .ui.segment.sub-menu .item:hover { color: var(--color-text-dark) !important; background: transparent !important; }
-
-/* --- File list: tighter rows, hairline separators, aligned icons --- */
-#repo-files-table .repo-file-item,
-.repo-file-line,
-#repo-files-table tr {
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  transition: background-color 0.15s ease-out;
-}
-#repo-files-table tr:hover { background: rgba(255,255,255,0.03); }
-#repo-files-table td, .repo-file-cell {
-  padding: 9px 12px !important;
-  vertical-align: middle !important;
-  border: none !important;
-}
-#repo-files-table .svg, .repo-file-cell .svg {
-  vertical-align: -3px;
-  margin-right: 6px;
-  color: var(--color-text-light-2) !important;
-}
-#repo-files-table .commit-message, .repo-file-cell.message { color: var(--color-text-light-2) !important; font-size: 0.92em; }
-#repo-files-table .age, .repo-file-cell.age { color: var(--color-text-light-3) !important; font-size: 0.88em; }
-/* latest-commit header row */
-.latest-commit, #repo-files-table .commit-list {
-  background: rgba(255,255,255,0.025) !important;
-  border-radius: 10px 10px 0 0;
+/* Top navigation */
+#navbar {
+  min-height: 58px;
+  padding: 8px 18px;
+  background: var(--color-nav-bg);
+  border-bottom: 1px solid var(--work-border-subtle);
+  box-shadow: 0 1px 0 rgb(31 35 33 / 2%);
+  backdrop-filter: blur(18px) saturate(1.15);
+  -webkit-backdrop-filter: blur(18px) saturate(1.15);
 }
 
-/* --- Search inputs: keep icon from overlapping placeholder --- */
-.ui.icon.input > input { padding-right: 40px !important; }
-.ui.icon.input > .icon, .ui.icon.input > .svg {
-  right: 12px !important; left: auto !important;
-  top: 50% !important; transform: translateY(-50%) !important;
-  margin: 0 !important; opacity: 0.6;
-  pointer-events: none;
-}
-/* left-icon variants (Gitea puts <i class="icon"> AFTER the input) */
-.ui.left.icon.input { position: relative; }
-.ui.left.icon.input > input,
-.ui.action.left.icon.input > input,
-.ui.left.icon.input > input[type=search] {
-  padding-left: 38px !important;
-  padding-right: 14px !important;
-}
-.ui.left.icon.input > .icon,
-.ui.left.icon.input > i.icon,
-.ui.action.left.icon.input > .icon {
-  position: absolute !important;
-  left: 13px !important; right: auto !important;
-  top: 50% !important; transform: translateY(-50%) !important;
-  margin: 0 !important; padding: 0 !important;
-  width: 16px; height: 16px;
-  display: flex; align-items: center;
-  opacity: 0.55;
-  pointer-events: none;
-  z-index: 2;
-}
-/* when a search box has BOTH action button and left icon, keep pill ends right */
-.ui.action.left.icon.input { display: flex !important; align-items: center; gap: 8px; }
-.ui.action.left.icon.input > input {
-  border-radius: 9999px !important;
-  border: 1px solid rgba(255,255,255,0.09) !important;
-  flex: 1;
-  min-width: 0;
-}
-/* trailing dropdown/filter button becomes a separate round icon button */
-.ui.action.left.icon.input > .ui.dropdown.icon.button,
-.ui.action.left.icon.input > .ui.button {
-  border-radius: 9999px !important;
-  margin: 0 !important;
-  border: 1px solid rgba(255,255,255,0.09) !important;
-  background: rgba(255,255,255,0.05) !important;
-  width: 36px; height: 36px;
-  padding: 0 !important;
-  display: inline-flex !important;
-  align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.ui.action.left.icon.input > .ui.button:hover { background: rgba(255,255,255,0.09) !important; }
-/* the left magnifier icon stays inside the input */
-.ui.action.left.icon.input > i.icon {
-  position: absolute !important;
-  left: 13px !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  z-index: 2;
-}
-/* keyboard hint chip inside search */
-.ui.input kbd, .ui.action.input kbd {
-  background: rgba(255,255,255,0.07) !important;
-  border: 1px solid rgba(255,255,255,0.1) !important;
-  border-radius: 5px;
-  padding: 1px 5px;
-  font-size: 0.78em;
-  color: var(--color-text-light-2);
-  margin-right: 6px;
-}
-
-/* --- Sidebar filter block on dashboard: no nested frame --- */
-.dashboard .ui.segment .ui.small.fluid.action.input { margin-bottom: 10px; }
-.dashboard .ui.secondary.filter.menu,
-.dashboard .ui.small.secondary.filter.menu {
-  background: transparent !important;
-  border: none !important;
-  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
-  margin: 0 0 4px 0 !important;
-  gap: 0;
-}
-.dashboard .ui.secondary.filter.menu .item { padding: 7px 11px !important; font-size: 0.9em; }
-/* the inner wrapper that Gitea renders around search+filter must not draw a box */
-.dashboard .ui.attached.segment > .ui.segment,
-.dashboard .ui.segment > .ui.segment,
-.dashboard .repo-search-wrapper,
-.dashboard .ui.segment .ui.attached.segment {
-  background: transparent !important;
-  border: none !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
-  box-shadow: none !important;
-}
-.dashboard .ui.segment > .ui.segment:hover { background: transparent !important; box-shadow: none !important; }
-/* repo list rows in sidebar join the panel above seamlessly */
-.dashboard .flex-list, .dashboard .repo-owner-name-list {
-  border: none !important;
-  background: transparent !important;
-  padding: 0 !important;
-}
-.dashboard .flex-list .flex-item.repo-item,
-.dashboard .repo-owner-name-list .flex-item {
-  border-radius: 9px !important;
-  padding: 10px 12px !important;
-  border-bottom: none !important;
-  margin: 1px 0 !important;
-}
-.dashboard .flex-list .flex-item.repo-item:hover { background: rgba(255,255,255,0.05) !important; }
-
-/* --- Activity feed: hairline rows, aligned meta, smaller avatars --- */
-.dashboard .flex-list .flex-item,
-.dashboard .news .item,
-#activity-feed .flex-item {
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  padding: 13px 4px !important;
-  gap: 11px;
-  align-items: flex-start;
-}
-.dashboard .flex-list .flex-item:last-child { border-bottom: none; }
-.dashboard .flex-item-leading .ui.avatar.image,
-.dashboard .flex-item-leading img,
-#activity-feed img.avatar { width: 22px !important; height: 22px !important; border-radius: 6px !important; }
-.dashboard .flex-item-main { gap: 3px; line-height: 1.5; }
-.dashboard .flex-item-title { font-size: 0.94em; font-weight: 400; }
-.dashboard .flex-item-body { color: var(--color-text-light-2) !important; font-size: 0.9em; }
-.dashboard .flex-item-trailing, #activity-feed .flex-item-trailing {
-  align-self: center;
-  color: var(--color-text-light-3) !important;
-}
-.dashboard .flex-item-trailing .svg { opacity: 0.55; }
-/* commit sha chip inside feed */
-.dashboard .flex-item-body .ui.label,
-.dashboard .commit-id, #activity-feed .sha {
-  font-family: var(--fonts-monospace);
-  font-size: 0.85em !important;
-  background: rgba(255,255,255,0.06) !important;
-  padding: 1px 6px !important;
-  border-radius: 5px !important;
-}
-
-/* --- Issue / PR list: row blocks with hairlines --- */
-.issue-list .flex-item,
-.milestone-list .flex-item,
-#issue-list .flex-item {
-  border-bottom: 1px solid rgba(255,255,255,0.05) !important;
-  border-radius: 0 !important;
-  padding: 14px 10px !important;
-  gap: 10px;
-  transition: background-color 0.15s ease-out;
-}
-.issue-list .flex-item:hover, #issue-list .flex-item:hover {
-  background: rgba(255,255,255,0.03) !important;
-  transform: none !important;
-}
-.issue-list .flex-item:last-child { border-bottom: none !important; }
-.issue-list .flex-item-title { font-size: 0.98em; font-weight: 500; }
-.issue-list .flex-item-body, .issue-list .desc {
-  color: var(--color-text-light-3) !important;
-  font-size: 0.88em;
-  margin-top: 3px;
-}
-.issue-list .flex-item-leading { padding-top: 2px; }
-/* the open/closed segmented control on issue list */
-.issue-list-toolbar-left .ui.compact.menu,
-.issue-list-toolbar .ui.compact.menu {
-  background: rgba(255,255,255,0.04) !important;
-  border: 1px solid rgba(255,255,255,0.06) !important;
-  border-radius: 10px !important;
-  padding: 3px !important;
-  gap: 2px;
-}
-.issue-list-toolbar .ui.compact.menu .item {
-  border-radius: 7px !important;
-  padding: 6px 12px !important;
-  border: none !important;
-  font-size: 0.9em;
-  color: var(--color-text-light) !important;
-}
-.issue-list-toolbar .ui.compact.menu .item.active {
-  background: rgba(255,255,255,0.1) !important;
-  color: #fff !important;
-}
-
-/* --- Right sidebar of repo page: airy, borderless sections --- */
-.repository .repo-home-sidebar-top,
-.repository .repo-home-sidebar-bottom,
-.repository #repo-desc + * {
-  padding-left: 22px;
-}
-.repository .repo-home-sidebar-top h4,
-.repository .repo-home-sidebar-bottom h4,
-.repository .ui.header:not(.attached) {
-  font-size: 0.82em !important;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--color-text-light-3) !important;
-  font-weight: 600 !important;
-  margin: 18px 0 8px !important;
-}
-.repository .language-stats { border-radius: 9999px; overflow: hidden; height: 7px; gap: 2px; }
-.repository .language-stats-details { font-size: 0.86em; color: var(--color-text-light-2) !important; }
-
-/* --- Language bar segments neutral-friendly --- */
-.language-stats .language-percentage { border-radius: 0 !important; }
-
-/* --- Markdown body (README) tighter --- */
-.markup h1:first-child { margin-top: 0 !important; font-size: 1.7em; }
-.markup { font-size: 0.95em; line-height: 1.7; }
-.markup h1, .markup h2 { border-bottom: 1px solid rgba(255,255,255,0.07) !important; padding-bottom: 7px; }
-
-/* --- Buttons in toolbars a touch smaller (Codex compact feel) --- */
-.issue-list-toolbar .ui.button,
-.repo-file-actions .ui.button,
-.ui.small.button { padding: 7px 14px !important; font-size: 0.9em !important; }
-.ui.tiny.button { padding: 5px 11px !important; font-size: 0.85em !important; }
-
-/* --- Timeline / comment blocks --- */
-.timeline-item .content, .comment .content {
-  border-radius: 12px !important;
-  border-color: rgba(255,255,255,0.07) !important;
-}
-.timeline-item .comment-header {
-  background: rgba(255,255,255,0.03) !important;
-  border-radius: 12px 12px 0 0 !important;
-  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
-}
-
-/* --- Diff view --- */
-.diff-file-box .diff-file-header {
-  background: rgba(255,255,255,0.03) !important;
-  border-radius: 12px 12px 0 0 !important;
-}
-.diff-file-box { border-radius: 12px !important; }
-.file-body.file-code .lines-num { color: var(--color-text-light-3) !important; }
-
-/* --- Tables generally --- */
-.ui.table { border-radius: 12px !important; border-color: rgba(255,255,255,0.07) !important; }
-.ui.table thead th {
-  background: rgba(255,255,255,0.03) !important;
-  color: var(--color-text-light-2) !important;
-  font-weight: 500 !important;
-  font-size: 0.88em;
-  border-color: rgba(255,255,255,0.07) !important;
-}
-.ui.table td { border-color: rgba(255,255,255,0.05) !important; }
-
-/* ==========================================================================
-   PR / diff / issue detail — desaturate, add structure
-   ========================================================================== */
-
-/* --- State badges (开启中 / 已合并 / 已关闭): muted, pill --- */
-.issue-state-label, .ui.label.issue-state,
-.issue-title-buttons + * .ui.label,
-.ui.basic.label.issue-state {
-  border-radius: 9999px !important;
-  padding: 5px 12px !important;
-  font-weight: 500 !important;
-  font-size: 0.86em !important;
-  border: 1px solid transparent !important;
-}
-.issue-state-label.green, .issue-state-label.is-open,
-.ui.green.label.issue-state,
-.ui.green.label.issue-state-label,
-.ui.label.issue-state-label.green {
-  background: rgba(38, 181, 146, 0.16) !important;
-  background-color: rgba(38, 181, 146, 0.16) !important;
-  color: #4fc7a8 !important;
-  border-color: rgba(38, 181, 146, 0.3) !important;
-}
-.issue-state-label.purple, .issue-state-label.is-merged,
-.ui.purple.label.issue-state-label {
-  background-color: rgba(155, 126, 240, 0.16) !important;
-  color: #b39af5 !important;
-  border-color: rgba(155, 126, 240, 0.3) !important;
-}
-.issue-state-label.red, .issue-state-label.is-closed,
-.ui.red.label.issue-state-label {
-  background-color: rgba(239, 74, 74, 0.16) !important;
-  color: #f26461 !important;
-  border-color: rgba(239, 74, 74, 0.3) !important;
-}
-.issue-state-label .svg { color: currentColor !important; }
-
-/* --- Comment editor: pill tabs, roomier toolbar --- */
-.comment-form .ui.tabular.menu,
-.combo-markdown-editor .ui.tabular.menu,
-.markdown-editor-tabs {
-  background: rgba(255,255,255,0.04) !important;
-  border: 1px solid rgba(255,255,255,0.06) !important;
-  border-radius: 10px !important;
-  padding: 3px !important;
-  gap: 2px;
-  display: inline-flex !important;
-  margin-bottom: 10px !important;
-}
-.comment-form .ui.tabular.menu .item,
-.combo-markdown-editor .ui.tabular.menu .item {
-  border-radius: 7px !important;
-  border: none !important;
-  padding: 6px 14px !important;
-  font-size: 0.9em;
-  color: var(--color-text-light) !important;
-}
-.comment-form .ui.tabular.menu .item.active,
-.combo-markdown-editor .ui.tabular.menu .item.active {
-  background: rgba(255,255,255,0.1) !important;
-  color: #fff !important;
-}
-.markdown-toolbar, .combo-markdown-editor .markdown-toolbar {
+#navbar .navbar-left,
+#navbar .navbar-right {
   gap: 3px;
-  padding: 6px 8px !important;
-  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
-}
-.markdown-toolbar button, .markdown-toolbar .markdown-toolbar-button {
-  border-radius: 7px !important;
-  width: 28px; height: 28px;
-  display: inline-flex; align-items: center; justify-content: center;
-  color: var(--color-text-light-2) !important;
-  transition: background-color 0.15s ease-out, color 0.15s ease-out;
-}
-.markdown-toolbar button:hover {
-  background: rgba(255,255,255,0.08) !important;
-  color: var(--color-text-dark) !important;
-}
-.combo-markdown-editor .ui.form textarea,
-.comment-form textarea { border-radius: 10px !important; min-height: 110px; }
-/* dropzone */
-.dropzone, .ui.form .dropzone {
-  border: 1px dashed rgba(255,255,255,0.12) !important;
-  border-radius: 10px !important;
-  background: rgba(255,255,255,0.02) !important;
-  color: var(--color-text-light-3) !important;
-  padding: 16px !important;
 }
 
-/* --- Issue sidebar: thinner rules, tighter groups --- */
-.issue-content-right .ui.divider,
-.issue-sidebar .ui.divider,
-.issue-content-right hr {
-  border-color: rgba(255,255,255,0.06) !important;
-  margin: 14px 0 !important;
-}
-.issue-content-right .ui.header,
-.issue-sidebar .ui.header {
-  font-size: 0.82em !important;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--color-text-light-3) !important;
-  font-weight: 600 !important;
-  margin-bottom: 7px !important;
-}
-.issue-content-right .ui.button, .issue-sidebar .ui.button {
-  font-size: 0.88em !important;
-  padding: 7px 13px !important;
+#navbar .item {
+  min-height: 40px;
+  margin: 0 1px;
+  padding: 0 12px;
+  color: var(--work-text-soft);
+  border-radius: 10px;
+  font-weight: 520;
+  transition:
+    color 120ms ease,
+    background-color 120ms ease;
 }
 
-/* --- Comment header row --- */
-.comment .comment-header, .timeline-item .comment-header {
-  padding: 9px 14px !important;
-  font-size: 0.92em;
-}
-.comment .comment-header-left .author { font-weight: 500; }
-.comment .comment-content, .timeline-item .render-content { padding: 14px !important; }
-
-/* --- Form action buttons: not cramped --- */
-.comment-form .ui.buttons, .comment-form .field > .ui.button { margin-top: 4px; }
-.comment-form .ui.primary.button { padding: 8px 18px !important; }
-
-/* --- Issue / PR title block gets a card --- */
-.issue-content-header, .issue-title-header,
-.repository .issue-title-wrapper {
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  margin-bottom: 18px;
-}
-#issue-title-display h1, .issue-title h1 {
-  font-size: 1.65em !important;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.35;
-}
-.issue-title-meta, .issue-content-header .flex-text-block {
-  color: var(--color-text-light-2) !important;
-  font-size: 0.92em;
-  margin-top: 8px;
+#navbar .item:hover,
+#navbar .item:focus-visible {
+  color: var(--work-text);
+  background: #eaeae6;
 }
 
-/* --- diff stat bars: desaturate, thinner --- */
-.diff-stats-bar {
-  height: 7px !important;
-  border-radius: 9999px !important;
-  overflow: hidden;
-  background: rgba(239, 74, 74, 0.55) !important;
-}
-.diff-stats-bar .diff-stats-add-bar {
-  background: rgba(38, 181, 146, 0.7) !important;
-  height: 100% !important;
-}
-.diff-stats .text.green, .diff-stats-add, span.text.green {
-  color: #4fc7a8 !important;
-  font-weight: 500;
-  font-size: 0.9em;
-}
-.diff-stats .text.red, .diff-stats-del, span.text.red {
-  color: #f08a87 !important;
-  font-weight: 500;
-  font-size: 0.9em;
+#navbar-logo {
+  width: 42px;
+  justify-content: center;
 }
 
-/* --- diff rows: softer add/del tint --- */
-.code-diff .add-code, .code-diff td.add-code,
-.diff-file-body .lines-code.add-code,
-tr.add-code, .code-inner.add-code {
-  background: rgba(38, 181, 146, 0.09) !important;
+#navbar-logo img {
+  width: 27px;
+  height: 27px;
+  filter: grayscale(1) contrast(1.1) brightness(0.62);
+  opacity: 0.9;
 }
-.code-diff .del-code, .code-diff td.del-code,
-.diff-file-body .lines-code.del-code,
-tr.del-code, .code-inner.del-code {
-  background: rgba(239, 74, 74, 0.09) !important;
-}
-.code-diff .lines-num.add-code, .lines-num-old.add-code,
-.diff-file-body .lines-num.add-code { background: rgba(38, 181, 146, 0.14) !important; }
-.code-diff .lines-num.del-code, .lines-num-new.del-code,
-.diff-file-body .lines-num.del-code { background: rgba(239, 74, 74, 0.14) !important; }
-/* hunk header row */
-.diff-file-body .lines-code.hunk, tr.same-code .hunk,
-.code-diff .hunk, td.chunk-header {
-  background: rgba(255,255,255,0.035) !important;
-  color: var(--color-text-light-3) !important;
-  font-size: 0.86em;
-}
-/* diff code font a touch smaller for density */
-.code-diff, .file-body.file-code { font-size: 0.86em; line-height: 1.55; }
-.code-diff .lines-num { user-select: none; opacity: 0.65; }
 
-/* --- diff file box header --- */
-.diff-file-box .diff-file-header,
-.diff-file-header.sticky-2nd-row {
-  padding: 10px 14px !important;
-  border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+#navbar .avatar {
+  box-shadow: 0 0 0 1px var(--work-border);
 }
-.diff-file-header .file { font-family: var(--fonts-monospace); font-size: 0.9em; }
-.diff-file-box { border: 1px solid rgba(255,255,255,0.07) !important; margin-bottom: 16px !important; }
 
-/* --- diff toolbar icon buttons: equal size --- */
-.diff-detail-actions .ui.button,
-.diff-detail-box .ui.icon.button,
-.diff-toolbar .ui.button {
-  width: 32px; height: 32px;
-  padding: 0 !important;
-  display: inline-flex !important;
-  align-items: center; justify-content: center;
-  background: rgba(255,255,255,0.055) !important;
-  color: var(--color-text) !important;
-  border: 1px solid rgba(255,255,255,0.09) !important;
+/* Page rhythm and width */
+.page-content {
+  padding-top: 30px;
+  padding-bottom: 64px;
 }
-.diff-detail-actions .ui.button:hover,
-.diff-detail-box .ui.icon.button:hover {
-  background: rgba(255,255,255,0.1) !important;
-  color: var(--color-text-dark) !important;
+
+.page-content > .ui.container,
+.repository .ui.container {
+  width: min(1320px, calc(100% - 48px)) !important;
+  max-width: 1320px !important;
 }
-/* active/checked toolbar toggles stay subtle, never solid white */
-.diff-detail-actions .ui.button.active,
-.diff-detail-box .ui.icon.button.active,
-.diff-detail-actions .ui.primary.button,
-.diff-detail-box .ui.primary.button {
-  background: rgba(255,255,255,0.14) !important;
+
+.dashboard.feeds > .ui.container {
+  width: min(1180px, calc(100% - 48px)) !important;
+  max-width: 1180px !important;
+  gap: 28px;
+}
+
+/* Surfaces */
+.ui.segment,
+.ui.segments,
+.ui.card,
+.ui.cards > .card,
+.ui.attached.segment,
+.ui.modal,
+.ui.message,
+.ui.popup,
+.ui.dropdown > .menu {
+  border-color: var(--work-border) !important;
+}
+
+.ui.segment,
+.ui.segments,
+.ui.card,
+.ui.cards > .card {
+  border-radius: var(--work-radius-md) !important;
+  box-shadow: var(--work-shadow-sm) !important;
+}
+
+.ui.segments > .segment:first-child,
+.ui.attached.segment:first-child {
+  border-radius: var(--work-radius-md) var(--work-radius-md) 0 0 !important;
+}
+
+.ui.segments > .segment:last-child,
+.ui.attached.segment:last-child {
+  border-radius: 0 0 var(--work-radius-md) var(--work-radius-md) !important;
+}
+
+.ui.header,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--work-text);
+  letter-spacing: -0.015em;
+}
+
+.ui.header .sub.header {
+  color: var(--work-text-soft);
+  letter-spacing: 0;
+}
+
+/* Buttons */
+.ui.button {
+  min-height: 36px;
+  padding: 9px 14px;
+  border-radius: var(--work-radius-sm) !important;
+  box-shadow:
+    0 0 0 1px var(--work-border) inset,
+    var(--work-shadow-sm) !important;
+  font-family: var(--fonts-proportional);
+  font-weight: 560;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease,
+    box-shadow 120ms ease,
+    transform 120ms ease;
+}
+
+.ui.button:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 1px #c9cac4 inset,
+    0 2px 5px rgb(31 35 33 / 7%) !important;
+}
+
+.ui.primary.button,
+.ui.green.button,
+.ui.positive.button {
   color: #fff !important;
-  border-color: rgba(255,255,255,0.2) !important;
-}
-.diff-detail-actions .ui.dropdown.button,
-.diff-detail-box .ui.dropdown.button { width: auto; padding: 0 12px !important; }
-
-/* --- viewed-file counter chip --- */
-.diff-detail-box .diff-detail-stats,
-.review-progress, .viewed-files-counter {
-  background: rgba(255,255,255,0.05) !important;
-  border-radius: 9999px !important;
-  padding: 4px 11px !important;
-  font-size: 0.86em;
-  color: var(--color-text-light-2) !important;
-}
-
-/* --- Tabs with counts (对话内容 1 / 文件变动 1) --- */
-.repository .tabs .ui.menu .item,
-.issue-navbar .ui.menu .item { gap: 6px; }
-
-/* --- Timeline avatars & rails --- */
-.timeline-item .avatar img, .timeline .avatar img { border-radius: 7px !important; }
-.timeline::before, .timeline-item::before { background: rgba(255,255,255,0.07) !important; }
-
-/* --- Commit list rows --- */
-#commits-table tr, .commit-list tr {
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-#commits-table td, .commit-list td { padding: 10px 12px !important; border: none !important; }
-#commits-table .sha, .commit-list .sha, .commit-id-short {
-  font-family: var(--fonts-monospace);
-  background: rgba(255,255,255,0.06);
-  border-radius: 5px;
-  padding: 2px 6px;
-  font-size: 0.85em;
-}
-
-/* ==========================================================================
-   Round 3 fixes (from screenshot review)
-   ========================================================================== */
-
-/* --- 1. Heatmap: blue ramp so levels are distinguishable --- */
-/* Gitea fills cells with inline style="fill: var(--color-primary-dark-N)".
-   Since our primary is neutral white, all levels looked identical.
-   Fix: redefine those vars ONLY inside the heatmap scope → cool blue ramp. */
-#user-heatmap, .contribution-graph, #user-heatmap svg {
-  --color-primary-dark-1: #1f4470;
-  --color-primary-dark-2: #2a5f9e;
-  --color-primary-dark-3: #3a7cc4;
-  --color-primary-dark-4: #5aa0e6;
-  --color-primary-dark-5: #7fbcf5;
-  --color-primary: #3a7cc4;
-  --color-secondary-alpha-60: #2b2b2b;
-}
-#user-heatmap { --heatmap-cell-size: 10px; }
-#user-heatmap rect.heatmap-day, .vch__day__square {
-  width: 10px !important; height: 10px !important;
-  rx: 2 !important; ry: 2 !important;
-  stroke: none !important;
-}
-/* legend squares inherit the same scope so they match */
-.contribution-legend, .total-contributions + * { --color-primary-dark-2: #2a5f9e; }
-
-/* --- 2. Repo nav tabs: give real height, stop the squeeze --- */
-.repository .header-wrapper .ui.tabular.menu,
-.repository .ui.tabular.menu:not(.secondary),
-.repository .overflow-menu {
-  min-height: 44px;
-  align-items: center;
-  padding: 5px !important;
-}
-.repository .overflow-menu-items .item,
-.repository .ui.tabular.menu .item {
-  padding: 8px 14px !important;
-  min-height: 34px;
-  align-items: center;
-}
-/* mirror-sync notice must not overlap the tab bar */
-.repository .mirror-sync-notice,
-.repository .ui.info.message.mirror,
-.repository .header-wrapper > .ui.container > .flex-text-block:first-child {
-  margin-bottom: 10px !important;
-  padding: 7px 12px !important;
-  background: rgba(255,255,255,0.04) !important;
-  border: 1px solid rgba(255,255,255,0.07) !important;
-  border-radius: 9px !important;
-  font-size: 0.88em;
-  color: var(--color-text-light-2) !important;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-}
-.repository .header-wrapper { padding-bottom: 6px; }
-
-/* --- 3. Repo action buttons: kill the double-nested frame --- */
-/* Gitea wraps each action in .ui.labeled.button (outer) containing button+label.
-   Previously both drew borders → double frame. Now only the group draws one. */
-.repo-buttons .ui.labeled.button,
-.repository .ui.labeled.button {
-  border: 1px solid rgba(255,255,255,0.1) !important;
-  border-radius: 9999px !important;
-  background: rgba(255,255,255,0.05) !important;
-  overflow: hidden;
-  display: inline-flex !important;
-  align-items: stretch;
-  padding: 0 !important;
-}
-.repo-buttons .ui.labeled.button > .ui.button,
-.repo-buttons .ui.labeled.button > button,
-.repository .ui.labeled.button > .ui.button {
-  border: none !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  padding: 7px 13px !important;
+  background: var(--work-accent) !important;
   box-shadow: none !important;
 }
-.repo-buttons .ui.labeled.button > .ui.button:hover,
-.repository .ui.labeled.button > .ui.button:hover {
-  background: rgba(255,255,255,0.07) !important;
+
+.ui.primary.button:hover,
+.ui.green.button:hover,
+.ui.positive.button:hover {
+  background: var(--work-accent-hover) !important;
 }
-.repo-buttons .ui.labeled.button > .ui.label,
-.repository .ui.labeled.button > .ui.label {
-  border: none !important;
-  border-left: 1px solid rgba(255,255,255,0.1) !important;
-  border-radius: 0 !important;
-  background: rgba(255,255,255,0.03) !important;
-  padding: 7px 12px !important;
+
+.ui.red.button,
+.ui.negative.button {
+  color: #fff !important;
+  box-shadow: none !important;
+}
+
+.ui.icon.button,
+.ui.mini.icon.button {
   display: inline-flex;
   align-items: center;
-  font-size: 0.86em !important;
-  color: var(--color-text-light) !important;
-}
-/* the lone RSS icon button stays a circle */
-.repo-buttons > .ui.icon.button:not(.labeled) {
-  width: 36px; height: 36px;
-  padding: 0 !important;
-  border-radius: 9999px !important;
-  display: inline-flex; align-items: center; justify-content: center;
-}
-.repo-buttons { gap: 8px; display: flex; align-items: center; }
-
-/* --- 4. Issue search toolbar: keep 精确 button inside bounds --- */
-.issue-list-toolbar, .issue-list-toolbar-left, .issue-list-toolbar-right {
-  gap: 8px;
-  flex-wrap: wrap;
-  align-items: center;
-}
-.issue-list-toolbar .ui.action.input,
-.issue-list-toolbar-right .ui.action.input {
-  display: flex !important;
-  align-items: center;
-  gap: 6px;
-  flex: 1 1 260px;
-  min-width: 0;
-}
-.issue-list-toolbar .ui.action.input > input {
-  flex: 1;
-  min-width: 0;
-  border-radius: 9999px !important;
-  border: 1px solid rgba(255,255,255,0.09) !important;
-}
-/* the "精确" toggle + search icon become separate compact controls */
-.issue-list-toolbar .ui.action.input > .ui.button,
-.issue-list-toolbar .ui.action.input > .ui.checkbox,
-.issue-list-toolbar .ui.action.input > label {
-  flex-shrink: 0;
-  border-radius: 9999px !important;
-  margin: 0 !important;
-  white-space: nowrap;
-}
-.issue-list-toolbar .ui.action.input > .ui.button {
-  padding: 7px 13px !important;
-  background: rgba(255,255,255,0.06) !important;
-  border: 1px solid rgba(255,255,255,0.09) !important;
+  justify-content: center;
 }
 
-/* --- 5. Left summary rail on issue dashboard (在您的仓库中…) --- */
-/* NOTE: .small-menu-items is used BOTH as a vertical rail (issue dashboard)
-   and as a horizontal segmented control (release page). Split by .vertical. */
-.ui.vertical.menu.small-menu-items,
-.ui.secondary.vertical.menu.small-menu-items {
-  background: transparent !important;
-  border: none !important;
-  padding: 0 !important;
-}
-.ui.vertical.menu.small-menu-items .item {
-  border-radius: 8px !important;
-  padding: 8px 11px !important;
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  color: var(--color-text-light) !important;
-  border-bottom: none !important;
-}
-.ui.vertical.menu.small-menu-items .item:hover { background: rgba(255,255,255,0.05) !important; }
-.ui.vertical.menu.small-menu-items .item.active {
-  background: rgba(255,255,255,0.09) !important;
-  color: #fff !important;
-  font-weight: 500;
-}
-.ui.vertical.menu.small-menu-items .item .ui.label,
-.ui.vertical.menu.small-menu-items .item .count {
-  background: transparent !important;
-  color: var(--color-text-light-3) !important;
-  padding: 0 !important;
-  font-size: 0.9em;
+.ui.basic.button {
+  background: var(--work-surface) !important;
 }
 
-/* horizontal variant (release page: 0 发布 / 0 Git 标签) = pill segmented */
-.ui.compact.menu.small-menu-items:not(.vertical),
-.ui.compact.small.menu.small-menu-items:not(.vertical) {
-  display: inline-flex !important;
-  background: rgba(255,255,255,0.05) !important;
-  border: 1px solid rgba(255,255,255,0.08) !important;
-  border-radius: 10px !important;
-  padding: 3px !important;
-  gap: 2px;
-  min-height: 0 !important;
-}
-.ui.compact.menu.small-menu-items:not(.vertical) .item {
-  border: none !important;
-  border-radius: 7px !important;
-  padding: 6px 13px !important;
-  margin: 0 !important;
-  font-size: 0.9em;
-  color: var(--color-text-light) !important;
-  background: transparent !important;
-}
-.ui.compact.menu.small-menu-items:not(.vertical) .item:hover {
-  background: rgba(255,255,255,0.07) !important;
-  color: var(--color-text-dark) !important;
-}
-.ui.compact.menu.small-menu-items:not(.vertical) .item.active {
-  background: rgba(255,255,255,0.11) !important;
-  color: #fff !important;
-  font-weight: 500;
-}
-.ui.compact.menu.small-menu-items:not(.vertical) .item::before,
-.ui.compact.menu.small-menu-items:not(.vertical) .item::after { display: none !important; }
-/* toolbar row that holds it gets breathing room */
-.repository .ui.secondary.pointing.menu + *,
-.release-list-topbar, .tag-list-topbar { margin-bottom: 14px; }
-
-/* --- Inline toggle fields: keep switch after the label text --- */
-.ui.form .inline.field > .ui.checkbox,
-.ui.form .field > .ui.checkbox { vertical-align: middle; }
-/* Gitea repo settings uses: <label>模板</label><div class="ui toggle checkbox"><input><label>说明</label></div>
-   Make the switch sit first, then its own描述 label. */
-.ui.toggle.checkbox {
-  display: inline-flex !important;
-  align-items: center;
-  gap: 10px;
-}
-.ui.toggle.checkbox > input[type=checkbox] { order: 0; flex-shrink: 0; }
-.ui.toggle.checkbox > label { order: 1; margin: 0 !important; }
-
-/* --- Vertical settings menu: fix nested/indented sub-items --- */
-.ui.vertical.menu .item > .menu,
-.ui.vertical.menu .item .menu { margin: 4px 0 0 0 !important; }
-.ui.vertical.menu .item > .menu > .item,
-.ui.vertical.menu .item .menu .item {
-  padding: 7px 11px 7px 20px !important;
-  font-size: 0.94em;
-  border-radius: 7px !important;
-}
-/* collapsible group header (工作流 ›) aligns with siblings */
-.ui.vertical.menu .item.has-sub,
-.ui.vertical.menu details > summary.item {
-  display: flex !important;
-  align-items: center;
-  justify-content: space-between;
-  padding: 9px 13px !important;
-  cursor: pointer;
-  list-style: none;
-}
-.ui.vertical.menu details > summary.item::-webkit-details-marker { display: none; }
-
-/* --- 6. Dashboard sidebar search: icon never overlaps text --- */
-/* Gitea renders: <div class="ui ... action left icon input"><input><i class="icon"><svg></i><button>
-   Two things must hold: (a) the input reserves left space, (b) the <i> is
-   centered absolutely. The earlier `.ui.action.input input{padding-left:18px}`
-   rule must lose, so we qualify with [class*="left icon"] + high specificity. */
-.ui[class*="left icon"].input > input,
-.ui[class*="left icon"].input > input[type="search"],
-.ui[class*="left icon"].input > input[type="text"] {
-  padding-left: 38px !important;
-}
-.ui[class*="left icon"].input {
-  position: relative !important;
-  display: flex !important;
-  align-items: center;
-}
-.ui[class*="left icon"].input > i.icon,
-.ui[class*="left icon"].input > .icon {
-  position: absolute !important;
-  left: 13px !important;
-  right: auto !important;
-  top: 0 !important;
-  bottom: 0 !important;
+.ui.disabled.button,
+.ui.button:disabled {
   transform: none !important;
-  height:100% !important;
-  width: 16px !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  pointer-events: none;
-  opacity: 0.5;
-  z-index: 3;
-}
-.ui[class*="left icon"].input > i.icon > svg,
-.ui[class*="left icon"].input > .icon > svg {
-  width: 15px !important;
-  height: 15px !important;
-  display: block;
+  opacity: 0.48 !important;
 }
 
-/* --- Elevated surfaces to match the lighter base --- */
-.ui.dropdown .menu, .ui.popup, .ui.selection.dropdown .menu,
-.ui.modal { background: #262626 !important; }
-.navbar, #navbar { background: rgba(26, 26, 26, 0.85) !important; }
-.ui.input input, .ui.form input, .ui.form textarea,
-.ui.form select, .ui.selection.dropdown {
-  background: rgba(255,255,255,0.05) !important;
+/* Forms */
+.ui.form input:not([type="checkbox"]):not([type="radio"]),
+.ui.form textarea,
+.ui.form select,
+.ui.input > input,
+input,
+textarea,
+select {
+  color: var(--work-text) !important;
+  background: var(--work-surface) !important;
+  border-color: var(--color-input-border) !important;
+  border-radius: var(--work-radius-sm) !important;
+  box-shadow: 0 1px 1px rgb(31 35 33 / 2%) inset !important;
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease;
 }
-.ui.input input:focus, .ui.form input:focus, .ui.form textarea:focus {
-  background: rgba(255,255,255,0.08) !important;
+
+.ui.form input:focus,
+.ui.form textarea:focus,
+.ui.form select:focus,
+.ui.input > input:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--work-focus) !important;
+  box-shadow: 0 0 0 3px rgb(128 185 170 / 22%) !important;
 }
-.ui.button:not(.primary):not(.positive):not(.red) {
-  background: rgba(255,255,255,0.07) !important;
+
+.ui.form label {
+  color: #454844 !important;
+  font-weight: 560 !important;
 }
-.ui.button:not(.primary):not(.positive):not(.red):hover {
-  background: rgba(255,255,255,0.12) !important;
+
+.ui.checkbox label,
+.ui.radio.checkbox label {
+  color: var(--work-text-soft) !important;
 }
-/* code / diff wells slightly lighter than card */
-.code-diff, .file-body.file-code, .highlight, pre.code-block {
-  background: #1c1c1c !important;
+
+/* Menus, tabs, and dropdowns */
+.ui.menu {
+  border-color: var(--work-border) !important;
+  box-shadow: none !important;
 }
-.diff-file-box .diff-file-header, .comment .comment-header {
-  background: rgba(255,255,255,0.04) !important;
+
+.ui.menu .item {
+  color: var(--work-text-soft);
+}
+
+.ui.menu .active.item {
+  color: var(--work-text) !important;
+  font-weight: 620;
+}
+
+.ui.secondary.menu .item {
+  border-radius: var(--work-radius-sm) !important;
+}
+
+.ui.secondary.menu .active.item {
+  background: #e8e8e4 !important;
+}
+
+.ui.pointing.menu .active.item::after,
+.ui.secondary.pointing.menu .active.item::after {
+  background: var(--work-accent) !important;
+}
+
+.ui.dropdown > .menu,
+.ui.popup,
+.ui.modal {
+  background: var(--work-surface) !important;
+  border-radius: var(--work-radius-md) !important;
+  box-shadow: var(--work-shadow-md) !important;
+}
+
+.ui.dropdown > .menu > .item {
+  margin: 3px 5px;
+  border-radius: 7px !important;
+}
+
+.ui.dropdown > .menu > .item:hover,
+.ui.dropdown > .menu > .selected.item {
+  background: var(--work-surface-muted) !important;
+}
+
+/* Repository navigation */
+.repository .repo-header {
+  padding-bottom: 18px;
+}
+
+.repository .repo-header .repo-title {
+  font-weight: 650;
+  letter-spacing: -0.018em;
+}
+
+.repository .ui.secondary.pointing.menu,
+.repository overflow-menu.ui.secondary.pointing.menu {
+  padding: 5px;
+  background: #edede9;
+  border: 1px solid var(--work-border-subtle) !important;
+  border-radius: var(--work-radius-md);
+}
+
+.repository .ui.secondary.pointing.menu .item,
+.repository overflow-menu.ui.secondary.pointing.menu .item {
+  min-height: 38px;
+  margin: 0 2px;
+  padding: 9px 12px;
+  border: 0 !important;
+  border-radius: var(--work-radius-sm) !important;
+}
+
+.repository .ui.secondary.pointing.menu .active.item,
+.repository overflow-menu.ui.secondary.pointing.menu .active.item {
+  background: var(--work-surface) !important;
+  box-shadow: 0 1px 2px rgb(31 35 33 / 8%);
+}
+
+.repository .ui.secondary.pointing.menu .active.item::after,
+.repository overflow-menu.ui.secondary.pointing.menu .active.item::after {
+  display: none !important;
+}
+
+.repository-menu.ui.segment {
+  padding: 10px !important;
+  background: var(--work-surface) !important;
+}
+
+/* Tables and file lists */
+.ui.table {
+  color: var(--work-text);
+  background: var(--work-surface);
+  border-color: var(--work-border) !important;
+  border-radius: var(--work-radius-md) !important;
+  box-shadow: var(--work-shadow-sm);
+}
+
+.ui.table thead th {
+  color: #4e514d;
+  background: #f5f5f2 !important;
+  border-color: var(--work-border-subtle) !important;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+}
+
+.ui.table tr td {
+  border-color: var(--work-border-subtle) !important;
+}
+
+.ui.selectable.table tbody tr:hover,
+.repository.file.list #repo-files-table tr:hover {
+  background: #f5f7f5 !important;
+}
+
+#repo-files-table {
+  overflow: hidden;
+  border: 1px solid var(--work-border) !important;
+  border-radius: var(--work-radius-md) !important;
+}
+
+#repo-files-table .repo-file-cell-name a {
+  color: #30332f;
+  font-weight: 520;
+}
+
+/* Labels, badges, and status */
+.ui.label {
+  border-radius: 999px !important;
+  font-weight: 560;
+  letter-spacing: 0;
+}
+
+.ui.basic.label {
+  background: #f3f3f0 !important;
+  border-color: var(--work-border) !important;
+}
+
+.ui.label.primary,
+.ui.primary.label {
+  color: #0b5f50 !important;
+  background: var(--work-accent-soft) !important;
+}
+
+.issue-state-label,
+.commit-statuses-trigger,
+.repo-topic-label {
+  border-radius: 999px !important;
+}
+
+/* Code and Markdown */
+code,
+pre,
+.code-view,
+.file-view,
+.monaco-editor {
+  font-family: var(--fonts-monospace) !important;
+}
+
+code {
+  border-radius: 5px;
+}
+
+.markup {
+  color: #2d302d;
+  font-size: 15px;
+  line-height: 1.72;
+}
+
+.markup h1,
+.markup h2,
+.markup h3,
+.markup h4 {
+  color: #222522;
+  font-weight: 650;
+  letter-spacing: -0.018em;
+}
+
+.markup h1,
+.markup h2 {
+  border-bottom-color: var(--work-border-subtle) !important;
+}
+
+.markup blockquote {
+  color: var(--work-text-soft);
+  background: #f4f4f1;
+  border-left: 3px solid #a9c8bf;
+  border-radius: 0 var(--work-radius-sm) var(--work-radius-sm) 0;
+  padding: 10px 16px;
+}
+
+.markup pre,
+.file-view pre,
+.code-view {
+  background: #f5f5f2 !important;
+  border-color: var(--work-border) !important;
+  border-radius: var(--work-radius-md) !important;
+}
+
+.markup table {
+  border-radius: var(--work-radius-sm);
+  overflow: hidden;
+}
+
+/* Activity feeds and dashboard */
+.dashboard.feeds .news {
+  background: transparent;
+}
+
+.dashboard.feeds .news .event {
+  margin: 0;
+  padding: 18px 4px;
+  border-bottom: 1px solid var(--work-border-subtle);
+}
+
+.dashboard.feeds .news .event:hover {
+  background: rgb(255 255 255 / 45%);
+}
+
+.dashboard.feeds .filter.menu,
+.dashboard.feeds .ui.card,
+.dashboard.feeds .ui.segment {
+  background: var(--work-surface);
+}
+
+.heatmap-color-0 {
+  background: #ecece7 !important;
+}
+.heatmap-color-1 {
+  background: #cce4dc !important;
+}
+.heatmap-color-2 {
+  background: #91c4b5 !important;
+}
+.heatmap-color-3 {
+  background: #4a9b84 !important;
+}
+.heatmap-color-4 {
+  background: #0f7a65 !important;
+}
+
+/* Pagination */
+.ui.pagination.menu {
+  gap: 3px;
+  padding: 3px;
+  background: var(--work-surface);
+  border-radius: 10px !important;
+}
+
+.ui.pagination.menu .item {
+  min-width: 34px;
+  min-height: 34px;
+  margin: 0;
+  border: 0 !important;
+  border-radius: 7px !important;
+}
+
+.ui.pagination.menu .active.item {
+  color: #fff !important;
+  background: var(--work-accent) !important;
+}
+
+/* Footer */
+.page-footer {
+  color: var(--work-text-muted);
+  background: #efefec;
+  border-top: 1px solid var(--work-border-subtle);
+}
+
+.page-footer a {
+  color: #656862;
+}
+
+/* Scrollbars */
+* {
+  scrollbar-color: #c8cac4 transparent;
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c8cac4;
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #aeb1aa;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+
+/* Responsive */
+@media (max-width: 767.98px) {
+  #navbar {
+    min-height: 54px;
+    padding: 6px 10px;
+  }
+
+  #navbar .item {
+    min-height: 38px;
+  }
+
+  .page-content {
+    padding-top: 18px;
+    padding-bottom: 40px;
+  }
+
+  .page-content > .ui.container,
+  .repository .ui.container,
+  .dashboard.feeds > .ui.container {
+    width: calc(100% - 24px) !important;
+  }
+
+  .repository .ui.secondary.pointing.menu,
+  .repository overflow-menu.ui.secondary.pointing.menu {
+    border-radius: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
