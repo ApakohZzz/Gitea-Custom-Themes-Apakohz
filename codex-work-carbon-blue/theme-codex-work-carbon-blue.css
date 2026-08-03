@@ -1,5 +1,5 @@
 /*
- * Codex Work Carbon for Gitea 1.27.x
+ * Codex Work Carbon Blue for Gitea 1.27.x
  *
  * A dark, low-glare workspace designed for long coding sessions. The theme
  * uses warm graphite layers instead of pure black, clear surface boundaries,
@@ -965,7 +965,7 @@ select:focus {
   background: #ffffff05;
 }
 
-.dashboard.feeds .news .item-trailing > svg {
+.dashboard.feeds #activity-feed .item-trailing > svg {
   width: 22px !important;
   height: 22px !important;
   margin-right: 6px !important;
