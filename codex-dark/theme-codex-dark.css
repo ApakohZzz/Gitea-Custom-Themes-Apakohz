@@ -1,5 +1,5 @@
 /*
- * Codex Work Panels for Gitea 1.27.x
+ * Codex Dark for Gitea 1.27.x
  *
  * A dark, low-glare workspace designed for long coding sessions. The theme
  * uses warm graphite layers instead of pure black, clear surface boundaries,
@@ -7,7 +7,7 @@
  */
 
 gitea-theme-meta-info {
-  --theme-display-name: "Codex Work";
+  --theme-display-name: "Codex Dark";
   --theme-color-scheme: "dark";
 }
 
@@ -20,7 +20,7 @@ gitea-theme-meta-info {
     "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   --fonts-emoji: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji";
 
-  /* Codex Work design tokens */
+  /* Codex Dark design tokens */
   --cw-canvas: #171717;
   --cw-nav: #1b1b1b;
   --cw-surface: #212121;

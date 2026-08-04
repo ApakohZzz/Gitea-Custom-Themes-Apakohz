@@ -1,5 +1,5 @@
 /*
- * ChatGPT Work for Gitea 1.27.x
+ * Codex Light for Gitea 1.27.x
  *
  * A calm, light workspace theme inspired by the visual restraint of ChatGPT
  * and Codex: warm neutral canvas, crisp white working surfaces, readable type,
@@ -7,7 +7,7 @@
  */
 
 gitea-theme-meta-info {
-  --theme-display-name: "ChatGPT Work";
+  --theme-display-name: "Codex Light";
   --theme-color-scheme: "light";
 }
 
@@ -20,7 +20,7 @@ gitea-theme-meta-info {
     "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   --fonts-emoji: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji";
 
-  /* ChatGPT Work design tokens */
+  /* Codex Light design tokens */
   --work-canvas: #f7f7f4;
   --work-surface: #ffffff;
   --work-surface-muted: #f1f1ee;
