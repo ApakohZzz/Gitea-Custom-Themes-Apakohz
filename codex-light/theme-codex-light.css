@@ -437,7 +437,7 @@ a:hover {
 }
 
 #navbar-logo img {
-  content: url("/assets/img/codex-theme-logo.svg");
+  content: url("/assets/img/codex-logo-light.svg");
   width: 29px;
   height: 29px;
   object-fit: contain;
