@@ -39,7 +39,9 @@ gitea-theme-meta-info {
   --cw-accent-hover: #0c6958;
   --cw-accent-soft: #e3f3ee;
   --cw-focus: #80b9aa;
+  --cw-focus-ring: rgb(128 185 170 / 22%);
   --cw-danger: #c94b45;
+  --cw-danger-border: rgb(201 75 69 / 42%);
   --cw-shadow-sm: 0 1px 2px rgb(31 35 33 / 5%);
   --cw-shadow-lg: 0 12px 34px rgb(31 35 33 / 10%), 0 2px 8px rgb(31 35 33 / 5%);
   --cw-radius-sm: 8px;
@@ -635,7 +637,7 @@ select {
     box-shadow 120ms ease;
 }
 
-.ui.form input:focus,
+.ui.form input:not([type="checkbox"]):not([type="radio"]):focus,
 .ui.form textarea:focus,
 .ui.form select:focus,
 .ui.input > input:focus,
@@ -643,7 +645,44 @@ input:focus,
 textarea:focus,
 select:focus {
   border-color: var(--cw-focus) !important;
-  box-shadow: 0 0 0 3px rgb(128 185 170 / 22%) !important;
+  box-shadow: 0 0 0 3px var(--cw-focus-ring) !important;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.ui.selection.dropdown:focus-visible,
+.ui.selection.dropdown > input.search:focus-visible {
+  outline: none !important;
+}
+
+.ui.selection.dropdown {
+  color: var(--cw-text) !important;
+  background: var(--cw-surface-2) !important;
+  border: 1px solid var(--color-input-border) !important;
+  border-radius: var(--cw-radius-sm) !important;
+  box-shadow: 0 1px 1px rgb(31 35 33 / 5%) inset !important;
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.ui.selection.dropdown > input.search,
+.ui.selection.dropdown > input.search:focus {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+body .ui.selection.dropdown:focus,
+body .ui.selection.dropdown:focus-within,
+body .ui.selection.dropdown.active,
+body .ui.selection.dropdown.visible {
+  border-color: var(--cw-focus) !important;
+  border-radius: var(--cw-radius-sm) !important;
+  box-shadow: 0 0 0 3px var(--cw-focus-ring) !important;
 }
 
 .ui.left.icon.input > input {
@@ -658,6 +697,18 @@ select:focus {
 
 .ui.action.input {
   gap: 8px;
+}
+
+.ui.fluid.action.input {
+  display: flex !important;
+  width: 100% !important;
+}
+
+.ui.action.input > input,
+.ui.action.input > .ui.selection.dropdown {
+  flex: 1 1 0%;
+  width: auto !important;
+  min-width: 0;
 }
 
 .ui.action.input > .button,
@@ -732,6 +783,23 @@ select:focus {
 .ui.selection.dropdown > .menu {
   min-width: 100% !important;
   max-height: min(20rem, calc(100vh - 24px)) !important;
+}
+
+.ui.selection.dropdown.active.visible:not(.upward) {
+  border-radius: var(--cw-radius-sm) !important;
+}
+
+.ui.selection.dropdown.active.visible:not(.upward) > .menu {
+  margin-top: 6px !important;
+}
+
+.ui.selection.dropdown.upward.active.visible {
+  border-radius: var(--cw-radius-sm) !important;
+}
+
+.ui.selection.dropdown.upward.active.visible > .menu {
+  margin-top: 0 !important;
+  margin-bottom: 6px !important;
 }
 
 .ui.dropdown > .menu > .item,
@@ -1125,11 +1193,20 @@ select:focus {
   border-radius: 999px !important;
 }
 
-.comment,
-.timeline-item .comment,
-.repository.view.issue .comment-list .comment {
+.repository.view.issue .comment-list > .timeline-item.comment {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+
+.repository.view.issue .comment-list .content.comment-container,
+.repository.view.issue
+  .comment-list
+  > .timeline-item.comment.form
+  > .content
+  > .ui.segment {
   background: var(--cw-surface);
-  border-color: var(--cw-border) !important;
+  border: 1px solid var(--cw-border) !important;
   border-radius: var(--cw-radius-md) !important;
 }
 
@@ -1144,6 +1221,46 @@ select:focus {
 .repository.view.issue .issue-content-right .ui.segment {
   background: var(--cw-surface);
   border-color: var(--cw-border) !important;
+}
+
+.repository.view.issue .issue-content-right .ui.buttons:has(.issue-start-time) {
+  display: flex !important;
+  width: 100%;
+  gap: 8px;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.repository.view.issue
+  .issue-content-right
+  .ui.buttons:has(.issue-start-time)
+  > .ui.button {
+  margin: 0 !important;
+  border: 1px solid var(--cw-border-strong) !important;
+  border-radius: var(--cw-radius-sm) !important;
+}
+
+.repository.view.issue .issue-content-right .issue-add-time,
+.repository.view.issue #addDependencyForm .ui.action.input > .ui.button {
+  width: 38px;
+  min-width: 38px;
+  flex: 0 0 38px;
+  padding-inline: 0 !important;
+}
+
+.repository.view.issue #addDependencyForm .ui.action.input {
+  display: flex !important;
+  width: 100%;
+  gap: 8px;
+}
+
+.repository.view.issue
+  #addDependencyForm
+  .ui.action.input
+  > .ui.selection.dropdown {
+  flex: 1 1 0%;
+  width: auto !important;
+  min-width: 0;
 }
 
 .repository.view.issue .markup {
@@ -1177,7 +1294,6 @@ select:focus {
 code,
 pre,
 .code-view,
-.file-view,
 .monaco-editor {
   font-family: var(--fonts-monospace) !important;
 }
@@ -1188,6 +1304,7 @@ code {
 
 .markup {
   color: #2d302d;
+  font-family: var(--fonts-proportional) !important;
   font-size: 15px;
   line-height: 1.72;
 }
@@ -1270,6 +1387,11 @@ code {
 .repository.settings .ui.form > .ui.segment,
 .user.settings .ui.form > .ui.segment {
   padding: 18px !important;
+}
+
+.repository.settings .ui.top.attached.error.header,
+.repository.settings .ui.attached.error.danger.segment {
+  border-color: var(--cw-danger-border) !important;
 }
 
 .ui.attached.segment:has(+ .ui.top.attached.header),
