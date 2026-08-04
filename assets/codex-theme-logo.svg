@@ -1,0 +1,65 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 64 64"
+  role="img"
+  aria-labelledby="title desc"
+>
+  <title id="title">Codex themes logo</title>
+  <desc id="desc">
+    A teal rounded workspace tile containing interlocking code brackets and a
+    cursor.
+  </desc>
+  <defs>
+    <linearGradient
+      id="tile"
+      x1="11"
+      y1="8"
+      x2="53"
+      y2="56"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop stop-color="#63d7b8" />
+      <stop offset="0.52" stop-color="#1a9c7e" />
+      <stop offset="1" stop-color="#0b6655" />
+    </linearGradient>
+    <linearGradient
+      id="shine"
+      x1="16"
+      y1="13"
+      x2="47"
+      y2="50"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop stop-color="#ffffff" stop-opacity="0.82" />
+      <stop offset="1" stop-color="#d9fff3" stop-opacity="0.08" />
+    </linearGradient>
+  </defs>
+  <rect x="3" y="3" width="58" height="58" rx="18" fill="url(#tile)" />
+  <rect
+    x="4"
+    y="4"
+    width="56"
+    height="56"
+    rx="17"
+    fill="none"
+    stroke="url(#shine)"
+    stroke-width="2"
+  />
+  <path
+    d="M27 18 14.5 32 27 46"
+    fill="none"
+    stroke="#f8fffc"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="m37 18 12.5 14L37 46"
+    fill="none"
+    stroke="#12332b"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <rect x="29" y="28.5" width="6" height="7" rx="2" fill="#f8fffc" />
+</svg>

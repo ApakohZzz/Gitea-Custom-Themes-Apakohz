@@ -437,10 +437,12 @@ a:hover {
 }
 
 #navbar-logo img {
-  width: 27px;
-  height: 27px;
-  filter: grayscale(1) contrast(1.1) brightness(0.62);
-  opacity: 0.76;
+  content: url("/assets/img/codex-theme-logo.svg");
+  width: 29px;
+  height: 29px;
+  object-fit: contain;
+  filter: none;
+  opacity: 1;
 }
 
 #navbar .avatar {

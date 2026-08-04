@@ -436,10 +436,12 @@ a:hover {
 }
 
 #navbar-logo img {
-  width: 27px;
-  height: 27px;
-  filter: grayscale(1) brightness(1.45);
-  opacity: 0.82;
+  content: url("/assets/img/codex-theme-logo.svg");
+  width: 29px;
+  height: 29px;
+  object-fit: contain;
+  filter: none;
+  opacity: 1;
 }
 
 #navbar .avatar {
