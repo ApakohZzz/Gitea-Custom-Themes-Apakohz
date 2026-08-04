@@ -1,5 +1,5 @@
 /*
- * Codex Work Compact for Gitea 1.27.x
+ * Codex Work Panels for Gitea 1.27.x
  *
  * A dark, low-glare workspace designed for long coding sessions. The theme
  * uses warm graphite layers instead of pure black, clear surface boundaries,
@@ -1269,14 +1269,8 @@ code {
   padding: 18px !important;
 }
 
-.user.settings
-  .user-setting-content
-  > .ui.attached.segment:has(+ .ui.top.attached.header) {
-  margin-bottom: 16px !important;
-  border-radius: 0 0 var(--cw-radius-md) var(--cw-radius-md) !important;
-}
-
-.organization.profile .ui.attached.segment:has(+ .ui.top.attached.header) {
+.ui.attached.segment:has(+ .ui.top.attached.header),
+.ui.attached.table:has(+ .ui.top.attached.header) {
   margin-bottom: 16px !important;
   border-radius: 0 0 var(--cw-radius-md) var(--cw-radius-md) !important;
 }
